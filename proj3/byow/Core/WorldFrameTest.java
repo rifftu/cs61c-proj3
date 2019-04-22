@@ -9,12 +9,17 @@ import byow.TileEngine.Tileset;
 public class WorldFrameTest {
 
     public static void main(String[] args) {
-        int seed = 5;
+
+        int w = 70;
+        int h = 40;
+        int seed = 27;
 
         TERenderer ter = new TERenderer();
-        ter.initialize(200, 100);
+        ter.initialize(w, h);
 
-        TETile[][] testTiles = new WorldFrame(200, 100, seed).tiles();
+        WorldFrame frame = new WorldFrame(w, h, seed);
+
+        TETile[][] testTiles = frame.tiles();
 
         ter.renderFrame(testTiles);
 

@@ -2,6 +2,7 @@ package byow.Core;
 
 import byow.TileEngine.TERenderer;
 import byow.TileEngine.TETile;
+import byow.TileEngine.Tileset;
 
 import java.util.*;
 
@@ -19,6 +20,7 @@ class WorldFrame {
 
 
     WorldFrame(int w, int h, int seed) {
+
         tiles = new TETile[w][h];
         width = w;
         height = h;
@@ -47,8 +49,8 @@ class WorldFrame {
         for (int i = 0; i < attempts; i++) {
             int rw = Math.max(2, rand.nextInt(MaxSize));
             int rh = Math.max(2, rand.nextInt(MaxSize));
-            int rx = rand.nextInt(width - rw - 2) + 1;
-            int ry = rand.nextInt(height - rh - 2) + 1;
+            int rx = Math.max(2, rand.nextInt(width - rw - 3) + 1);
+            int ry = Math.max(2, rand.nextInt(height - rh - 3) + 1);
             Room newRoom = new Room(rx, ry, rw, rh, this);
             Boolean ok = true;
             for (Room oldRoom : roomSet) {
@@ -63,11 +65,18 @@ class WorldFrame {
                 previous = newRoom;
             }
         }
-        /*
+        for (int x = 0; x < width; x += 1) {
+            for (int y = 0; y < height; y += 1) {
+                tiles[x][y] = Tileset.NOTHING;
+            }
+        }
+
+
         for (Hallway hall : hallwaysSet) {
             hall.draw(tiles);
         }
-        */
+
+
         for (Room room : roomSet) {
             room.draw(tiles);
         }
@@ -77,7 +86,7 @@ class WorldFrame {
 
 
     TETile[][] tiles() {
-        return null;
+        return tiles;
     }
     private boolean filled() {
         return false;

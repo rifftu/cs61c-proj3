@@ -143,8 +143,8 @@ public class Room {
             if (tiles[x - 1][j] == Tileset.NOTHING) {
                 tiles[x - 1][j] = Tileset.WALL;
             }
-            if (tiles[x + h][j] == Tileset.NOTHING) {
-                tiles[x + h][j] = Tileset.WALL;
+            if (tiles[x + w][j] == Tileset.NOTHING) {
+                tiles[x + w][j] = Tileset.WALL;
             }
         }
         //TODO: draw the middle part
@@ -156,7 +156,7 @@ public class Room {
                 tiles[i][j] = Tileset.FLOOR;
             }
             if (tiles[i][y + h] == Tileset.NOTHING) {
-                tiles[i][y - h] = Tileset.WALL;
+                tiles[i][y + h] = Tileset.WALL;
             }
         }
 
