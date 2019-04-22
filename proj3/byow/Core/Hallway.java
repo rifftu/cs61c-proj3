@@ -1,6 +1,8 @@
 package byow.Core;
 
 import byow.SaveDemo.World;
+import byow.TileEngine.TETile;
+import byow.TileEngine.Tileset;
 
 import java.util.Random;
 
@@ -9,8 +11,8 @@ public class Hallway extends Room {
     private int length;
     private int startX;
     private int startY;
-    private int endX;
-    private int endY;
+    //private int endX;
+    //private int endY;
     private final int width = 1;
     Hallway(int x, int y, Direction d, int l) {
         dir = d;
@@ -18,23 +20,23 @@ public class Hallway extends Room {
         startX = x;
         startY = y;
         switch (d) {
+            /*
             case UP:
-                endY = y + l;
-                endX = x;
-            case DOWN:
-                endY = y - l;
-                endX = x;
-            case LEFT:
-                endX = x - l;
-                endY = y;
+                //endY = y + l;
+                //endX = x;
+                //endY = y - l;
+                //endX = x;
+                //endX = x - l;
+                //endY = y;
             default:
-                endX = x + l;
-                endY = y;
+                //endX = x + l;
+                //endY = y;
+                */
         }
     }
     //Built vertical hallway from lower room to other room
     static void builtVertical(Room one, Room two, WorldFrame world) {
-        Random ran = new Random();
+        Random ran = world.rand;
         int length, y;
         int smallestRWallX = Math.min(one.RWall(), two.RWall());
         int largestX = Math.max(one.getX(), two.getX());
@@ -53,7 +55,7 @@ public class Hallway extends Room {
     }
     //Built horizontal hallway from most left room to other room
     static void builtHorizontal(Room one, Room two, WorldFrame world) {
-        Random ran = new Random();
+        Random ran = world.rand;
         int length, x;
         int smallestTWallY = Math.min(one.TWall(), two.TWall());
         int largestY = Math.max(one.getY(), two.getY());
@@ -76,7 +78,7 @@ public class Hallway extends Room {
     // room one is higher room, roo two is lower room
     static void forwardL(Room one, Room two, WorldFrame world) {
         //built horizontal hallway part
-        Random ran = new Random();
+        Random ran = world.rand;
         int yH = RandomUtils.uniform(ran, two.getY(), two.TWall() + 1);
         int xH = RandomUtils.uniform(ran, one.getX(), one.RWall() + 1);
         int lH = two.getX() - xH;
@@ -90,7 +92,7 @@ public class Hallway extends Room {
 
     //Built backward L hallway from higher right room to lower left room
     static void backwardL(Room one, Room two, WorldFrame world) {
-        Random ran = new Random();
+        Random ran = world.rand;
         int yH = RandomUtils.uniform(ran, two.getY(), two.TWall());
         int xH = two.getX();
         int lH = RandomUtils.uniform(ran, one.getX(), one.RWall() + 1);
@@ -114,5 +116,40 @@ public class Hallway extends Room {
 
     }
     */
+    void draw(TETile[][] tiles) {
+
+        switch (this.dir) {
+            case UP:
+                drawV(tiles, startX, startY, startY + length);
+            case RIGHT:
+                drawH(tiles, startY, startX, startX + length);
+            default:
+                throw new RuntimeException("invalid direction");
+        }
+
+    }
+    private void drawH(TETile[][] tiles, int y, int x1, int x2) {
+
+        for (int i = x1; i < x2; i++) {
+            if (tiles[i][y - 1] == Tileset.NOTHING) {
+                tiles[i][y - 1] = Tileset.WALL;
+            }
+            tiles[i][y] = Tileset.FLOOR;
+            if (tiles[i][y + 1] == Tileset.NOTHING) {
+                tiles[i][y + 1] = Tileset.WALL;
+            }
+        }
+    }
+    private void drawV(TETile[][] tiles, int x, int y1, int y2) {
+        for (int j = y1; j < y2; j++) {
+            if (tiles[x - 1][j] == Tileset.NOTHING) {
+                tiles[x - 1][j] = Tileset.WALL;
+            }
+            tiles[x][j] = Tileset.FLOOR;
+            if (tiles[x - 1][j] == Tileset.NOTHING) {
+                tiles[x - 1][j] = Tileset.WALL;
+            }
+        }
+    }
 
 }

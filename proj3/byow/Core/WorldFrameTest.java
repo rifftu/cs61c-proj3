@@ -12,11 +12,12 @@ public class WorldFrameTest {
         int seed = 5;
 
         TERenderer ter = new TERenderer();
-        ter.initialize(400, 300);
+        ter.initialize(200, 100);
 
-        TETile[][] randomTiles = new WorldFrame().tiles();
+        TETile[][] testTiles = new WorldFrame(200, 100, seed).tiles();
 
-        ter.renderFrame(randomTiles);
+        ter.renderFrame(testTiles);
+
     }
 
 }

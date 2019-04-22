@@ -59,7 +59,8 @@ public class Room {
         return y - 1;
     }
 
-    void connect(Room one, Room two) {
+    static void connect(Room one, Room two, WorldFrame world) {
+        /*
         if ((one.TWall() < two.y || two.TWall() < one.y)
                 && ((one.x < two.RWall() && two.RWall() <= one.RWall())
                 || one.x <= two.x && two.x < one.RWall() )) {
@@ -68,6 +69,30 @@ public class Room {
                 && ((one.y <= two.y && two.y < one.TWall())
                 || (one.y <two.TWall() && two.TWall() <= one.RWall()))) {
                 Hallway.builtHorizontal(one, two, world);
+        } else if (one.x >= two.RWall()) {
+            if (one.TWall() <= two.y) {
+                Hallway.forwardL(two, one, world);
+            }
+            if (two.TWall() <= one.y){
+                Hallway.backwardL(one, two, world);
+            }
+        } else if(one.RWall() <= two.x) {
+            if (one.TWall() <= two.y) {
+                Hallway.backwardL(two, one, world);
+            }
+            if (two.TWall() <= one.y){
+                Hallway.forwardL(one, two, world);
+            }
+        }
+        */
+        if ((one.TWall() < two.y || two.TWall() < one.y)
+                && ((one.x < two.RWall() && two.RWall() <= one.RWall())
+                || one.x <= two.x && two.x < one.RWall() )) {
+            Hallway.builtVertical(one, two, world);
+        } else if ((two.RWall() < one.x || one.RWall() < two.x)
+                && ((one.y <= two.y && two.y < one.TWall())
+                || (one.y <two.TWall() && two.TWall() <= one.TWall()))) {
+            Hallway.builtHorizontal(one, two, world);
         } else if (one.x >= two.RWall()) {
             if (one.TWall() <= two.y) {
                 Hallway.forwardL(two, one, world);
@@ -113,19 +138,28 @@ public class Room {
     }
 
     void draw(TETile[][] tiles) {
-        //TODO: draw left wall
-
+        //TODO: draw left and right wall
+        for (int j = y - 1; j <= y + h; j++) {
+            if (tiles[x - 1][j] == Tileset.NOTHING) {
+                tiles[x - 1][j] = Tileset.WALL;
+            }
+            if (tiles[x + h][j] == Tileset.NOTHING) {
+                tiles[x + h][j] = Tileset.WALL;
+            }
+        }
         //TODO: draw the middle part
         for (int i = x; i < x + w; i++) {
-            //TODO: draw the first thingy
-            //TODO: draw the middle
+            if (tiles[i][y - 1] == Tileset.NOTHING) {
+                tiles[i][y - 1] = Tileset.WALL;
+            }
             for (int j = y; j < y + h; j++) {
                 tiles[i][j] = Tileset.FLOOR;
             }
-            //TODO: draw the toppu
+            if (tiles[i][y + h] == Tileset.NOTHING) {
+                tiles[i][y - h] = Tileset.WALL;
+            }
         }
 
-        //TODO: draw the right wall
 
 
     }

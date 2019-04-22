@@ -1,5 +1,6 @@
 package byow.Core;
 
+import byow.TileEngine.TERenderer;
 import byow.TileEngine.TETile;
 
 import java.util.*;
@@ -14,8 +15,11 @@ class WorldFrame {
     Random rand;
     int MaxSize;
     final int attempts = 50;
+    TETile[][] tiles;
+
 
     WorldFrame(int w, int h, int seed) {
+        tiles = new TETile[w][h];
         width = w;
         height = h;
         MaxSize = width / 8;
@@ -27,7 +31,8 @@ class WorldFrame {
         int firstH = 5;
         roomQueue = new ArrayDeque<>();
         roomSet = new HashSet<>();
-        Room root = new Room(firstX, firstY, firstW, firstH);
+        hallwaysSet = new HashSet<>();
+        Room root = new Room(firstX, firstY, firstW, firstH, this);
         roomQueue.add(root);
 
         /*
@@ -35,10 +40,13 @@ class WorldFrame {
             roomQueue.remove().expand(this);
         }
         */
+
+
+
         Room previous = root;
         for (int i = 0; i < attempts; i++) {
-            int rw = rand.nextInt(MaxSize);
-            int rh = rand.nextInt(MaxSize);
+            int rw = Math.max(2, rand.nextInt(MaxSize));
+            int rh = Math.max(2, rand.nextInt(MaxSize));
             int rx = rand.nextInt(width - rw - 2) + 1;
             int ry = rand.nextInt(height - rh - 2) + 1;
             Room newRoom = new Room(rx, ry, rw, rh, this);
@@ -51,9 +59,17 @@ class WorldFrame {
             }
             if (ok) {
                 roomSet.add(newRoom);
-                Room.connect(previous, newRoom);
+                Room.connect(previous, newRoom, this);
                 previous = newRoom;
             }
+        }
+        /*
+        for (Hallway hall : hallwaysSet) {
+            hall.draw(tiles);
+        }
+        */
+        for (Room room : roomSet) {
+            room.draw(tiles);
         }
 
     }
