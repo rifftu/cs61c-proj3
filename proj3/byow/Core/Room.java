@@ -31,8 +31,49 @@ public class Room {
     }
     */
 
-    static void connect(Room one, Room two) {}
+    int LWall() {
+        return x - 1;
+    }
+
+    int RWall() {
+        return x + w;
+    }
+
+    int TWall() {
+        return y + h;
+    }
+
+    int BWall() {
+        return y - 1;
+    }
+
+    static void connect(Room one, Room two) {
+
+    }
     static boolean intersect(Room one, Room two) {
+        //r2 UL cut
+        if (ibt(two.TWall(), one.BWall(), one.TWall())
+                && ibt(two.LWall(), one.LWall(), one.RWall())) {
+            return true;
+        }
+        //r2 UR cut
+        if (ibt(two.TWall(), one.BWall(), one.TWall())
+                && ibt(two.RWall(), one.LWall(), one.RWall())) {
+            return true;
+        }
+        //r2 BL cut
+        if (ibt(two.BWall(), one.BWall(), one.TWall())
+                && ibt(two.LWall(), one.LWall(), one.RWall())) {
+            return true;
+        }
+        //r2 BR cut
+        if (ibt(two.BWall(), one.BWall(), one.TWall())
+                && ibt(two.RWall(), one.LWall(), one.RWall())) {
+            return true;
+        }
         return false;
+    }
+    static boolean ibt(int you, int one, int two) {
+        return (you >= one && you <= two) || (you <= one && you >= two);
     }
 }
