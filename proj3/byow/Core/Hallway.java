@@ -59,12 +59,18 @@ public class Hallway extends Room {
         if (one.RWall() < two.getX()) {
             length = two.getX() - one.RWall();
             x = one.RWall();
-        } else {// two.RWall() < one.getX()
+        } else if (two.RWall() < one.getX()) {// two.RWall() < one.getX()
             length = one.getX() - two.RWall();
             x = two.getX();
+        } else {
+            throw new RuntimeException("logic error");
         }
         int y = RandomUtils.uniform(ran, largestY, smallestTWallY + 1);
         world.hallwaysSet.add(new Hallway(x, y, Direction.RIGHT, length));
+        if (x + length > 70) {
+            
+        }
+        world.hallwaysSet.add(new Hallway(x, y, dir, length));
     }
 
     //Built forward L hallway from higher left room to lower right room
@@ -118,7 +124,7 @@ public class Hallway extends Room {
             case RIGHT:
                 drawH(tiles, startY, startX, startX + length);
             default:
-                throw new RuntimeException("invalid direction");
+
         }
 
     }
