@@ -68,7 +68,7 @@ public class Hallway extends Room {
         int y = RandomUtils.uniform(ran, largestY, smallestTWallY + 1);
         world.hallwaysSet.add(new Hallway(x, y, Direction.RIGHT, length));
         if (x + length > 70) {
-            
+            throw new RuntimeException("horizontal problem");
         }
         world.hallwaysSet.add(new Hallway(x, y, dir, length));
     }
@@ -82,6 +82,7 @@ public class Hallway extends Room {
         int yH = RandomUtils.uniform(ran, two.getY(), two.TWall() + 1);
         int xH = RandomUtils.uniform(ran, one.getX(), one.RWall() + 1);
         int lH = two.getX() - xH;
+
         world.hallwaysSet.add(new Hallway(xH, yH, Direction.RIGHT, lH));
         // built vertical part first
         int xV = xH;
