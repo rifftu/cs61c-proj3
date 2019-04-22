@@ -59,7 +59,7 @@ public class Room {
         return y - 1;
     }
 
-    static void connect(Room one, Room two) {
+    void connect(Room one, Room two) {
         if ((one.TWall() < two.y || two.TWall() < one.y)
                 && ((one.x < two.RWall() && two.RWall() <= one.RWall())
                 || one.x <= two.x && two.x < one.RWall() )) {
