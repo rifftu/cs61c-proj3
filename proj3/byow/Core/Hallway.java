@@ -40,18 +40,15 @@ public class Hallway extends Room {
         int length, y;
         int smallestRWallX = Math.min(one.RWall(), two.RWall());
         int largestX = Math.max(one.getX(), two.getX());
-        Direction dir;
         if (one.TWall() < two.getY()) {
-            dir = Direction.UP;
             length = two.getY() - one.TWall();
             y = one.TWall();
         } else { // two.TWall() < one.getY()
-            dir = Direction.UP;
             length = one.getY() - two.TWall();
             y = two.RWall();
         }
         int x = RandomUtils.uniform(ran, largestX, smallestRWallX + 1);
-        world.hallwaysSet.add(new Hallway(x, y, dir, length));
+        world.hallwaysSet.add(new Hallway(x, y, Direction.UP, length));
     }
     //Built horizontal hallway from most left room to other room
     static void builtHorizontal(Room one, Room two, WorldFrame world) {
@@ -59,18 +56,15 @@ public class Hallway extends Room {
         int length, x;
         int smallestTWallY = Math.min(one.TWall(), two.TWall());
         int largestY = Math.max(one.getY(), two.getY());
-        Direction dir;
         if (one.RWall() < two.getX()) {
-            dir = Direction.RIGHT;
             length = two.getX() - one.RWall();
             x = one.RWall();
         } else {// two.RWall() < one.getX()
-            dir = Direction.RIGHT;
             length = one.getX() - two.RWall();
             x = two.getX();
         }
         int y = RandomUtils.uniform(ran, largestY, smallestTWallY + 1);
-        world.hallwaysSet.add(new Hallway(x, y, dir, length));
+        world.hallwaysSet.add(new Hallway(x, y, Direction.RIGHT, length));
     }
 
     //Built forward L hallway from higher left room to lower right room
@@ -94,8 +88,8 @@ public class Hallway extends Room {
     static void backwardL(Room one, Room two, WorldFrame world) {
         Random ran = world.rand;
         int yH = RandomUtils.uniform(ran, two.getY(), two.TWall());
-        int xH = two.getX();
-        int lH = RandomUtils.uniform(ran, one.getX(), one.RWall() + 1);
+        int xH = two.RWall();
+        int lH = RandomUtils.uniform(ran, one.getX() - two.RWall(), one.RWall() + 1 - two.RWall());
         world.hallwaysSet.add(new Hallway(xH, yH, Direction.RIGHT, lH));
         // built vertical part first
         int xV = xH + lH;
@@ -130,7 +124,8 @@ public class Hallway extends Room {
     }
     private void drawH(TETile[][] tiles, int y, int x1, int x2) {
 
-        for (int i = x1; i < x2; i++) {
+        for (int i = x1; i < x2 ; i++) {
+            System.out.println(x2);
             if (tiles[i][y - 1] == Tileset.NOTHING) {
                 tiles[i][y - 1] = Tileset.WALL;
             }
