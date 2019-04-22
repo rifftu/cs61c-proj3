@@ -73,8 +73,8 @@ class WorldFrame {
 
 
         for (Hallway hall : hallwaysSet) {
-            System.out.println("start x "+ hall.getStartX() + " start y " +hall.getStartY()+
-                        " h "+ hall.getL() + " Direction "+ hall.getD());
+            //System.out.println("start x "+ hall.getStartX() + " start y " +hall.getStartY()+
+            //            " h "+ hall.getL() + " Direction "+ hall.getD());
             hall.draw(tiles);
         }
 

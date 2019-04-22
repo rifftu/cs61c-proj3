@@ -165,7 +165,7 @@ public class Hallway extends Room {
         if (this.dir == Direction.UP) {
             drawV(tiles, startX, startY , startY + length);
         } else {
-            drawH(tiles, startY, startX, startX + length + 1);
+            drawH(tiles, startY, startX, startX + length);
         }
 
     }
@@ -180,6 +180,9 @@ public class Hallway extends Room {
                 tiles[i][y + 1] = Tileset.WALL;
             }
         }
+
+        tiles[x2][y - 1] = Tileset.WALL;
+        tiles[x2 + 1][y - 1] = Tileset.WALL;
     }
     private void drawV(TETile[][] tiles, int x, int y1, int y2) {
         for (int j = y1; j < y2; j++) {

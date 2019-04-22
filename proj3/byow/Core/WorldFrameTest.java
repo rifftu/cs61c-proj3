@@ -12,7 +12,7 @@ public class WorldFrameTest {
 
         int w = 70;
         int h = 40;
-        int seed = 56;
+        int seed = 27;
 
         TERenderer ter = new TERenderer();
         ter.initialize(w, h);
