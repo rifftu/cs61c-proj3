@@ -10,6 +10,7 @@ class WorldFrame {
     int height;
     Queue<Room> roomQueue;
     Set<Room> roomSet;
+    Set<Hallway> hallwaysSet;
     Random rand;
     int MaxSize;
     final int attempts = 50;
@@ -40,7 +41,7 @@ class WorldFrame {
             int rh = rand.nextInt(MaxSize);
             int rx = rand.nextInt(width - rw - 2) + 1;
             int ry = rand.nextInt(height - rh - 2) + 1;
-            Room newRoom = new Room(rx, ry, rw, rh);
+            Room newRoom = new Room(rx, ry, rw, rh, this);
             Boolean ok = true;
             for (Room oldRoom : roomSet) {
                 if (Room.intersect(oldRoom, newRoom)) {

@@ -8,16 +8,16 @@ public class Room {
     private int y;
     private int w;
     private int h;
-
+    private WorldFrame world;
 
     Room() {}
 
-    Room(int x, int y, int w, int h) {
+    Room(int x, int y, int w, int h, WorldFrame world) {
         this.x = x;
         this.y = y;
         this.w = w;
         this.h = h;
-
+        this.world = world;
     }
 
     /*
@@ -30,7 +30,15 @@ public class Room {
         return 0;
     }
     */
-
+    int getH() {
+        return h;
+    }
+    int getY() {
+        return y;
+    }
+    int getX() {
+        return x;
+    }
     int LWall() {
         return x - 1;
     }
@@ -48,23 +56,27 @@ public class Room {
     }
 
     static void connect(Room one, Room two) {
-        if (((one.x < two.x + two.w) && (two.x + two.w <= one.w + one.x))
-                || (one.x <= two.x && (two.x < one.x + one.w))) {
-            Hallway.builtVertical(one, two);
-        } else if () {
-
-        }
-        else if (one.x >= two.x + one.w) {
-            if (one.y + one.h <= two.y) {
-                Hallway.forwardL(two, one);
-            } else {
-                Hallway.backwardL(two, one);
+        if ((one.TWall() < two.y || two.TWall() < one.y)
+                && ((one.x < two.RWall() && two.RWall() <= one.RWall())
+                || one.x <= two.x && two.x < one.RWall() )) {
+                 Hallway.builtVertical(one, two, world);
+        } else if ((two.RWall() < one.x || one.RWall() < two.x)
+                && ((one.y <= two.y && two.y < one.TWall())
+                || (one.y <two.TWall() && two.TWall() <= one.RWall()))) {
+                Hallway.builtHorizontal(one, two, world);
+        } else if (one.x >= two.RWall()) {
+            if (one.TWall() <= two.y) {
+                Hallway.forwardL(two, one, world);
             }
-        } else if(one.x + one.w <= two.x) {
-            if (one.y + one.h <= two.y) {
-                Hallway.bacdwardL(one, two);
-            } else {
-                Hallway.forwardL(one, two);
+            if (two.TWall() <= one.y){
+                Hallway.backwardL(one, two, world);
+            }
+        } else if(one.RWall() <= two.x) {
+            if (one.TWall() <= two.y) {
+                Hallway.backwardL(two, one, world);
+            }
+            if (two.TWall() <= one.y){
+                Hallway.forwardL(one, two, world);
             }
         }
     }
