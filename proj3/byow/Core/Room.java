@@ -1,5 +1,9 @@
 package byow.Core;
 
+import byow.TileEngine.TETile;
+import byow.TileEngine.Tileset;
+import byow.TileEngine.TERenderer;
+
 import java.util.Queue;
 import java.util.Set;
 
@@ -107,5 +111,25 @@ public class Room {
     static boolean ibt(int you, int one, int two) {
         return (you >= one && you <= two) || (you <= one && you >= two);
     }
+
+    void draw(TETile[][] tiles) {
+        //TODO: draw left wall
+
+        //TODO: draw the middle part
+        for (int i = x; i < x + w; i++) {
+            //TODO: draw the first thingy
+            //TODO: draw the middle
+            for (int j = y; j < y + h; j++) {
+                tiles[i][j] = Tileset.FLOOR;
+            }
+            //TODO: draw the toppu
+        }
+
+        //TODO: draw the right wall
+
+
+    }
+
+
 }
 
