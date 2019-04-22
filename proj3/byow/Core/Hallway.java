@@ -60,7 +60,7 @@ public class Hallway extends Room {
             len = one.getY() - two.TWall();
             y = two.TWall();
         }
-        int x = RandomUtils.uniform(ran, largestX, smallestRWallX);
+        int x = RandomUtils.uniform(ran, largestX - 1, smallestRWallX);
         if (y + len > 40) {
             throw new RuntimeException("vertical problem");
         }
@@ -175,7 +175,7 @@ public class Hallway extends Room {
             if (tiles[i][y - 1] == Tileset.NOTHING) {
                 tiles[i][y - 1] = Tileset.WALL;
             }
-            tiles[i][y] = Tileset.FLOWER;
+            tiles[i][y] = Tileset.FLOOR;
             if (tiles[i][y + 1] == Tileset.NOTHING) {
                 tiles[i][y + 1] = Tileset.WALL;
             }
