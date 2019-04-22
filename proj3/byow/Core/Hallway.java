@@ -19,7 +19,7 @@ public class Hallway extends Room {
         length = l;
         startX = x;
         startY = y;
-        switch (d) {
+        //switch (d) {
             /*
             case UP:
                 //endY = y + l;
@@ -32,45 +32,61 @@ public class Hallway extends Room {
                 //endX = x + l;
                 //endY = y;
                 */
-        }
+        //}
+    }
+    int getStartX() {
+        return startX;
+    }
+    int getStartY() {
+        return startY;
+    }
+    Direction getD(){
+        return dir;
+    }
+    int getL(){
+        return length;
     }
     //Built vertical hallway from lower room to other room
     static void builtVertical(Room one, Room two, WorldFrame world) {
         Random ran = world.rand;
-        int length, y;
+        int len;
+        int y;
         int smallestRWallX = Math.min(one.RWall(), two.RWall());
         int largestX = Math.max(one.getX(), two.getX());
         if (one.TWall() < two.getY()) {
-            length = two.getY() - one.TWall();
+            len = two.getY() - one.TWall();
             y = one.TWall();
         } else { // two.TWall() < one.getY()
-            length = one.getY() - two.TWall();
-            y = two.RWall();
+            len = one.getY() - two.TWall();
+            y = two.TWall();
         }
-        int x = RandomUtils.uniform(ran, largestX, smallestRWallX + 1);
-        world.hallwaysSet.add(new Hallway(x, y, Direction.UP, length));
+        int x = RandomUtils.uniform(ran, largestX, smallestRWallX);
+        if (y + len > 40) {
+            throw new RuntimeException("vertical problem");
+        }
+        world.hallwaysSet.add(new Hallway(x, y, Direction.UP, len));
     }
     //Built horizontal hallway from most left room to other room
     static void builtHorizontal(Room one, Room two, WorldFrame world) {
         Random ran = world.rand;
-        int length;
+        int len;
         int x;
         int smallestTWallY = Math.min(one.TWall(), two.TWall());
         int largestY = Math.max(one.getY(), two.getY());
         if (one.RWall() < two.getX()) {
-            length = two.getX() - one.RWall();
+            len = two.getX() - one.RWall() + 1;
             x = one.RWall();
         } else if (two.RWall() < one.getX()) {// two.RWall() < one.getX()
-            length = one.getX() - two.RWall();
-            x = two.getX();
+            len = one.getX() - two.RWall();
+            x = two.RWall();
         } else {
             throw new RuntimeException("logic error");
         }
-        int y = RandomUtils.uniform(ran, largestY, smallestTWallY + 1);
-        if (x + length > 70) {
+        int y = RandomUtils.uniform(ran, largestY, smallestTWallY);
+        if (x + len > 70) {
             throw new RuntimeException("horizontal problem");
         }
-        world.hallwaysSet.add(new Hallway(x, y, Direction.RIGHT, length));
+        world.hallwaysSet.add(new Hallway(x, y, Direction.RIGHT, len));
 
     }
 
@@ -80,8 +96,8 @@ public class Hallway extends Room {
     static void forwardL(Room one, Room two, WorldFrame world) {
         //built horizontal hallway part
         Random ran = world.rand;
-        int yH = RandomUtils.uniform(ran, two.getY(), two.TWall() + 1);
-        int xH = RandomUtils.uniform(ran, one.getX(), one.RWall() + 1);
+        int yH = RandomUtils.uniform(ran, two.getY(), two.TWall());
+        int xH = RandomUtils.uniform(ran, one.getX(), one.RWall());
         int lH = two.getX() - xH;
         if (xH + lH > 70) {
             throw new RuntimeException("forward L problem");
@@ -91,6 +107,9 @@ public class Hallway extends Room {
         int xV = xH;
         int yV = yH;
         int lV = one.getY() - yV;
+        if (yV+ lV > 40) {
+            throw new RuntimeException("forward L problem");
+        }
         world.hallwaysSet.add(new Hallway(xV, yV, Direction.UP, lV));
     }
 
@@ -99,7 +118,7 @@ public class Hallway extends Room {
         Random ran = world.rand;
         int yH = RandomUtils.uniform(ran, two.getY(), two.TWall());
         int xH = two.RWall();
-        int lH = RandomUtils.uniform(ran, one.getX() - two.RWall(), one.RWall() + 1 - two.RWall());
+        int lH = RandomUtils.uniform(ran, one.getX() - two.RWall(), one.RWall() - two.RWall());
         if (xH + lH > 70) {
             throw new RuntimeException("backward L problem");
         }
@@ -108,6 +127,9 @@ public class Hallway extends Room {
         int xV = xH + lH;
         int yV = yH;
         int lV = one.getY() - yV;
+        if (yV + lV > 40) {
+            throw new RuntimeException("backward L problem");
+        }
         world.hallwaysSet.add(new Hallway(xV, yV, Direction.UP, lV));
     }
     /*
@@ -125,13 +147,25 @@ public class Hallway extends Room {
     */
     void draw(TETile[][] tiles) {
 
-        switch (this.dir) {
+        /*switch (this.dir) {
             case UP:
                 drawV(tiles, startX, startY, startY + length);
             case RIGHT:
+                if (startX + length > 70) {
+                    System.out.println("start x" + startX + " length " + length);
+                    length = 0;
+                }
+                System.out.println("start x Right"+ getStartX() + " start y " +getStartY()+
+                        " h "+ getL() + " Direction "+ getD());
                 drawH(tiles, startY, startX, startX + length);
             default:
+                break;
 
+        }*/
+        if (this.dir == Direction.UP) {
+            drawV(tiles, startX, startY , startY + length);
+        } else {
+            drawH(tiles, startY, startX, startX + length + 1);
         }
 
     }
@@ -141,7 +175,7 @@ public class Hallway extends Room {
             if (tiles[i][y - 1] == Tileset.NOTHING) {
                 tiles[i][y - 1] = Tileset.WALL;
             }
-            tiles[i][y] = Tileset.FLOOR;
+            tiles[i][y] = Tileset.FLOWER;
             if (tiles[i][y + 1] == Tileset.NOTHING) {
                 tiles[i][y + 1] = Tileset.WALL;
             }
@@ -152,9 +186,9 @@ public class Hallway extends Room {
             if (tiles[x - 1][j] == Tileset.NOTHING) {
                 tiles[x - 1][j] = Tileset.WALL;
             }
-            tiles[x][j] = Tileset.FLOOR;
-            if (tiles[x - 1][j] == Tileset.NOTHING) {
-                tiles[x - 1][j] = Tileset.WALL;
+            tiles[x][j] = Tileset.FLOWER;
+            if (tiles[x + 1][j] == Tileset.NOTHING) {
+                tiles[x + 1][j] = Tileset.WALL;
             }
         }
     }

@@ -34,8 +34,8 @@ public class Room {
         return 0;
     }
     */
-    int getH() {
-        return h;
+    int getW() {
+        return w;
     }
     int getY() {
         return y;

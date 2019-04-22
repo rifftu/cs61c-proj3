@@ -15,7 +15,7 @@ class WorldFrame {
     Set<Hallway> hallwaysSet;
     Random rand;
     int MaxSize;
-    final int attempts = 50;
+    final int attempts = 11;
     TETile[][] tiles;
 
 
@@ -35,7 +35,7 @@ class WorldFrame {
         roomSet = new HashSet<>();
         hallwaysSet = new HashSet<>();
         Room root = new Room(firstX, firstY, firstW, firstH, this);
-        roomQueue.add(root);
+        roomSet.add(root);
 
         /*
         while (!roomQueue.isEmpty()) {
@@ -71,14 +71,18 @@ class WorldFrame {
             }
         }
 
-        /*
+
         for (Hallway hall : hallwaysSet) {
+            System.out.println("start x "+ hall.getStartX() + " start y " +hall.getStartY()+
+                        " h "+ hall.getL() + " Direction "+ hall.getD());
             hall.draw(tiles);
         }
-        */
+
 
 
         for (Room room : roomSet) {
+            //System.out.println("start x "+ room.getX() + " start y " +room.getY()+
+            //                "with "+ room.getW());
             room.draw(tiles);
         }
 
