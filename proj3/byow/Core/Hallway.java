@@ -82,7 +82,7 @@ public class Hallway extends Room {
         } else {
             throw new RuntimeException("logic error");
         }
-        int y = RandomUtils.uniform(ran, largestY, smallestTWallY);
+        int y = RandomUtils.uniform(ran, largestY - 1, smallestTWallY);
         if (x + len > 70) {
             throw new RuntimeException("horizontal problem");
         }
@@ -186,7 +186,7 @@ public class Hallway extends Room {
             if (tiles[x - 1][j] == Tileset.NOTHING) {
                 tiles[x - 1][j] = Tileset.WALL;
             }
-            tiles[x][j] = Tileset.FLOWER;
+            tiles[x][j] = Tileset.FLOOR;
             if (tiles[x + 1][j] == Tileset.NOTHING) {
                 tiles[x + 1][j] = Tileset.WALL;
             }

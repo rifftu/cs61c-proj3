@@ -15,7 +15,7 @@ class WorldFrame {
     Set<Hallway> hallwaysSet;
     Random rand;
     int MaxSize;
-    final int attempts = 11;
+    final int attempts = 25;
     TETile[][] tiles;
 
 

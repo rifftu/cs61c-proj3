@@ -86,12 +86,12 @@ public class Room {
         }
         */
         if ((one.TWall() < two.y || two.TWall() < one.y)
-                && ((one.x < two.RWall() && two.RWall() <= one.RWall())
-                || one.x <= two.x && two.x < one.RWall() )) {
+                && (ibt(one.x, two.x, two.RWall())
+                || ibt(two.x, one.x, one.RWall()))) {
             Hallway.builtVertical(one, two, world);
         } else if ((two.RWall() < one.x || one.RWall() < two.x)
-                && ((one.y <= two.y && two.y < one.TWall())
-                || (one.y <two.TWall() && two.TWall() <= one.TWall()))) {
+                && (ibt(one.TWall(), two.y, two.TWall())
+                || ibt(two.TWall(), one.y, one.TWall()))) {
             Hallway.builtHorizontal(one, two, world);
         } else if (one.x >= two.RWall()) {
             if (one.TWall() <= two.y) {
@@ -159,11 +159,6 @@ public class Room {
                 tiles[i][y + h] = Tileset.WALL;
             }
         }
-
-
-
     }
-
-
 }
 
