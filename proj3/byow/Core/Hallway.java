@@ -1,5 +1,7 @@
 package byow.Core;
 
+import byow.SaveDemo.World;
+
 import java.util.Random;
 
 public class Hallway extends Room {
@@ -30,7 +32,7 @@ public class Hallway extends Room {
                 endY = y;
         }
     }
-    //Built vertical hallway from first room to second room
+    //Built vertical hallway from lower room to other room
     static void builtVertical(Room one, Room two, WorldFrame world) {
         Random ran = new Random();
         int length, y;
@@ -42,14 +44,14 @@ public class Hallway extends Room {
             length = two.getY() - one.TWall();
             y = one.TWall();
         } else { // two.TWall() < one.getY()
-            dir = Direction.DOWN;
+            dir = Direction.UP;
             length = one.getY() - two.TWall();
-            y = one.getY();
+            y = two.RWall();
         }
-        int x = largestX + RandomUtils.uniform(ran, smallestRWallX - largestX);
+        int x = RandomUtils.uniform(ran, largestX, smallestRWallX + 1);
         world.hallwaysSet.add(new Hallway(x, y, dir, length));
     }
-    //Built horizontal hallway from one to two
+    //Built horizontal hallway from most left room to other room
     static void builtHorizontal(Room one, Room two, WorldFrame world) {
         Random ran = new Random();
         int length, x;
@@ -61,45 +63,43 @@ public class Hallway extends Room {
             length = two.getX() - one.RWall();
             x = one.RWall();
         } else {// two.RWall() < one.getX()
-            dir = Direction.LEFT;
+            dir = Direction.RIGHT;
             length = one.getX() - two.RWall();
-            x = one.getX();
+            x = two.getX();
         }
-        int y = largestY + RandomUtils.uniform(ran, smallestTWallY - largestY);
-        world.hallwaysSet.add(new Hallway(x, y, dir, length))
+        int y = RandomUtils.uniform(ran, largestY, smallestTWallY + 1);
+        world.hallwaysSet.add(new Hallway(x, y, dir, length));
     }
 
     //Built forward L hallway from higher left room to lower right room
     // L shape hallway have vertical and horizontal part
     // room one is higher room, roo two is lower room
     static void forwardL(Room one, Room two, WorldFrame world) {
-        // built vertical part first
+        //built horizontal hallway part
         Random ran = new Random();
-        int xV = one.getX() + RandomUtils.uniform(ran, one.RWall());
-        int yV = one.getY();
-        int lV = one.getY() - two.TWall() + RandomUtils.uniform(ran, two.getH());
-        world.hallwaysSet.add(new Hallway(xV, yV, Direction.DOWN, lV));
-        //built horizontal part
-        int xH = xV;
-        int yH = yV + lV;
-        int lH = one.getX() - xV + 1;
+        int yH = RandomUtils.uniform(ran, two.getY(), two.TWall() + 1);
+        int xH = RandomUtils.uniform(ran, one.getX(), one.RWall() + 1);
+        int lH = two.getX() - xH;
         world.hallwaysSet.add(new Hallway(xH, yH, Direction.RIGHT, lH));
+        // built vertical part first
+        int xV = xH;
+        int yV = yH;
+        int lV = one.getY() - yV;
+        world.hallwaysSet.add(new Hallway(xV, yV, Direction.UP, lV));
     }
 
     //Built backward L hallway from higher right room to lower left room
-    static Hallway backwardL(Room one, Room two) {
-        // built vertical part first
+    static void backwardL(Room one, Room two, WorldFrame world) {
         Random ran = new Random();
-        int xV = one.getX() + RandomUtils.uniform(ran, one.RWall());
-        int yV = one.getY();
-        int lV = one.getY() - two.TWall() + RandomUtils.uniform(ran, two.getH());
-        Hallway ver = new Hallway(xV, yV, Direction.DOWN, lV);
-        //built horizontal
-        int xH = xV;
-        int yH = yV + lV;
-        int lH = one.getX() - xV + 1;
-        Hallway hor = new Hallway(xH, yH, Direction.LEFT, lH);
-        return ver;
+        int yH = RandomUtils.uniform(ran, two.getY(), two.TWall());
+        int xH = two.getX();
+        int lH = RandomUtils.uniform(ran, one.getX(), one.RWall() + 1);
+        world.hallwaysSet.add(new Hallway(xH, yH, Direction.RIGHT, lH));
+        // built vertical part first
+        int xV = xH + lH;
+        int yV = yH;
+        int lV = one.getY() - yV;
+        world.hallwaysSet.add(new Hallway(xV, yV, Direction.UP, lV));
     }
     /*
     @Override
