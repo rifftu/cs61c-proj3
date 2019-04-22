@@ -64,12 +64,17 @@ public class Hallway extends Room {
             dir = Direction.RIGHT;
             length = two.getX() - one.RWall();
             x = one.RWall();
-        } else {// two.RWall() < one.getX()
+        } else if (two.RWall() < one.getX()) {// two.RWall() < one.getX()
             dir = Direction.RIGHT;
             length = one.getX() - two.RWall();
             x = two.getX();
+        } else {
+            throw new RuntimeException("logic error");
         }
         int y = RandomUtils.uniform(ran, largestY, smallestTWallY + 1);
+        if (x + length > 70) {
+            
+        }
         world.hallwaysSet.add(new Hallway(x, y, dir, length));
     }
 
@@ -124,7 +129,7 @@ public class Hallway extends Room {
             case RIGHT:
                 drawH(tiles, startY, startX, startX + length);
             default:
-                throw new RuntimeException("invalid direction");
+
         }
 
     }
