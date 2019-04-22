@@ -53,7 +53,8 @@ public class Hallway extends Room {
     //Built horizontal hallway from most left room to other room
     static void builtHorizontal(Room one, Room two, WorldFrame world) {
         Random ran = world.rand;
-        int length, x;
+        int length;
+        int x;
         int smallestTWallY = Math.min(one.TWall(), two.TWall());
         int largestY = Math.max(one.getY(), two.getY());
         if (one.RWall() < two.getX()) {
@@ -66,11 +67,11 @@ public class Hallway extends Room {
             throw new RuntimeException("logic error");
         }
         int y = RandomUtils.uniform(ran, largestY, smallestTWallY + 1);
-        world.hallwaysSet.add(new Hallway(x, y, Direction.RIGHT, length));
         if (x + length > 70) {
             throw new RuntimeException("horizontal problem");
         }
-        world.hallwaysSet.add(new Hallway(x, y, dir, length));
+        world.hallwaysSet.add(new Hallway(x, y, Direction.RIGHT, length));
+
     }
 
     //Built forward L hallway from higher left room to lower right room
@@ -82,7 +83,9 @@ public class Hallway extends Room {
         int yH = RandomUtils.uniform(ran, two.getY(), two.TWall() + 1);
         int xH = RandomUtils.uniform(ran, one.getX(), one.RWall() + 1);
         int lH = two.getX() - xH;
-
+        if (xH + lH > 70) {
+            throw new RuntimeException("forward L problem");
+        }
         world.hallwaysSet.add(new Hallway(xH, yH, Direction.RIGHT, lH));
         // built vertical part first
         int xV = xH;
@@ -97,6 +100,9 @@ public class Hallway extends Room {
         int yH = RandomUtils.uniform(ran, two.getY(), two.TWall());
         int xH = two.RWall();
         int lH = RandomUtils.uniform(ran, one.getX() - two.RWall(), one.RWall() + 1 - two.RWall());
+        if (xH + lH > 70) {
+            throw new RuntimeException("backward L problem");
+        }
         world.hallwaysSet.add(new Hallway(xH, yH, Direction.RIGHT, lH));
         // built vertical part first
         int xV = xH + lH;
@@ -132,7 +138,6 @@ public class Hallway extends Room {
     private void drawH(TETile[][] tiles, int y, int x1, int x2) {
 
         for (int i = x1; i < x2 ; i++) {
-            System.out.println(x2);
             if (tiles[i][y - 1] == Tileset.NOTHING) {
                 tiles[i][y - 1] = Tileset.WALL;
             }

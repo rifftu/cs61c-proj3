@@ -71,10 +71,11 @@ class WorldFrame {
             }
         }
 
-
+        /*
         for (Hallway hall : hallwaysSet) {
             hall.draw(tiles);
         }
+        */
 
 
         for (Room room : roomSet) {
