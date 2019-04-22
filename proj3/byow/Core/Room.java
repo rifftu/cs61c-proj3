@@ -111,6 +111,7 @@ public class Room {
     }
 
     static boolean intersect(Room one, Room two) {
+        /*
         //r2 UL cut
         if (ibt(two.TWall(), one.BWall(), one.TWall())
                 && ibt(two.LWall(), one.LWall(), one.RWall())) {
@@ -131,10 +132,32 @@ public class Room {
                 && ibt(two.RWall(), one.LWall(), one.RWall())) {
             return true;
         }
-        return false;
+        */
+        boolean hMeet = false;
+        boolean vMeet = false;
+        if (ibt(two.TWall(), one.BWall(), one.TWall())
+                || ibt(two.BWall(), one.BWall(), one.TWall())) {
+            hMeet = true;
+        }
+        if (ibt(one.TWall(), two.BWall(), two.TWall())
+                || ibt(one.BWall(), two.BWall(), two.TWall())) {
+            hMeet = true;
+        }
+
+        if (ibt(two.LWall(), one.LWall(), one.RWall())
+                || ibt(two.RWall(), one.LWall(), one.RWall())) {
+            vMeet = true;
+        }
+        if (ibt(one.LWall(), two.LWall(), two.RWall())
+                || ibt(one.RWall(), two.LWall(), two.RWall())) {
+            vMeet = true;
+        }
+
+
+        return hMeet && vMeet;
     }
     static boolean ibt(int you, int one, int two) {
-        return (you >= one && you <= two) || (you <= one && you >= two);
+        return (you > one && you < two) || (you < one && you > two);
     }
 
     void draw(TETile[][] tiles) {
@@ -159,6 +182,15 @@ public class Room {
                 tiles[i][y + h] = Tileset.WALL;
             }
         }
+    }
+
+    boolean connected(Set<Hallway> halls) {
+        for (Hallway hall : halls) {
+            if (Room.intersect(this, hall)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
 
