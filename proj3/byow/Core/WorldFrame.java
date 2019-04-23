@@ -9,8 +9,8 @@ import java.util.Set;
 
 
 class WorldFrame {
-    int width;
-    int height;
+    //int width;
+    //int height;
     Set<Hallway> hallwaysSet;
     Random rand;
     private TETile[][] tiles;
@@ -24,22 +24,22 @@ class WorldFrame {
         System.out.println(seed);
         pSet = new DynamicKD();
         tiles = new TETile[w][h];
-        width = w;
-        height = h;
+
+
         rand = new Random(seed);
         int firstX = 10; int firstY = 10; int firstW = 5; int firstH = 5;
         roomSet = new HashSet<>();
         hallwaysSet = new HashSet<>();
-        Room root = new Room(firstX, firstY, firstW, firstH, this);
+        Room root = new Room(firstX, firstY, firstW, firstH);
         roomSet.add(root);
         root.addPoints(pSet);
 
         for (int i = 0; i < attempts; i++) {
             int rw = Math.max(2, rand.nextInt(maxSize));
             int rh = Math.max(2, rand.nextInt(maxSize));
-            int rx = Math.max(2, rand.nextInt(width - rw - 3) + 1);
-            int ry = Math.max(2, rand.nextInt(height - rh - 3) + 1);
-            Room newRoom = new Room(rx, ry, rw, rh, this);
+            int rx = Math.max(2, rand.nextInt(w - rw - 3) + 1);
+            int ry = Math.max(2, rand.nextInt(h - rh - 3) + 1);
+            Room newRoom = new Room(rx, ry, rw, rh);
 
 
             boolean ok = true;
@@ -60,8 +60,8 @@ class WorldFrame {
                 newRoom.addPoints(pSet);
             }
         }
-        for (int x = 0; x < width; x += 1) {
-            for (int y = 0; y < height; y += 1) {
+        for (int x = 0; x < w; x += 1) {
+            for (int y = 0; y < h; y += 1) {
                 tiles[x][y] = Tileset.NOTHING;
             }
         }

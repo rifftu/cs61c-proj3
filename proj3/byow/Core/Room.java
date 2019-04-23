@@ -5,7 +5,7 @@ import byow.TileEngine.Tileset;
 
 import java.util.Set;
 
-public class Room {
+class Room {
     private int x;
     private int y;
     private int w;
@@ -13,7 +13,7 @@ public class Room {
 
     Room() { }
 
-    Room(int x, int y, int w, int h, WorldFrame world) {
+    Room(int x, int y, int w, int h) {
 
         this.x = x;
         this.y = y;
@@ -137,12 +137,15 @@ public class Room {
 
         return hMeet && vMeet;
     }
-    static boolean ibt(int you, int one, int two) {
+    private static boolean ibt(int you, int one, int two) {
         return (you > one && you < two) || (you < one && you > two);
     }
+
+    /*
     static boolean ibti(int you, int one, int two) {
         return (you >= one && you <= two) || (you <= one && you >= two);
     }
+    */
 
     void draw(TETile[][] tiles) {
         int yValue = getY();

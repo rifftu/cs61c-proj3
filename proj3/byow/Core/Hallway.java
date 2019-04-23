@@ -32,18 +32,8 @@ class Hallway extends Room {
 
 
     }
-    int getStartX() {
-        return startX;
-    }
-    int getStartY() {
-        return startY;
-    }
-    Direction getD() {
-        return dir;
-    }
-    int getL() {
-        return length;
-    }
+
+
 
     @Override
     int getX() {
