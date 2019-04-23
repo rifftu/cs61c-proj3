@@ -74,7 +74,7 @@ class WorldFrame {
                 } else {
                     System.out.println("hall avoided");
                 }
-                Room.connect(previous, newRoom, this);
+                //Room.connect(previous, newRoom, this);
                 previous = newRoom;
             }
         }
@@ -90,7 +90,6 @@ class WorldFrame {
             //            " h "+ hall.getL() + " Direction "+ hall.getD());
             hall.draw(tiles);
         }
-
 
 
         for (Room room : roomSet) {
