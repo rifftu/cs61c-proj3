@@ -22,6 +22,14 @@ public class Room {
         this.w = w;
         this.h = h;
         this.world = world;
+        Point ur = new Point(x + w - 1, y + h - 1, this);
+        Point ul = new Point(x, y + h - 1, this);
+        Point ll = new Point(x, y, this);
+        Point lr = new Point(x + w - 1, y, this);
+        world.pSet.put(ur);
+        world.pSet.put(ul);
+        world.pSet.put(ll);
+        world.pSet.put(lr);
     }
 
     /*
