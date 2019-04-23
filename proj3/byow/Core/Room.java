@@ -168,7 +168,7 @@ public class Room {
         */
         boolean hMeet = false;
         boolean vMeet = false;
-        if (ibti(two.TWall(), one.BWall(), one.TWall())
+        if (ibt(two.TWall(), one.BWall(), one.TWall())
                 || ibt(two.BWall(), one.BWall(), one.TWall())) {
             hMeet = true;
         }
@@ -227,6 +227,12 @@ public class Room {
     boolean connected(Set<Hallway> halls) {
         for (Hallway hall : halls) {
             if (Room.intersect(this, hall)) {
+                if(this.x == 26 && this.y == 2) {
+                    System.out.println("hallx" + hall.getX());
+                    System.out.println("hally" + hall.getY());
+                    System.out.println("hallL" + hall.getL());
+                    System.out.println("hallD" + hall.getD());
+                }
                 return true;
             }
         }

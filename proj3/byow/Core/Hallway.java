@@ -116,7 +116,8 @@ class Hallway extends Room {
             len = one.getX() - two.RWall();
             x = two.RWall();
         } else {
-            throw new RuntimeException("logic error");
+            len = 1;
+            x = one.RWall();
         }
         int y = RandomUtils.uniform(ran, largestY, smallestTWallY + 1);
         if (x + len > world.width) {
