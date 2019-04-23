@@ -61,7 +61,7 @@ public class Hallway extends Room {
             y = two.TWall();
         }
         int x = RandomUtils.uniform(ran, largestX - 1, smallestRWallX);
-        if (y + len > 40) {
+        if (y + len > world.height) {
             throw new RuntimeException("vertical problem");
         }
         world.hallwaysSet.add(new Hallway(x, y, Direction.UP, len));
@@ -83,7 +83,7 @@ public class Hallway extends Room {
             throw new RuntimeException("logic error");
         }
         int y = RandomUtils.uniform(ran, largestY - 1, smallestTWallY);
-        if (x + len > 70) {
+        if (x + len > world.width) {
             throw new RuntimeException("horizontal problem");
         }
         world.hallwaysSet.add(new Hallway(x, y, Direction.RIGHT, len));
@@ -99,7 +99,7 @@ public class Hallway extends Room {
         int yH = RandomUtils.uniform(ran, two.getY(), two.TWall());
         int xH = RandomUtils.uniform(ran, one.getX(), one.RWall());
         int lH = two.getX() - xH;
-        if (xH + lH > 70) {
+        if (xH + lH > world.width) {
             throw new RuntimeException("forward L problem");
         }
         world.hallwaysSet.add(new Hallway(xH, yH, Direction.RIGHT, lH));
@@ -107,7 +107,7 @@ public class Hallway extends Room {
         int xV = xH;
         int yV = yH;
         int lV = one.getY() - yV;
-        if (yV+ lV > 40) {
+        if (yV+ lV > world.height) {
             throw new RuntimeException("forward L problem");
         }
         world.hallwaysSet.add(new Hallway(xV, yV, Direction.UP, lV));
@@ -119,7 +119,7 @@ public class Hallway extends Room {
         int yH = RandomUtils.uniform(ran, two.getY(), two.TWall());
         int xH = two.RWall();
         int lH = RandomUtils.uniform(ran, one.getX() - two.RWall(), one.RWall() - two.RWall());
-        if (xH + lH > 70) {
+        if (xH + lH > world.width) {
             throw new RuntimeException("backward L problem");
         }
         world.hallwaysSet.add(new Hallway(xH, yH, Direction.RIGHT, lH));
@@ -127,7 +127,7 @@ public class Hallway extends Room {
         int xV = xH + lH;
         int yV = yH;
         int lV = one.getY() - yV;
-        if (yV + lV > 40) {
+        if (yV + lV > world.height) {
             throw new RuntimeException("backward L problem");
         }
         world.hallwaysSet.add(new Hallway(xV, yV, Direction.UP, lV));

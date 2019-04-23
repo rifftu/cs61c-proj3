@@ -1,5 +1,7 @@
 package byow.Core;
 
+import byow.InputDemo.InputSource;
+import byow.InputDemo.StringInputDevice;
 import byow.TileEngine.TERenderer;
 import byow.TileEngine.TETile;
 
@@ -7,7 +9,8 @@ public class Engine {
     TERenderer ter = new TERenderer();
     /* Feel free to change the width and height. */
     public static final int WIDTH = 80;
-    public static final int HEIGHT = 30;
+    public static final int HEIGHT = 40;
+    //int previousSeed = 0;
 
     /**
      * Method used for exploring a fresh world. This method should handle all inputs,
@@ -36,6 +39,7 @@ public class Engine {
      *
      * @param input the input string to feed to your program
      * @return the 2D TETile[][] representing the state of the world
+     * @source: inputDemo by Professor Hug
      */
     public TETile[][] interactWithInputString(String input) {
         // TODO: Fill out this method so that it run the engine using the input
@@ -47,8 +51,61 @@ public class Engine {
         // that works for many different input types.
 
         //TETile[][] finalWorldFrame = new WorldFrame(input).tiles();
+        InputSource inputType = new StringInputDevice(input);
+        int totalCharacters = 0;
+        //String previousWorld = input,
+        String newWorld = input;
+        //String newInput = input;
+        int seed = 0;
+        int startIndexSeed = 0;
+        boolean newW = false;
+        while (inputType.possibleNextInput()) {
+            totalCharacters += 1;
+            char c = Character.toUpperCase(inputType.getNextKey());
+            if (c == 'N') {
+                startIndexSeed = totalCharacters;
+                newW = true;
+                //if (0 < inputType.getNextKey() || inputType.getNextKey() > 9) {
+                //    System.out.println("wrong format to build new world");
+                //}
+            }
+            if (c == 'S') {
+                //System.out.println("moo");
+                if ((startIndexSeed != totalCharacters - 1) && newW) {
+                    newWorld = input.substring(startIndexSeed, totalCharacters - 1);
+                    seed = Integer.parseInt(newWorld, 10);
+                    //newInput = input.substring(totalCharacters, input.length());
+                    break;
+                }
 
-        return null;
+            }
+            //for phase 2 might be
+            /*if (c == 'L') {
+                newWorld = previousWorld;
+                seed = previousSeed;
+                break;
+            }
+            if (c == 'Q') {
+                System.out.println("done.");
+                break;
+            }
+            if (c == ':') {
+                previousWorld = newWorld;
+            }*/
+        }
+        TETile[][] finalWorldFrame = null;
+        if (seed > 0 && seed < Math.pow(2,63)) {
+            ter.initialize(WIDTH, HEIGHT);
+            //System.out.println("seed "+ seed);
+            //WorldFrame frame = new WorldFrame(WIDTH, HEIGHT, seed, newInput);
+            WorldFrame frame = new WorldFrame(WIDTH, HEIGHT, seed);
+            finalWorldFrame = frame.tiles;
+            ter.renderFrame(frame.tiles);
+        }
+
+        //System.out.println("Processed " + totalCharacters + " characters.");
+
+        return finalWorldFrame;
     }
 
 
