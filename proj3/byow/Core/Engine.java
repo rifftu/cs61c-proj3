@@ -6,7 +6,7 @@ import byow.TileEngine.TERenderer;
 import byow.TileEngine.TETile;
 
 public class Engine {
-    TERenderer ter = new TERenderer();
+    //TERenderer ter = new TERenderer();
     /* Feel free to change the width and height. */
     public static final int WIDTH = 80;
     public static final int HEIGHT = 40;
@@ -101,7 +101,7 @@ public class Engine {
             //WorldFrame frame = new WorldFrame(WIDTH, HEIGHT, seed, newInput);
             WorldFrame frame = new WorldFrame(WIDTH, HEIGHT, seed);
             finalWorldFrame = frame.tiles;
-            ter.renderFrame(frame.tiles);
+            //ter.renderFrame(frame.tiles);
         }
 
         //System.out.println("Processed " + totalCharacters + " characters.");
