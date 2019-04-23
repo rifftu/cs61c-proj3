@@ -4,7 +4,7 @@ import byow.TileEngine.TERenderer;
 import byow.TileEngine.TERenderer.*;
 import byow.TileEngine.TETile;
 import byow.TileEngine.Tileset;
-
+import java.util.Random;
 
 public class WorldFrameTest {
     static  Engine engine = new Engine();
@@ -12,7 +12,7 @@ public class WorldFrameTest {
 
         int w = 80;
         int h = 30;
-        int seed = 543;
+        int seed = new Random().nextInt(500);
 
         TERenderer ter = new TERenderer();
         ter.initialize(w, h);

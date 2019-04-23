@@ -74,34 +74,24 @@ public class Room {
         return y - 1;
     }
 
+    int REdge() {
+        return RWall() - 1;
+    }
+
+    int TEdge() {
+        return TWall() - 1;
+    }
+
     static void connect(Room one, Room two, WorldFrame world) {
-        /*
-        if ((one.TWall() < two.y || two.TWall() < one.y)
-                && ((one.x < two.RWall() && two.RWall() <= one.RWall())
-                || one.x <= two.x && two.x < one.RWall() )) {
-                 Hallway.builtVertical(one, two, world);
-        } else if ((two.RWall() < one.x || one.RWall() < two.x)
-                && ((one.y <= two.y && two.y < one.TWall())
-                || (one.y <two.TWall() && two.TWall() <= one.RWall()))) {
-                Hallway.builtHorizontal(one, two, world);
-        } else if (one.x >= two.RWall()) {
-            if (one.TWall() <= two.y) {
-                Hallway.forwardL(two, one, world);
-            }
-            if (two.TWall() <= one.y){
-                Hallway.backwardL(one, two, world);
-            }
-        } else if(one.RWall() <= two.x) {
-            if (one.TWall() <= two.y) {
-                Hallway.backwardL(two, one, world);
-            }
-            if (two.TWall() <= one.y){
-                Hallway.forwardL(one, two, world);
-            }
+
+        if (intersect(one, two)) {
+            return;
         }
-        */
-        if ((one.TWall() < two.y || two.TWall() < one.y)
-                && (ibt(one.x, two.x, two.RWall())
+        /*
+        if (
+                (one.TWall() < two.y || two.TWall() < one.y)
+                &&
+                        (ibt(one.x, two.x, two.RWall())
                 || ibt(two.x, one.x, one.RWall()))) {
             Hallway.builtVertical(one, two, world);
         } else if ((two.RWall() < one.x || one.RWall() < two.x)
@@ -120,6 +110,32 @@ public class Room {
                 Hallway.backwardL(two, one, world);
             }
             if (two.TWall() <= one.y){
+                Hallway.forwardL(one, two, world);
+            }
+        }
+        */
+        if (ibti(one.getX(), two.getX(), two.REdge()) || ibti(one.REdge(), two.getX(), two.REdge())
+                || ibti(two.getX(), one.getX(), one.REdge()) || ibti(two.REdge(), one.getX(), one.REdge())) {
+
+            Hallway.builtVertical(one, two, world);
+
+        } else if (ibti(one.getY(), two.getY(), two.TEdge()) || ibti(one.TEdge(), two.getY(), two.TEdge())
+                || ibti(two.getY(), one.getY(), one.TEdge()) || ibti(two.TEdge(), one.getY(), one.TEdge())) {
+
+            Hallway.builtHorizontal(one, two, world);
+
+        } else if (one.getX() > two.RWall()) {
+            if (one.TEdge() < two.getY()) {
+                Hallway.forwardL(two, one, world);
+            }
+            if (two.TEdge() < one.getY()){
+                Hallway.backwardL(one, two, world);
+            }
+        } else if(one.REdge() < two.getX()) {
+            if (one.TEdge() < two.getY()) {
+                Hallway.backwardL(two, one, world);
+            }
+            if (two.TEdge() < one.getY()){
                 Hallway.forwardL(one, two, world);
             }
         }
@@ -150,7 +166,7 @@ public class Room {
         */
         boolean hMeet = false;
         boolean vMeet = false;
-        if (ibt(two.TWall(), one.BWall(), one.TWall())
+        if (ibti(two.TWall(), one.BWall(), one.TWall())
                 || ibt(two.BWall(), one.BWall(), one.TWall())) {
             hMeet = true;
         }
@@ -173,6 +189,9 @@ public class Room {
     }
     static boolean ibt(int you, int one, int two) {
         return (you > one && you < two) || (you < one && you > two);
+    }
+    static boolean ibti(int you, int one, int two) {
+        return (you >= one && you <= two) || (you <= one && you >= two);
     }
 
     void draw(TETile[][] tiles) {
