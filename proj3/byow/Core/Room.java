@@ -14,9 +14,13 @@ public class Room {
     private int h;
     private WorldFrame world;
 
+    //TODO
+    public boolean tracked;
+
     Room() { }
 
     Room(int x, int y, int w, int h, WorldFrame world) {
+        tracked = false;
         this.x = x;
         this.y = y;
         this.w = w;
@@ -119,7 +123,9 @@ public class Room {
                 || ibti(two.getX(), one.getX(), one.REdge())
                 || ibti(two.REdge(), one.getX(), one.REdge()))*/
         if (Math.min(one.rEdge(), two.rEdge()) >= Math.max(one.getX(), two.getX())) {
-
+            if(two.tracked) {
+                System.out.println("VVV");
+            }
             Hallway.builtVertical(one, two, world);
 
         /*} else if (ibti(one.getY(), two.getY(), two.TEdge())
@@ -127,11 +133,18 @@ public class Room {
                 || ibti(two.getY(), one.getY(), one.TEdge())
                 || ibti(two.TEdge(), one.getY(), one.TEdge()))*/
         } else if (Math.min(one.tEdge(), two.tEdge()) >= Math.max(one.getY(), two.getY())) {
-
+            if(two.tracked) {
+                System.out.println("HHH");
+                throw new RuntimeException("gsafs");
+            }
             Hallway.builtHorizontal(one, two, world);
 
-        } else if (one.getX() > two.rWall()) {
+        } else if (one.getX() > two.rEdge()) {
             if (one.tEdge() < two.getY()) {
+                if(two.tracked) {
+                    System.out.println("LL");
+
+                }
                 Hallway.forwardL(two, one, world);
             }
             if (two.tEdge() < one.getY()) {
@@ -143,7 +156,10 @@ public class Room {
             }
             if (two.tEdge() < one.getY()) {
                 Hallway.forwardL(one, two, world);
+
             }
+        } else {
+            System.out.println("tf now");
         }
     }
 
