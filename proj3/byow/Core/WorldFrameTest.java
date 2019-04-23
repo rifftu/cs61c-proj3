@@ -1,10 +1,10 @@
 package byow.Core;
 
-//import byow.TileEngine.TERenderer;
-//import byow.TileEngine.TERenderer.*;
-//import byow.TileEngine.TETile;
-//import byow.TileEngine.Tileset;
-//import java.util.Random;
+import byow.TileEngine.TERenderer;
+import byow.TileEngine.TERenderer.*;
+import byow.TileEngine.TETile;
+import byow.TileEngine.Tileset;
+import java.util.Random;
 
 public class WorldFrameTest {
     static  Engine engine = new Engine();
@@ -16,8 +16,8 @@ public class WorldFrameTest {
         //int seed = new Random().nextInt(2000);
         //System.out.println(seed);
         int seed = 1289;
-        //TERenderer ter = new TERenderer();
-        //ter.initialize(w, h);
+        TERenderer ter = new TERenderer();
+        ter.initialize(w, h);
 
         WorldFrame frame = new WorldFrame(w, h, seed);
 
@@ -25,9 +25,9 @@ public class WorldFrameTest {
         //    engine.interactWithInputString(args[i]);
         //}
         //System.out.println(engine.toString());
-        //TETile[][] testTiles = frame.tiles();
+        TETile[][] testTiles = frame.tiles();
 
-        //ter.renderFrame(frame.tiles);
+        ter.renderFrame(frame.tiles);
     }
     //}
 
