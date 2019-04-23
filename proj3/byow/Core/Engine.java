@@ -70,7 +70,7 @@ public class Engine {
                 //}
             }
             if (c == 'S') {
-                //System.out.println("moo");
+                System.out.println("moo");
                 if ((startIndexSeed != totalCharacters - 1) && newW) {
                     newWorld = input.substring(startIndexSeed, totalCharacters - 1);
                     seed = Integer.parseInt(newWorld, 10);
