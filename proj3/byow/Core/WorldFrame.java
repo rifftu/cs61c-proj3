@@ -51,11 +51,16 @@ class WorldFrame {
         */
 
         for (int i = 0; i < attempts; i++) {
+            boolean tracked = false;
             int rw = Math.max(2, rand.nextInt(MaxSize));
             int rh = Math.max(2, rand.nextInt(MaxSize));
             int rx = Math.max(2, rand.nextInt(width - rw - 3) + 1);
             int ry = Math.max(2, rand.nextInt(height - rh - 3) + 1);
             Room newRoom = new Room(rx, ry, rw, rh, this);
+            if (rx == 26 && ry == 2) {
+                tracked = true;
+
+            }
             Boolean ok = true;
             for (Room oldRoom : roomSet) {
                 if (Room.intersect(oldRoom, newRoom)) {
@@ -63,17 +68,24 @@ class WorldFrame {
                     break;
                 }
             }
+
             if (ok) {
                 Room closest = pSet.nearest(rx + ((double) rw / 2), ry + ((double) rh / 2)).room();
                 roomSet.add(newRoom);
                 roomCount++;
                 if (!newRoom.connected(hallwaysSet)) {
+
                     Room.connect(closest, newRoom, this);
                     hallCount++;
-                    newRoom.addPoints(pSet);
+
                 } else {
-                    System.out.println("hall avoided");
+                    /*
+                    if (tracked) {
+                        System.out.println("it alr touch a hallwae?");
+                    }
+                    */
                 }
+                newRoom.addPoints(pSet);
             }
         }
         for (int x = 0; x < width; x += 1) {

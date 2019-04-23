@@ -114,13 +114,15 @@ public class Room {
             }
         }
         */
-        if (ibti(one.getX(), two.getX(), two.REdge()) || ibti(one.REdge(), two.getX(), two.REdge())
-                || ibti(two.getX(), one.getX(), one.REdge()) || ibti(two.REdge(), one.getX(), one.REdge())) {
+        if /*(ibti(one.getX(), two.getX(), two.REdge()) || ibti(one.REdge(), two.getX(), two.REdge())
+                || ibti(two.getX(), one.getX(), one.REdge()) || ibti(two.REdge(), one.getX(), one.REdge()))*/
+        (Math.min(one.REdge(), two.REdge()) >= Math.max(one.getX(), two.getX())){
 
             Hallway.builtVertical(one, two, world);
 
-        } else if (ibti(one.getY(), two.getY(), two.TEdge()) || ibti(one.TEdge(), two.getY(), two.TEdge())
-                || ibti(two.getY(), one.getY(), one.TEdge()) || ibti(two.TEdge(), one.getY(), one.TEdge())) {
+        } else if /*(ibti(one.getY(), two.getY(), two.TEdge()) || ibti(one.TEdge(), two.getY(), two.TEdge())
+                || ibti(two.getY(), one.getY(), one.TEdge()) || ibti(two.TEdge(), one.getY(), one.TEdge()))*/
+        (Math.min(one.TEdge(), two.TEdge()) >= Math.max(one.getY(), two.getY())) {
 
             Hallway.builtHorizontal(one, two, world);
 
@@ -166,7 +168,7 @@ public class Room {
         */
         boolean hMeet = false;
         boolean vMeet = false;
-        if (ibti(two.TWall(), one.BWall(), one.TWall())
+        if (ibt(two.TWall(), one.BWall(), one.TWall())
                 || ibt(two.BWall(), one.BWall(), one.TWall())) {
             hMeet = true;
         }
@@ -225,6 +227,12 @@ public class Room {
     boolean connected(Set<Hallway> halls) {
         for (Hallway hall : halls) {
             if (Room.intersect(this, hall)) {
+                if(this.x == 26 && this.y == 2) {
+                    System.out.println("hallx" + hall.getX());
+                    System.out.println("hally" + hall.getY());
+                    System.out.println("hallL" + hall.getL());
+                    System.out.println("hallD" + hall.getD());
+                }
                 return true;
             }
         }

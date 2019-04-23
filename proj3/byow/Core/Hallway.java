@@ -14,6 +14,7 @@ class Hallway extends Room {
     //private int endX;
     //private int endY;
     Hallway(int x, int y, Direction d, int l, WorldFrame world) {
+
         dir = d;
         length = l;
         startX = x;
@@ -86,7 +87,7 @@ class Hallway extends Room {
         Random ran = world.rand;
         int len;
         int y;
-        int smallestRWallX = Math.min(one.RWall(), two.RWall());
+        int smallestRWallX = Math.min(one.REdge(), two.REdge());
         int largestX = Math.max(one.getX(), two.getX());
         if (one.TWall() < two.getY()) {
             len = two.getY() - one.TWall();
@@ -95,7 +96,7 @@ class Hallway extends Room {
             len = one.getY() - two.TWall();
             y = two.TWall();
         }
-        int x = RandomUtils.uniform(ran, largestX, smallestRWallX);
+        int x = RandomUtils.uniform(ran, largestX, smallestRWallX + 1);
         if (y + len > world.height) {
             throw new RuntimeException("vertical problem");
         }
@@ -106,7 +107,7 @@ class Hallway extends Room {
         Random ran = world.rand;
         int len;
         int x;
-        int smallestTWallY = Math.min(one.TWall(), two.TWall());
+        int smallestTWallY = Math.min(one.TEdge(), two.TEdge());
         int largestY = Math.max(one.getY(), two.getY());
         if (one.RWall() < two.getX()) {
             len = two.getX() - one.RWall();
@@ -115,14 +116,14 @@ class Hallway extends Room {
             len = one.getX() - two.RWall();
             x = two.RWall();
         } else {
-            throw new RuntimeException("logic error");
+            len = 1;
+            x = one.RWall();
         }
-        int y = RandomUtils.uniform(ran, largestY, smallestTWallY);
+        int y = RandomUtils.uniform(ran, largestY, smallestTWallY + 1);
         if (x + len > world.width) {
             throw new RuntimeException("horizontal problem");
         }
         world.hallwaysSet.add(new Hallway(x, y, Direction.RIGHT, len, world));
-
     }
 
     //Built forward L hallway from higher left room to lower right room
@@ -131,8 +132,15 @@ class Hallway extends Room {
     static void forwardL(Room one, Room two, WorldFrame world) {
         //built horizontal hallway part
         Random ran = world.rand;
-        int yH = RandomUtils.uniform(ran, two.getY(), two.TWall());
-        int xH = RandomUtils.uniform(ran, one.getX(), one.RWall());
+
+        int yH = RandomUtils.uniform(ran, two.getY(), two.TEdge() + 1);
+        if (one.REdge() + 1 <= one.getX()) {
+            System.out.println(((Hallway) one).getW());
+
+            throw new RuntimeException("wyd");
+
+        }
+        int xH = RandomUtils.uniform(ran, one.getX(), one.REdge() + 1);
         int lH = two.getX() - xH;
         if (xH + lH > world.width) {
             throw new RuntimeException("forward L problem");
@@ -189,7 +197,7 @@ class Hallway extends Room {
     @Override
     int RWall() {
         if (dir == Direction.UP) {
-            return startX - 1;
+            return startX + 1;
         } else {
             return startX + length;
         }
@@ -200,7 +208,7 @@ class Hallway extends Room {
         if (dir == Direction.UP) {
             return startY + length;
         } else {
-            return startY - 1;
+            return startY + 1;
         }
     }
 
