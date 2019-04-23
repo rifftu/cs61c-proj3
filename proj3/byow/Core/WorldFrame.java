@@ -17,10 +17,12 @@ class WorldFrame {
     int MaxSize;
     final int attempts = 50;
     TETile[][] tiles;
+    DynamicKD pSet;
 
 
     WorldFrame(int w, int h, int seed) {
 
+        pSet = new DynamicKD();
         tiles = new TETile[w][h];
         width = w;
         height = h;

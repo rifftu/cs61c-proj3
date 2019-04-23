@@ -19,6 +19,11 @@ public class Hallway extends Room {
         length = l;
         startX = x;
         startY = y;
+        if (d == Direction.UP) {
+            Point farend = new Point(x, y + l - 1, this);
+        } else {
+            Point farend = new Point(x + l - 1, y, this);
+        }
         //switch (d) {
             /*
             case UP:
