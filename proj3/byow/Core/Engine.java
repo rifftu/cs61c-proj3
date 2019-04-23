@@ -73,7 +73,7 @@ public class Engine {
                 System.out.println("moo");
                 if ((startIndexSeed != totalCharacters - 1) && newW) {
                     newWorld = input.substring(startIndexSeed, totalCharacters - 1);
-                    seed = Integer.parseInt(newWorld, 10);
+                    seed = (int) Long.parseLong(newWorld);
                     //newInput = input.substring(totalCharacters, input.length());
                     break;
                 }

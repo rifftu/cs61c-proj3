@@ -108,8 +108,8 @@ class WorldFrame {
             room.draw(tiles);
         }
 
-        System.out.println("rooms: " + roomCount);
-        System.out.println("halls: " + hallCount);
+        //System.out.println("rooms: " + roomCount);
+        //System.out.println("halls: " + hallCount);
     }
 
 
