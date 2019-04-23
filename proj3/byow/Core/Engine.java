@@ -42,7 +42,7 @@ public class Engine {
      * @source: inputDemo by Professor Hug
      */
     public TETile[][] interactWithInputString(String input) {
-        // TODO: Fill out this method so that it run the engine using the input
+        // DO: Fill out this method so that it run the engine using the input
         // passed in as an argument, and return a 2D tile representation of the
         // world that would have been drawn if the same inputs had been given
         // to interactWithKeyboard().
@@ -94,7 +94,7 @@ public class Engine {
             }*/
         }
         TETile[][] finalWorldFrame = null;
-        if (seed > 0 && seed < Math.pow(2,63)) {
+        if (seed > 0 && seed < Math.pow(2, 63)) {
             ter.initialize(WIDTH, HEIGHT);
             //System.out.println("seed "+ seed);
             //WorldFrame frame = new WorldFrame(WIDTH, HEIGHT, seed, newInput);

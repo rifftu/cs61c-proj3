@@ -1,8 +1,8 @@
 package byow.Core;
 
-import byow.SaveDemo.World;
-import byow.TileEngine.TETile;
-import byow.TileEngine.Tileset;
+//import byow.SaveDemo.World;
+//import byow.TileEngine.TETile;
+//import byow.TileEngine.Tileset;
 
 import java.util.Random;
 
@@ -51,10 +51,10 @@ class Hallway extends Room {
     int getStartY() {
         return startY;
     }
-    Direction getD(){
+    Direction getD() {
         return dir;
     }
-    int getL(){
+    int getL() {
         return length;
     }
 
@@ -112,7 +112,7 @@ class Hallway extends Room {
         if (one.RWall() < two.getX()) {
             len = two.getX() - one.RWall();
             x = one.RWall();
-        } else if (two.RWall() < one.getX()) {// two.RWall() < one.getX()
+        } else if (two.RWall() < one.getX()) { // two.RWall() < one.getX()
             len = one.getX() - two.RWall();
             x = two.RWall();
         } else {
@@ -150,7 +150,7 @@ class Hallway extends Room {
         int xV = xH;
         int yV = yH;
         int lV = one.getY() - yV;
-        if (yV+ lV > world.height) {
+        if (yV + lV > world.height) {
             throw new RuntimeException("forward L problem");
         }
         world.hallwaysSet.add(new Hallway(xV, yV, Direction.UP, lV, world));
