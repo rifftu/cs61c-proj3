@@ -9,8 +9,8 @@ import java.util.Set;
 
 
 class WorldFrame {
-    //int width;
-    //int height;
+
+
     Set<Hallway> hallwaysSet;
     Random rand;
     private TETile[][] tiles;

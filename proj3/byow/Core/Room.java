@@ -33,16 +33,7 @@ class Room {
         pset.put(lr);
     }
 
-    /*
-    void expand(WorldFrame world) {
 
-    }
-
-    private int hasSpace(Direction d) {
-
-        return 0;
-    }
-    */
     int getW() {
         return w;
     }
@@ -141,11 +132,6 @@ class Room {
         return (you > one && you < two) || (you < one && you > two);
     }
 
-    /*
-    static boolean ibti(int you, int one, int two) {
-        return (you >= one && you <= two) || (you <= one && you >= two);
-    }
-    */
 
     void draw(TETile[][] tiles) {
         int yValue = getY();
