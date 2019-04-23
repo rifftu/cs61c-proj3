@@ -14,7 +14,7 @@ public class Room {
     private int h;
     private WorldFrame world;
 
-    //TODO
+    //DO
     public boolean tracked;
 
     Room() { }
@@ -123,7 +123,7 @@ public class Room {
                 || ibti(two.getX(), one.getX(), one.REdge())
                 || ibti(two.REdge(), one.getX(), one.REdge()))*/
         if (Math.min(one.rEdge(), two.rEdge()) >= Math.max(one.getX(), two.getX())) {
-            if(two.tracked) {
+            if (two.tracked) {
                 System.out.println("VVV");
             }
             Hallway.builtVertical(one, two, world);
@@ -133,7 +133,7 @@ public class Room {
                 || ibti(two.getY(), one.getY(), one.TEdge())
                 || ibti(two.TEdge(), one.getY(), one.TEdge()))*/
         } else if (Math.min(one.tEdge(), two.tEdge()) >= Math.max(one.getY(), two.getY())) {
-            if(two.tracked) {
+            if (two.tracked) {
                 System.out.println("HHH");
                 throw new RuntimeException("gsafs");
             }
@@ -141,7 +141,7 @@ public class Room {
 
         } else if (one.getX() > two.rEdge()) {
             if (one.tEdge() < two.getY()) {
-                if(two.tracked) {
+                if (two.tracked) {
                     System.out.println("LL");
 
                 }
@@ -218,28 +218,28 @@ public class Room {
 
     void draw(TETile[][] tiles) {
         //DO: draw left and right wall
-        int y = getY();
-        int x = getX();
-        int h = getH();
-        int w = getW();
-        for (int j = y - 1; j <= y + h; j++) {
-            if (tiles[x - 1][j] == Tileset.NOTHING) {
-                tiles[x - 1][j] = Tileset.WALL;
+        int yValue = getY();
+        int xValue = getX();
+        int hValue = getH();
+        int wValue = getW();
+        for (int j = yValue - 1; j <= yValue + hValue; j++) {
+            if (tiles[xValue - 1][j] == Tileset.NOTHING) {
+                tiles[xValue - 1][j] = Tileset.WALL;
             }
-            if (tiles[x + w][j] == Tileset.NOTHING) {
-                tiles[x + w][j] = Tileset.WALL;
+            if (tiles[xValue + wValue][j] == Tileset.NOTHING) {
+                tiles[xValue + wValue][j] = Tileset.WALL;
             }
         }
         //DO: draw the middle part
-        for (int i = x; i < x + w; i++) {
-            if (tiles[i][y - 1] == Tileset.NOTHING) {
-                tiles[i][y - 1] = Tileset.WALL;
+        for (int i = xValue; i < xValue + wValue; i++) {
+            if (tiles[i][yValue - 1] == Tileset.NOTHING) {
+                tiles[i][yValue - 1] = Tileset.WALL;
             }
-            for (int j = y; j < y + h; j++) {
+            for (int j = yValue; j < yValue + hValue; j++) {
                 tiles[i][j] = Tileset.FLOOR;
             }
-            if (tiles[i][y + h] == Tileset.NOTHING) {
-                tiles[i][y + h] = Tileset.WALL;
+            if (tiles[i][yValue + hValue] == Tileset.NOTHING) {
+                tiles[i][yValue + hValue] = Tileset.WALL;
             }
         }
     }
