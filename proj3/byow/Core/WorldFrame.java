@@ -15,7 +15,7 @@ class WorldFrame {
     Set<Hallway> hallwaysSet;
     Random rand;
     int MaxSize;
-    final int attempts = 50;
+    final int attempts = 5;
     TETile[][] tiles;
     DynamicKD pSet;
     String input;
@@ -50,12 +50,10 @@ class WorldFrame {
         }
         */
 
-
-
         for (int i = 0; i < attempts; i++) {
             int rw = Math.max(2, rand.nextInt(MaxSize));
             int rh = Math.max(2, rand.nextInt(MaxSize));
-            int rx = Math.max(2, rand.nextInt(width - rw - 3) + 1);
+            int rx = Math.max(2, rand.nextInt(width/5 - rw - 3) + 1);
             int ry = Math.max(2, rand.nextInt(height - rh - 3) + 1);
             Room newRoom = new Room(rx, ry, rw, rh, this);
             Boolean ok = true;
