@@ -100,7 +100,7 @@ public class Engine {
             //WorldFrame frame = new WorldFrame(WIDTH, HEIGHT, seed, newInput);
             WorldFrame frame = new WorldFrame(WIDTH, HEIGHT, seed);
             finalWorldFrame = frame.tiles;
-            ter.renderFrame(frame.tiles);
+            //ter.renderFrame(frame.tiles);
         }
 
         //System.out.println("Processed " + totalCharacters + " characters.");
