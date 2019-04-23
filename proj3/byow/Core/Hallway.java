@@ -95,7 +95,7 @@ class Hallway extends Room {
             len = one.getY() - two.TWall();
             y = two.TWall();
         }
-        int x = RandomUtils.uniform(ran, largestX - 1, smallestRWallX);
+        int x = RandomUtils.uniform(ran, largestX, smallestRWallX);
         if (y + len > world.height) {
             throw new RuntimeException("vertical problem");
         }
@@ -109,7 +109,7 @@ class Hallway extends Room {
         int smallestTWallY = Math.min(one.TWall(), two.TWall());
         int largestY = Math.max(one.getY(), two.getY());
         if (one.RWall() < two.getX()) {
-            len = two.getX() - one.RWall() + 1;
+            len = two.getX() - one.RWall();
             x = one.RWall();
         } else if (two.RWall() < one.getX()) {// two.RWall() < one.getX()
             len = one.getX() - two.RWall();
@@ -117,7 +117,7 @@ class Hallway extends Room {
         } else {
             throw new RuntimeException("logic error");
         }
-        int y = RandomUtils.uniform(ran, largestY - 1, smallestTWallY);
+        int y = RandomUtils.uniform(ran, largestY, smallestTWallY);
         if (x + len > world.width) {
             throw new RuntimeException("horizontal problem");
         }
