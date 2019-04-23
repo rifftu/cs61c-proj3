@@ -1,16 +1,16 @@
 package byow.Core;
 
+/*import byow.TileEngine.TERenderer;
 import byow.TileEngine.TERenderer;
-import byow.TileEngine.TERenderer.*;
 import byow.TileEngine.TETile;
 import byow.TileEngine.Tileset;
-import java.util.Random;
+import java.util.Random;*/
 
 
 public class WorldFrameTest {
     static  Engine engine = new Engine();
     public static void main(String[] args) {
-
+/*
         for (int i = 0; i < 1000; i++) {
         int w = 80;
         int h = 30;
@@ -31,7 +31,7 @@ public class WorldFrameTest {
 
         //ter.renderFrame(frame.tiles);
 
-    }
+    }*/
     }
 
 }

@@ -118,7 +118,7 @@ class Hallway extends Room {
         if (one.rWall() < two.getX()) {
             len = two.getX() - one.rWall();
             x = one.rWall();
-        } else if (two.rWall() < one.getX()) {// two.RWall() < one.getX()
+        } else if (two.rWall() < one.getX()) {
             len = one.getX() - two.rWall();
             x = two.rWall();
         } else {
