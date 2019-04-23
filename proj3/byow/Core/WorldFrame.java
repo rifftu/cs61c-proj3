@@ -15,7 +15,7 @@ class WorldFrame {
     Set<Hallway> hallwaysSet;
     Random rand;
     int MaxSize;
-    final int attempts = 100;
+    final int attempts = 50;
     TETile[][] tiles;
     DynamicKD pSet;
     String input;
@@ -27,7 +27,7 @@ class WorldFrame {
         tiles = new TETile[w][h];
         width = w;
         height = h;
-        MaxSize = width / 5;
+        MaxSize = width / 8;
         rand = new Random(seed);
         //input = in;
         //TODO
@@ -40,6 +40,7 @@ class WorldFrame {
         hallwaysSet = new HashSet<>();
         Room root = new Room(firstX, firstY, firstW, firstH, this);
         roomSet.add(root);
+        root.addPoints(pSet);
         int roomCount = 0;
         int hallCount = 0;
 
@@ -51,7 +52,6 @@ class WorldFrame {
 
 
 
-        Room previous = root;
         for (int i = 0; i < attempts; i++) {
             int rw = Math.max(2, rand.nextInt(MaxSize));
             int rh = Math.max(2, rand.nextInt(MaxSize));
@@ -66,16 +66,16 @@ class WorldFrame {
                 }
             }
             if (ok) {
+                Room closest = pSet.nearest(rx + ((double) rw / 2), ry + ((double) rh / 2)).room();
                 roomSet.add(newRoom);
                 roomCount++;
                 if (!newRoom.connected(hallwaysSet)) {
-                    Room.connect(previous, newRoom, this);
+                    Room.connect(closest, newRoom, this);
                     hallCount++;
+                    newRoom.addPoints(pSet);
                 } else {
                     System.out.println("hall avoided");
                 }
-                //Room.connect(previous, newRoom, this);
-                previous = newRoom;
             }
         }
         for (int x = 0; x < width; x += 1) {

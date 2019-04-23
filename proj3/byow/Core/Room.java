@@ -22,14 +22,18 @@ public class Room {
         this.w = w;
         this.h = h;
         this.world = world;
+
+    }
+
+    void addPoints(DynamicKD pset) {
         Point ur = new Point(x + w - 1, y + h - 1, this);
         Point ul = new Point(x, y + h - 1, this);
         Point ll = new Point(x, y, this);
         Point lr = new Point(x + w - 1, y, this);
-        world.pSet.put(ur);
-        world.pSet.put(ul);
-        world.pSet.put(ll);
-        world.pSet.put(lr);
+        pset.put(ur);
+        pset.put(ul);
+        pset.put(ll);
+        pset.put(lr);
     }
 
     /*
@@ -44,6 +48,9 @@ public class Room {
     */
     int getW() {
         return w;
+    }
+    int getH() {
+        return h;
     }
     int getY() {
         return y;
@@ -170,6 +177,10 @@ public class Room {
 
     void draw(TETile[][] tiles) {
         //TODO: draw left and right wall
+        int y = getY();
+        int x = getX();
+        int h = getH();
+        int w = getW();
         for (int j = y - 1; j <= y + h; j++) {
             if (tiles[x - 1][j] == Tileset.NOTHING) {
                 tiles[x - 1][j] = Tileset.WALL;
