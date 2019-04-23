@@ -15,9 +15,10 @@ class WorldFrame {
     Set<Hallway> hallwaysSet;
     Random rand;
     int MaxSize;
-    final int attempts = 50;
+    final int attempts = 100;
     TETile[][] tiles;
     DynamicKD pSet;
+    String input;
 
 
     WorldFrame(int w, int h, int seed) {
@@ -28,6 +29,7 @@ class WorldFrame {
         height = h;
         MaxSize = width / 5;
         rand = new Random(seed);
+        //input = in;
         //TODO
         int firstX = 10;
         int firstY = 10;
