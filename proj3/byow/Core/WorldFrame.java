@@ -25,7 +25,7 @@ class WorldFrame {
         tiles = new TETile[w][h];
         width = w;
         height = h;
-        MaxSize = width / 8;
+        MaxSize = width / 5;
         rand = new Random(seed);
         //input = in;
         //TODO
@@ -38,6 +38,8 @@ class WorldFrame {
         hallwaysSet = new HashSet<>();
         Room root = new Room(firstX, firstY, firstW, firstH, this);
         roomSet.add(root);
+        int roomCount = 0;
+        int hallCount = 0;
 
         /*
         while (!roomQueue.isEmpty()) {
@@ -63,6 +65,13 @@ class WorldFrame {
             }
             if (ok) {
                 roomSet.add(newRoom);
+                roomCount++;
+                if (!newRoom.connected(hallwaysSet)) {
+                    Room.connect(previous, newRoom, this);
+                    hallCount++;
+                } else {
+                    System.out.println("hall avoided");
+                }
                 Room.connect(previous, newRoom, this);
                 previous = newRoom;
             }
@@ -88,6 +97,8 @@ class WorldFrame {
             room.draw(tiles);
         }
 
+        System.out.println("rooms: " + roomCount);
+        System.out.println("halls: " + hallCount);
     }
 
 

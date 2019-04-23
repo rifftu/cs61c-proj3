@@ -145,6 +145,34 @@ public class Hallway extends Room {
 
     }
     */
+
+    @Override
+    int LWall() {
+        return startX;
+    }
+
+    @Override
+    int RWall() {
+        if (dir == Direction.UP) {
+            return startX;
+        } else {
+            return startX + length - 1;
+        }
+    }
+
+    @Override
+    int TWall() {
+        if (dir == Direction.UP) {
+            return startY + length - 1;
+        } else {
+            return startY;
+        }
+    }
+
+    @Override
+    int BWall() {
+        return startY;
+    }
     void draw(TETile[][] tiles) {
 
         /*switch (this.dir) {
@@ -175,7 +203,7 @@ public class Hallway extends Room {
             if (tiles[i][y - 1] == Tileset.NOTHING) {
                 tiles[i][y - 1] = Tileset.WALL;
             }
-            tiles[i][y] = Tileset.FLOOR;
+            tiles[i][y] = Tileset.FLOWER;
             if (tiles[i][y + 1] == Tileset.NOTHING) {
                 tiles[i][y + 1] = Tileset.WALL;
             }
@@ -189,7 +217,7 @@ public class Hallway extends Room {
             if (tiles[x - 1][j] == Tileset.NOTHING) {
                 tiles[x - 1][j] = Tileset.WALL;
             }
-            tiles[x][j] = Tileset.FLOOR;
+            tiles[x][j] = Tileset.FLOWER;
             if (tiles[x + 1][j] == Tileset.NOTHING) {
                 tiles[x + 1][j] = Tileset.WALL;
             }
