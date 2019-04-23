@@ -11,6 +11,7 @@ class Hallway extends Room {
     private int length;
     private int startX;
     private int startY;
+    static boolean test;
     //private int endX;
     //private int endY;
     Hallway(int x, int y, Direction d, int l, WorldFrame world) {
@@ -139,13 +140,15 @@ class Hallway extends Room {
         Random ran = world.rand;
 
         int yH = RandomUtils.uniform(ran, two.getY(), two.tEdge() + 1);
+        //System.out.println("1st room x " + one.getX() + " width " + one.rWall() + " edge "+ one.rEdge());
         /*if (one.rEdge() + 1 <= one.getX()) {
             System.out.println(((Hallway) one).getW());
 
             throw new RuntimeException("wyd");
 
         }*/
-        int xH = RandomUtils.uniform(ran, one.getX(), one.rEdge() + 1);
+        int xH = RandomUtils.uniform(ran, one.getX(), one.rEdge() + 1 + 1);
+        System.out.println("forward horizontal x " + one.getX() + " " +one.rEdge());
         int lH = two.getX() - xH;
         if (xH + lH > world.width) {
             throw new RuntimeException("forward L problem");
@@ -167,6 +170,7 @@ class Hallway extends Room {
         int yH = RandomUtils.uniform(ran, two.getY(), two.tWall());
         int xH = two.rWall();
         int lH = RandomUtils.uniform(ran, one.getX() - two.rWall(), one.rWall() - two.rWall());
+        test = true;
         if (xH + lH > world.width) {
             throw new RuntimeException("backward L problem");
         }
@@ -180,19 +184,6 @@ class Hallway extends Room {
         }
         world.hallwaysSet.add(new Hallway(xV, yV, Direction.UP, lV, world));
     }
-    /*
-    @Override
-    void expand(WorldFrame world) {
-
-    }
-
-    private void newRoom(WorldFrame world) {
-
-    }
-    private void newHall(WorldFrame world) {
-
-    }
-    */
 
     @Override
     int lWall() {

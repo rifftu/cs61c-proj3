@@ -66,8 +66,17 @@ class WorldFrame {
                     break;
                 }
             }
+            //System.out.println(" room x "+ newRoom.getX() + "  y " + newRoom.getY() + " w " +newRoom.getW()
+            //                + "h "+ newRoom.getH());
             if (ok) {
-                Room closest = pSet.nearest(rx + ((double) rw / 2), ry + ((double) rh / 2)).room();
+                Point clo = pSet.nearest(rx + ((double) rw / 2), ry + ((double) rh / 2));
+                Room closest = clo.room();
+                //Room closest = pSet.nearest(rx + ((double) rw / 2), ry + ((double) rh / 2)).room();
+                System.out.println("clo Point "+ clo.getX() + " y " + closest.getY());
+                System.out.println("clo mom  "+ clo.room().getX() + " w " + clo.room().getW() + " y " +clo.room().getY() +
+                        " h " + clo.room().getH());
+                //System.out.println("closest "+ closest.getX() + " w " + closest.getW() + " y " +closest.getY() +
+                //        " h " + closest.getH());
                 roomSet.add(newRoom);
                 roomCount++;
                 if (!newRoom.connected(hallwaysSet)) {
@@ -87,6 +96,7 @@ class WorldFrame {
                 newRoom.addPoints(pSet);
             }
         }
+
         for (int x = 0; x < width; x += 1) {
             for (int y = 0; y < height; y += 1) {
                 tiles[x][y] = Tileset.NOTHING;

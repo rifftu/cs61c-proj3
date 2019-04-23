@@ -30,10 +30,17 @@ public class Room {
     }
 
     void addPoints(DynamicKD pset) {
+
         Point ur = new Point(x + w - 1, y + h - 1, this);
         Point ul = new Point(x, y + h - 1, this);
         Point ll = new Point(x, y, this);
         Point lr = new Point(x + w - 1, y, this);
+        System.out.println("ur Point "+ ur.getX() + " y " + ur.getY());
+        System.out.println("ul Point "+ ul.getX() + " y " + ul.getY());
+        System.out.println("ll Point "+ ll.getX() + " y " + ll.getY());
+        System.out.println("lr Point "+ lr.getX() + " y " + lr.getY());
+        System.out.println("ur mom  "+ this.getX() + " w " + this.getW() + " y " +this.getY() +
+                        " h " + this.getH());
         pset.put(ur);
         pset.put(ul);
         pset.put(ll);
