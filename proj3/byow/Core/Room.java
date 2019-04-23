@@ -114,19 +114,19 @@ public class Room {
             }
         }
         */
-        if /*(ibti(one.getX(), two.getX(), two.REdge())
+        /*if (ibti(one.getX(), two.getX(), two.REdge())
                 || ibti(one.REdge(), two.getX(), two.REdge())
                 || ibti(two.getX(), one.getX(), one.REdge())
                 || ibti(two.REdge(), one.getX(), one.REdge()))*/
-            (Math.min(one.rEdge(), two.rEdge()) >= Math.max(one.getX(), two.getX())) {
+        if (Math.min(one.rEdge(), two.rEdge()) >= Math.max(one.getX(), two.getX())) {
 
             Hallway.builtVertical(one, two, world);
 
-        } else if /*(ibti(one.getY(), two.getY(), two.TEdge())
+        /*} else if (ibti(one.getY(), two.getY(), two.TEdge())
                 || ibti(one.TEdge(), two.getY(), two.TEdge())
                 || ibti(two.getY(), one.getY(), one.TEdge())
                 || ibti(two.TEdge(), one.getY(), one.TEdge()))*/
-            (Math.min(one.tEdge(), two.tEdge()) >= Math.max(one.getY(), two.getY())) {
+        } else if (Math.min(one.tEdge(), two.tEdge()) >= Math.max(one.getY(), two.getY())) {
 
             Hallway.builtHorizontal(one, two, world);
 
