@@ -3,7 +3,6 @@ package byow.Core;
 import byow.TileEngine.TETile;
 import byow.TileEngine.Tileset;
 
-//import java.util.ArrayDeque;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
@@ -16,7 +15,6 @@ class WorldFrame {
     Random rand;
     private TETile[][] tiles;
     DynamicKD pSet;
-    String input;
 
 
     WorldFrame(int w, int h, long seed) {
@@ -29,7 +27,6 @@ class WorldFrame {
         width = w;
         height = h;
         rand = new Random(seed);
-        //DO
         int firstX = 10; int firstY = 10; int firstW = 5; int firstH = 5;
         roomSet = new HashSet<>();
         hallwaysSet = new HashSet<>();
@@ -45,7 +42,7 @@ class WorldFrame {
             Room newRoom = new Room(rx, ry, rw, rh, this);
 
 
-            Boolean ok = true;
+            boolean ok = true;
             for (Room oldRoom : roomSet) {
                 if (Room.intersect(oldRoom, newRoom)) {
                     ok = false;
@@ -74,14 +71,10 @@ class WorldFrame {
         for (Room room : roomSet) {
             room.draw(tiles);
         }
-        //System.out.println("halls: " + hallCount);
     }
 
 
     TETile[][] tiles() {
         return tiles;
-    }
-    private boolean filled() {
-        return false;
     }
 }
