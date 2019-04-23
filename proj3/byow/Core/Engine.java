@@ -96,7 +96,7 @@ public class Engine {
         }
         TETile[][] finalWorldFrame = null;
         if (seed > 0 && seed < Math.pow(2, 63)) {
-            ter.initialize(WIDTH, HEIGHT);
+            //ter.initialize(WIDTH, HEIGHT);
             //System.out.println("seed "+ seed);
             //WorldFrame frame = new WorldFrame(WIDTH, HEIGHT, seed, newInput);
             WorldFrame frame = new WorldFrame(WIDTH, HEIGHT, seed);
