@@ -73,8 +73,6 @@ class WorldFrame {
                     Room.connect(closest, newRoom, this);
                     hallCount++;
                     newRoom.addPoints(pSet);
-                } else {
-                    System.out.println("hall avoided");
                 }
             }
         }

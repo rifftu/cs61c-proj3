@@ -12,8 +12,9 @@ public class WorldFrameTest {
 
         int w = 80;
         int h = 30;
-        int seed = new Random().nextInt(500);
-
+        //int seed = new Random().nextInt(500);
+        //System.out.println(seed);
+        int seed = 379;
         TERenderer ter = new TERenderer();
         ter.initialize(w, h);
 
