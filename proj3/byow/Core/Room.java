@@ -15,12 +15,12 @@ public class Room {
     private WorldFrame world;
 
     //DO
-    public boolean tracked;
+    //public boolean tracked;
 
     Room() { }
 
     Room(int x, int y, int w, int h, WorldFrame world) {
-        tracked = false;
+        //tracked = false;
         this.x = x;
         this.y = y;
         this.w = w;
@@ -130,9 +130,9 @@ public class Room {
                 || ibti(two.getX(), one.getX(), one.REdge())
                 || ibti(two.REdge(), one.getX(), one.REdge()))*/
         if (Math.min(one.rEdge(), two.rEdge()) >= Math.max(one.getX(), two.getX())) {
-            if (two.tracked) {
+            /*if (two.tracked) {
                 System.out.println("VVV");
-            }
+            }*/
             Hallway.builtVertical(one, two, world);
 
         /*} else if (ibti(one.getY(), two.getY(), two.TEdge())
@@ -140,18 +140,18 @@ public class Room {
                 || ibti(two.getY(), one.getY(), one.TEdge())
                 || ibti(two.TEdge(), one.getY(), one.TEdge()))*/
         } else if (Math.min(one.tEdge(), two.tEdge()) >= Math.max(one.getY(), two.getY())) {
-            if (two.tracked) {
+            /*if (two.tracked) {
                 System.out.println("HHH");
                 throw new RuntimeException("gsafs");
-            }
+            }*/
             Hallway.builtHorizontal(one, two, world);
 
         } else if (one.getX() > two.rEdge()) {
             if (one.tEdge() < two.getY()) {
-                if (two.tracked) {
+                /*if (two.tracked) {
                     System.out.println("LL");
 
-                }
+                }*/
                 Hallway.forwardL(two, one, world);
             }
             if (two.tEdge() < one.getY()) {
@@ -254,12 +254,14 @@ public class Room {
     boolean connected(Set<Hallway> halls) {
         for (Hallway hall : halls) {
             if (Room.intersect(this, hall)) {
+                /*
                 if (this.x == 26 && this.y == 2) {
                     System.out.println("hallx" + hall.getX());
                     System.out.println("hally" + hall.getY());
                     System.out.println("hallL" + hall.getL());
                     System.out.println("hallD" + hall.getD());
                 }
+                */
                 return true;
             }
         }

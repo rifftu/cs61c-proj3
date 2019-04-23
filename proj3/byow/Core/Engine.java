@@ -2,7 +2,7 @@ package byow.Core;
 
 import byow.InputDemo.InputSource;
 import byow.InputDemo.StringInputDevice;
-import byow.TileEngine.TERenderer;
+//import byow.TileEngine.TERenderer;
 import byow.TileEngine.TETile;
 
 public class Engine {
@@ -100,8 +100,10 @@ public class Engine {
             //System.out.println("seed "+ seed);
             //WorldFrame frame = new WorldFrame(WIDTH, HEIGHT, seed, newInput);
             WorldFrame frame = new WorldFrame(WIDTH, HEIGHT, seed);
-            finalWorldFrame = frame.tiles;
-            ter.renderFrame(frame.tiles);
+
+            finalWorldFrame = frame.tiles();
+            //ter.renderFrame(frame.tiles);
+
         }
 
         //System.out.println("Processed " + totalCharacters + " characters.");
