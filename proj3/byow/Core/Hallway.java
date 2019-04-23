@@ -120,16 +120,6 @@ class Hallway extends Room {
             len = one.getX() - two.rWall();
             x = two.rWall();
         } else {
-            System.out.println("horiz stats");
-            System.out.println("oneX" + one.getX());
-            System.out.println("oneEdge" + one.rEdge());
-            System.out.println("twoX" + two.getX());
-            System.out.println("twoEdge" + two.rEdge());
-            System.out.println("vert stats");
-            System.out.println("oneY" + one.getY());
-            System.out.println("oneEdge" + one.tEdge());
-            System.out.println("twoY" + two.getY());
-            System.out.println("twoEdge" + two.tEdge());
 
             return;
 

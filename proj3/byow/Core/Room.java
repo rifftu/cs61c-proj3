@@ -202,10 +202,10 @@ public class Room {
 
     void draw(TETile[][] tiles) {
         //DO: draw left and right wall
-        //int y = getY();
-        //int x = getX();
-        //int h = getH();
-        //int w = getW();
+        int y = getY();
+        int x = getX();
+        int h = getH();
+        int w = getW();
         for (int j = y - 1; j <= y + h; j++) {
             if (tiles[x - 1][j] == Tileset.NOTHING) {
                 tiles[x - 1][j] = Tileset.WALL;
