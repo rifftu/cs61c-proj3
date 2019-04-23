@@ -139,12 +139,12 @@ class Hallway extends Room {
         Random ran = world.rand;
 
         int yH = RandomUtils.uniform(ran, two.getY(), two.tEdge() + 1);
-        if (one.rEdge() + 1 <= one.getX()) {
+        /*if (one.rEdge() + 1 <= one.getX()) {
             System.out.println(((Hallway) one).getW());
 
             throw new RuntimeException("wyd");
 
-        }
+        }*/
         int xH = RandomUtils.uniform(ran, one.getX(), one.rEdge() + 1);
         int lH = two.getX() - xH;
         if (xH + lH > world.width) {

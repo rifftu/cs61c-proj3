@@ -74,7 +74,7 @@ public class Engine {
                 if ((startIndexSeed != totalCharacters - 1) && newW) {
                     newWorld = input.substring(startIndexSeed, totalCharacters - 1);
                     seed = Long.parseLong(newWorld);
-                    System.out.println(seed);
+                    //System.out.println(seed);
                     //newInput = input.substring(totalCharacters, input.length());
                     break;
                 }
