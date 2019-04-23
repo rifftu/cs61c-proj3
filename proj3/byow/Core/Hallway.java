@@ -203,7 +203,7 @@ public class Hallway extends Room {
             if (tiles[i][y - 1] == Tileset.NOTHING) {
                 tiles[i][y - 1] = Tileset.WALL;
             }
-            tiles[i][y] = Tileset.FLOWER;
+            tiles[i][y] = Tileset.FLOOR;
             if (tiles[i][y + 1] == Tileset.NOTHING) {
                 tiles[i][y + 1] = Tileset.WALL;
             }
@@ -217,7 +217,7 @@ public class Hallway extends Room {
             if (tiles[x - 1][j] == Tileset.NOTHING) {
                 tiles[x - 1][j] = Tileset.WALL;
             }
-            tiles[x][j] = Tileset.FLOWER;
+            tiles[x][j] = Tileset.FLOOR;
             if (tiles[x + 1][j] == Tileset.NOTHING) {
                 tiles[x + 1][j] = Tileset.WALL;
             }
