@@ -92,9 +92,11 @@ class Hallway extends Room {
         if (one.TWall() < two.getY()) {
             len = two.getY() - one.TWall();
             y = one.TWall();
-        } else { // two.TWall() < one.getY()
+        } else if (two.TWall() < one.getY()) { // two.TWall() < one.getY()
             len = one.getY() - two.TWall();
             y = two.TWall();
+        } else {
+            return;
         }
         int x = RandomUtils.uniform(ran, largestX, smallestRWallX + 1);
         if (y + len > world.height) {
@@ -109,6 +111,7 @@ class Hallway extends Room {
         int x;
         int smallestTWallY = Math.min(one.TEdge(), two.TEdge());
         int largestY = Math.max(one.getY(), two.getY());
+
         if (one.RWall() < two.getX()) {
             len = two.getX() - one.RWall();
             x = one.RWall();
@@ -116,8 +119,18 @@ class Hallway extends Room {
             len = one.getX() - two.RWall();
             x = two.RWall();
         } else {
-            len = 1;
-            x = one.RWall();
+            System.out.println("horiz stats");
+            System.out.println("oneX" + one.getX());
+            System.out.println("oneEdge" + one.REdge());
+            System.out.println("twoX" + two.getX());
+            System.out.println("twoEdge" + two.REdge());
+            System.out.println("vert stats");
+            System.out.println("oneY" + one.getY());
+            System.out.println("oneEdge" + one.TEdge());
+            System.out.println("twoY" + two.getY());
+            System.out.println("twoEdge" + two.TEdge());
+
+            return;
         }
         int y = RandomUtils.uniform(ran, largestY, smallestTWallY + 1);
         if (x + len > world.width) {
