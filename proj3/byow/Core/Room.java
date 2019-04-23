@@ -2,9 +2,9 @@ package byow.Core;
 
 import byow.TileEngine.TETile;
 import byow.TileEngine.Tileset;
-import byow.TileEngine.TERenderer;
+//import byow.TileEngine.TERenderer;
 
-import java.util.Queue;
+//import java.util.Queue;
 import java.util.Set;
 
 public class Room {
@@ -14,7 +14,7 @@ public class Room {
     private int h;
     private WorldFrame world;
 
-    Room() {}
+    Room() { }
 
     Room(int x, int y, int w, int h, WorldFrame world) {
         this.x = x;
@@ -58,28 +58,28 @@ public class Room {
     int getX() {
         return x;
     }
-    int LWall() {
+    int lWall() {
         return x - 1;
     }
 
-    int RWall() {
+    int rWall() {
         return x + w;
     }
 
-    int TWall() {
+    int tWall() {
         return y + h;
     }
 
-    int BWall() {
+    int bWall() {
         return y - 1;
     }
 
-    int REdge() {
-        return RWall() - 1;
+    int rEdge() {
+        return rWall() - 1;
     }
 
-    int TEdge() {
-        return TWall() - 1;
+    int tEdge() {
+        return tWall() - 1;
     }
 
     static void connect(Room one, Room two, WorldFrame world) {
@@ -114,30 +114,34 @@ public class Room {
             }
         }
         */
-        if /*(ibti(one.getX(), two.getX(), two.REdge()) || ibti(one.REdge(), two.getX(), two.REdge())
-                || ibti(two.getX(), one.getX(), one.REdge()) || ibti(two.REdge(), one.getX(), one.REdge()))*/
-        (Math.min(one.REdge(), two.REdge()) >= Math.max(one.getX(), two.getX())){
+        /*if (ibti(one.getX(), two.getX(), two.REdge())
+                || ibti(one.REdge(), two.getX(), two.REdge())
+                || ibti(two.getX(), one.getX(), one.REdge())
+                || ibti(two.REdge(), one.getX(), one.REdge()))*/
+        if (Math.min(one.rEdge(), two.rEdge()) >= Math.max(one.getX(), two.getX())) {
 
             Hallway.builtVertical(one, two, world);
 
-        } else if /*(ibti(one.getY(), two.getY(), two.TEdge()) || ibti(one.TEdge(), two.getY(), two.TEdge())
-                || ibti(two.getY(), one.getY(), one.TEdge()) || ibti(two.TEdge(), one.getY(), one.TEdge()))*/
-        (Math.min(one.TEdge(), two.TEdge()) >= Math.max(one.getY(), two.getY())) {
+        /*} else if (ibti(one.getY(), two.getY(), two.TEdge())
+                || ibti(one.TEdge(), two.getY(), two.TEdge())
+                || ibti(two.getY(), one.getY(), one.TEdge())
+                || ibti(two.TEdge(), one.getY(), one.TEdge()))*/
+        } else if (Math.min(one.tEdge(), two.tEdge()) >= Math.max(one.getY(), two.getY())) {
 
             Hallway.builtHorizontal(one, two, world);
 
-        } else if (one.getX() > two.RWall()) {
-            if (one.TEdge() < two.getY()) {
+        } else if (one.getX() > two.rWall()) {
+            if (one.tEdge() < two.getY()) {
                 Hallway.forwardL(two, one, world);
             }
-            if (two.TEdge() < one.getY()){
+            if (two.tEdge() < one.getY()) {
                 Hallway.backwardL(one, two, world);
             }
-        } else if(one.REdge() < two.getX()) {
-            if (one.TEdge() < two.getY()) {
+        } else if (one.rEdge() < two.getX()) {
+            if (one.tEdge() < two.getY()) {
                 Hallway.backwardL(two, one, world);
             }
-            if (two.TEdge() < one.getY()){
+            if (two.tEdge() < one.getY()) {
                 Hallway.forwardL(one, two, world);
             }
         }
@@ -168,21 +172,21 @@ public class Room {
         */
         boolean hMeet = false;
         boolean vMeet = false;
-        if (ibt(two.TWall(), one.BWall(), one.TWall())
-                || ibt(two.BWall(), one.BWall(), one.TWall())) {
+        if (ibt(two.tWall(), one.bWall(), one.tWall())
+                || ibt(two.bWall(), one.bWall(), one.tWall())) {
             hMeet = true;
         }
-        if (ibt(one.TWall(), two.BWall(), two.TWall())
-                || ibt(one.BWall(), two.BWall(), two.TWall())) {
+        if (ibt(one.tWall(), two.bWall(), two.tWall())
+                || ibt(one.bWall(), two.bWall(), two.tWall())) {
             hMeet = true;
         }
 
-        if (ibt(two.LWall(), one.LWall(), one.RWall())
-                || ibt(two.RWall(), one.LWall(), one.RWall())) {
+        if (ibt(two.lWall(), one.lWall(), one.rWall())
+                || ibt(two.rWall(), one.lWall(), one.rWall())) {
             vMeet = true;
         }
-        if (ibt(one.LWall(), two.LWall(), two.RWall())
-                || ibt(one.RWall(), two.LWall(), two.RWall())) {
+        if (ibt(one.lWall(), two.lWall(), two.rWall())
+                || ibt(one.rWall(), two.lWall(), two.rWall())) {
             vMeet = true;
         }
 
@@ -197,11 +201,11 @@ public class Room {
     }
 
     void draw(TETile[][] tiles) {
-        //TODO: draw left and right wall
-        int y = getY();
-        int x = getX();
-        int h = getH();
-        int w = getW();
+        //DO: draw left and right wall
+        //int y = getY();
+        //int x = getX();
+        //int h = getH();
+        //int w = getW();
         for (int j = y - 1; j <= y + h; j++) {
             if (tiles[x - 1][j] == Tileset.NOTHING) {
                 tiles[x - 1][j] = Tileset.WALL;
@@ -210,7 +214,7 @@ public class Room {
                 tiles[x + w][j] = Tileset.WALL;
             }
         }
-        //TODO: draw the middle part
+        //DO: draw the middle part
         for (int i = x; i < x + w; i++) {
             if (tiles[i][y - 1] == Tileset.NOTHING) {
                 tiles[i][y - 1] = Tileset.WALL;
@@ -227,7 +231,7 @@ public class Room {
     boolean connected(Set<Hallway> halls) {
         for (Hallway hall : halls) {
             if (Room.intersect(this, hall)) {
-                if(this.x == 26 && this.y == 2) {
+                if (this.x == 26 && this.y == 2) {
                     System.out.println("hallx" + hall.getX());
                     System.out.println("hally" + hall.getY());
                     System.out.println("hallL" + hall.getL());

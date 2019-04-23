@@ -6,7 +6,7 @@ import byow.TileEngine.TERenderer;
 import byow.TileEngine.TETile;
 
 public class Engine {
-    TERenderer ter = new TERenderer();
+    //TERenderer ter = new TERenderer();
     /* Feel free to change the width and height. */
     public static final int WIDTH = 80;
     public static final int HEIGHT = 40;
@@ -42,7 +42,7 @@ public class Engine {
      * @source: inputDemo by Professor Hug
      */
     public TETile[][] interactWithInputString(String input) {
-        // TODO: Fill out this method so that it run the engine using the input
+        // DO: Fill out this method so that it run the engine using the input
         // passed in as an argument, and return a 2D tile representation of the
         // world that would have been drawn if the same inputs had been given
         // to interactWithKeyboard().
@@ -94,8 +94,8 @@ public class Engine {
             }*/
         }
         TETile[][] finalWorldFrame = null;
-        if (seed > 0 && seed < Math.pow(2,63)) {
-            ter.initialize(WIDTH, HEIGHT);
+        if (seed > 0 && seed < Math.pow(2, 63)) {
+            //ter.initialize(WIDTH, HEIGHT);
             //System.out.println("seed "+ seed);
             //WorldFrame frame = new WorldFrame(WIDTH, HEIGHT, seed, newInput);
             WorldFrame frame = new WorldFrame(WIDTH, HEIGHT, seed);

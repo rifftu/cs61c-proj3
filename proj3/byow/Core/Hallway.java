@@ -1,8 +1,8 @@
 package byow.Core;
 
-import byow.SaveDemo.World;
-import byow.TileEngine.TETile;
-import byow.TileEngine.Tileset;
+//import byow.SaveDemo.World;
+//import byow.TileEngine.TETile;
+//import byow.TileEngine.Tileset;
 
 import java.util.Random;
 
@@ -51,10 +51,10 @@ class Hallway extends Room {
     int getStartY() {
         return startY;
     }
-    Direction getD(){
+    Direction getD() {
         return dir;
     }
-    int getL(){
+    int getL() {
         return length;
     }
 
@@ -87,16 +87,17 @@ class Hallway extends Room {
         Random ran = world.rand;
         int len;
         int y;
-        int smallestRWallX = Math.min(one.REdge(), two.REdge());
+        int smallestRWallX = Math.min(one.rEdge(), two.rEdge());
         int largestX = Math.max(one.getX(), two.getX());
-        if (one.TWall() < two.getY()) {
-            len = two.getY() - one.TWall();
-            y = one.TWall();
-        } else if (two.TWall() < one.getY()) { // two.TWall() < one.getY()
-            len = one.getY() - two.TWall();
-            y = two.TWall();
+        if (one.tWall() < two.getY()) {
+            len = two.getY() - one.tWall();
+            y = one.tWall();
+        } else if (two.tWall() < one.getY()) { // two.TWall() < one.getY()
+            len = one.getY() - two.tWall();
+            y = two.tWall();
         } else {
             return;
+
         }
         int x = RandomUtils.uniform(ran, largestX, smallestRWallX + 1);
         if (y + len > world.height) {
@@ -109,28 +110,29 @@ class Hallway extends Room {
         Random ran = world.rand;
         int len;
         int x;
-        int smallestTWallY = Math.min(one.TEdge(), two.TEdge());
+        int smallestTWallY = Math.min(one.tEdge(), two.tEdge());
         int largestY = Math.max(one.getY(), two.getY());
 
-        if (one.RWall() < two.getX()) {
-            len = two.getX() - one.RWall();
-            x = one.RWall();
-        } else if (two.RWall() < one.getX()) {// two.RWall() < one.getX()
-            len = one.getX() - two.RWall();
-            x = two.RWall();
+        if (one.rWall() < two.getX()) {
+            len = two.getX() - one.rWall();
+            x = one.rWall();
+        } else if (two.rWall() < one.getX()) {// two.RWall() < one.getX()
+            len = one.getX() - two.rWall();
+            x = two.rWall();
         } else {
             System.out.println("horiz stats");
             System.out.println("oneX" + one.getX());
-            System.out.println("oneEdge" + one.REdge());
+            System.out.println("oneEdge" + one.rEdge());
             System.out.println("twoX" + two.getX());
-            System.out.println("twoEdge" + two.REdge());
+            System.out.println("twoEdge" + two.rEdge());
             System.out.println("vert stats");
             System.out.println("oneY" + one.getY());
-            System.out.println("oneEdge" + one.TEdge());
+            System.out.println("oneEdge" + one.tEdge());
             System.out.println("twoY" + two.getY());
-            System.out.println("twoEdge" + two.TEdge());
+            System.out.println("twoEdge" + two.tEdge());
 
             return;
+
         }
         int y = RandomUtils.uniform(ran, largestY, smallestTWallY + 1);
         if (x + len > world.width) {
@@ -146,14 +148,14 @@ class Hallway extends Room {
         //built horizontal hallway part
         Random ran = world.rand;
 
-        int yH = RandomUtils.uniform(ran, two.getY(), two.TEdge() + 1);
-        if (one.REdge() + 1 <= one.getX()) {
+        int yH = RandomUtils.uniform(ran, two.getY(), two.tEdge() + 1);
+        if (one.rEdge() + 1 <= one.getX()) {
             System.out.println(((Hallway) one).getW());
 
             throw new RuntimeException("wyd");
 
         }
-        int xH = RandomUtils.uniform(ran, one.getX(), one.REdge() + 1);
+        int xH = RandomUtils.uniform(ran, one.getX(), one.rEdge() + 1);
         int lH = two.getX() - xH;
         if (xH + lH > world.width) {
             throw new RuntimeException("forward L problem");
@@ -163,7 +165,7 @@ class Hallway extends Room {
         int xV = xH;
         int yV = yH;
         int lV = one.getY() - yV;
-        if (yV+ lV > world.height) {
+        if (yV + lV > world.height) {
             throw new RuntimeException("forward L problem");
         }
         world.hallwaysSet.add(new Hallway(xV, yV, Direction.UP, lV, world));
@@ -172,9 +174,9 @@ class Hallway extends Room {
     //Built backward L hallway from higher right room to lower left room
     static void backwardL(Room one, Room two, WorldFrame world) {
         Random ran = world.rand;
-        int yH = RandomUtils.uniform(ran, two.getY(), two.TWall());
-        int xH = two.RWall();
-        int lH = RandomUtils.uniform(ran, one.getX() - two.RWall(), one.RWall() - two.RWall());
+        int yH = RandomUtils.uniform(ran, two.getY(), two.tWall());
+        int xH = two.rWall();
+        int lH = RandomUtils.uniform(ran, one.getX() - two.rWall(), one.rWall() - two.rWall());
         if (xH + lH > world.width) {
             throw new RuntimeException("backward L problem");
         }
@@ -203,12 +205,12 @@ class Hallway extends Room {
     */
 
     @Override
-    int LWall() {
+    int lWall() {
         return startX - 1;
     }
 
     @Override
-    int RWall() {
+    int rWall() {
         if (dir == Direction.UP) {
             return startX + 1;
         } else {
@@ -217,7 +219,7 @@ class Hallway extends Room {
     }
 
     @Override
-    int TWall() {
+    int tWall() {
         if (dir == Direction.UP) {
             return startY + length;
         } else {
@@ -226,7 +228,7 @@ class Hallway extends Room {
     }
 
     @Override
-    int BWall() {
+    int bWall() {
         return startY - 1;
     }
     /*
