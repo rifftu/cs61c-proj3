@@ -14,7 +14,7 @@ public class WorldFrameTest {
         for (int i = 0; i < 30; i++) {
         int w = 80;
         int h = 30;
-        int seed = new Random().nextInt(2000);
+        long seed = new Random().nextInt(2000);
         System.out.println(seed);
         //int seed = 1289;
         TERenderer ter = new TERenderer();
@@ -28,7 +28,7 @@ public class WorldFrameTest {
         //System.out.println(engine.toString());
         TETile[][] testTiles = frame.tiles();
 
-        ter.renderFrame(frame.tiles);
+        //ter.renderFrame(frame.tiles);
 
     }
     }

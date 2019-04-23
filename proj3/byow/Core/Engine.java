@@ -56,7 +56,7 @@ public class Engine {
         //String previousWorld = input,
         String newWorld = input;
         //String newInput = input;
-        int seed = 0;
+        long seed = 0;
         int startIndexSeed = 0;
         boolean newW = false;
         while (inputType.possibleNextInput()) {
@@ -70,10 +70,11 @@ public class Engine {
                 //}
             }
             if (c == 'S') {
-                System.out.println("moo");
+                //System.out.println("moo");
                 if ((startIndexSeed != totalCharacters - 1) && newW) {
                     newWorld = input.substring(startIndexSeed, totalCharacters - 1);
-                    seed = (int) Long.parseLong(newWorld);
+                    seed = Long.parseLong(newWorld);
+                    System.out.println(seed);
                     //newInput = input.substring(totalCharacters, input.length());
                     break;
                 }

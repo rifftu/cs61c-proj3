@@ -25,7 +25,7 @@ class WorldFrame {
     String input;
 
 
-    WorldFrame(int w, int h, int seed) {
+    WorldFrame(int w, int h, long seed) {
         pSet = new DynamicKD();
         tiles = new TETile[w][h];
         width = w;
