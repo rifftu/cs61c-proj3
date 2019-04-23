@@ -103,7 +103,9 @@ class Hallway extends Room {
         if (y + len > world.height) {
             throw new RuntimeException("vertical problem");
         }
-        world.hallwaysSet.add(new Hallway(x, y, Direction.UP, len, world));
+        if (len > 0) {
+            world.hallwaysSet.add(new Hallway(x, y, Direction.UP, len, world));
+        }
     }
     //Built horizontal hallway from most left room to other room
     static void builtHorizontal(Room one, Room two, WorldFrame world) {
@@ -128,7 +130,9 @@ class Hallway extends Room {
         if (x + len > world.width) {
             throw new RuntimeException("horizontal problem");
         }
-        world.hallwaysSet.add(new Hallway(x, y, Direction.RIGHT, len, world));
+        if (len > 0) {
+            world.hallwaysSet.add(new Hallway(x, y, Direction.RIGHT, len, world));
+        }
     }
 
     //Built forward L hallway from higher left room to lower right room
@@ -139,18 +143,20 @@ class Hallway extends Room {
         Random ran = world.rand;
 
         int yH = RandomUtils.uniform(ran, two.getY(), two.tEdge() + 1);
-        /*if (one.rEdge() + 1 <= one.getX()) {
+        if (one.rEdge() + 1 <= one.getX()) {
             System.out.println(((Hallway) one).getW());
-
+            System.out.println(((Hallway) one).getD());
             throw new RuntimeException("wyd");
 
-        }*/
+        }
         int xH = RandomUtils.uniform(ran, one.getX(), one.rEdge() + 1);
         int lH = two.getX() - xH;
         if (xH + lH > world.width) {
             throw new RuntimeException("forward L problem");
         }
-        world.hallwaysSet.add(new Hallway(xH, yH, Direction.RIGHT, lH, world));
+        if (lH > 0) {
+            world.hallwaysSet.add(new Hallway(xH, yH, Direction.RIGHT, lH, world));
+        }
         // built vertical part first
         int xV = xH;
         int yV = yH;
@@ -158,7 +164,9 @@ class Hallway extends Room {
         if (yV + lV > world.height) {
             throw new RuntimeException("forward L problem");
         }
-        world.hallwaysSet.add(new Hallway(xV, yV, Direction.UP, lV, world));
+        if (lV > 0) {
+            world.hallwaysSet.add(new Hallway(xV, yV, Direction.UP, lV, world));
+        }
     }
 
     //Built backward L hallway from higher right room to lower left room
@@ -170,7 +178,11 @@ class Hallway extends Room {
         if (xH + lH > world.width) {
             throw new RuntimeException("backward L problem");
         }
-        world.hallwaysSet.add(new Hallway(xH, yH, Direction.RIGHT, lH, world));
+        if (lH > 0) {
+
+
+            world.hallwaysSet.add(new Hallway(xH, yH, Direction.RIGHT, lH, world));
+        }
         // built vertical part first
         int xV = xH + lH;
         int yV = yH;
@@ -178,7 +190,9 @@ class Hallway extends Room {
         if (yV + lV > world.height) {
             throw new RuntimeException("backward L problem");
         }
-        world.hallwaysSet.add(new Hallway(xV, yV, Direction.UP, lV, world));
+        if (lV > 0) {
+            world.hallwaysSet.add(new Hallway(xV, yV, Direction.UP, lV, world));
+        }
     }
     /*
     @Override

@@ -11,14 +11,14 @@ public class WorldFrameTest {
     static  Engine engine = new Engine();
     public static void main(String[] args) {
 
-        for (int i = 0; i < 30; i++) {
+        for (int i = 0; i < 1000; i++) {
         int w = 80;
         int h = 30;
-        long seed = new Random().nextInt(2000);
-        System.out.println(seed);
-        //int seed = 1289;
+        long seed = new Random().nextInt(10000000);
+        //System.out.println(seed);
+        //int seed = 5912;
         TERenderer ter = new TERenderer();
-        ter.initialize(w, h);
+        //ter.initialize(w, h);
 
         WorldFrame frame = new WorldFrame(w, h, seed);
 
@@ -26,7 +26,8 @@ public class WorldFrameTest {
         //    engine.interactWithInputString(args[i]);
         //}
         //System.out.println(engine.toString());
-        TETile[][] testTiles = frame.tiles();
+
+        //TETile[][] testTiles = frame.tiles();
 
         //ter.renderFrame(frame.tiles);
 

@@ -26,6 +26,7 @@ class WorldFrame {
 
 
     WorldFrame(int w, int h, long seed) {
+        System.out.println(seed);
         pSet = new DynamicKD();
         tiles = new TETile[w][h];
         width = w;
@@ -54,10 +55,10 @@ class WorldFrame {
             int rx = Math.max(2, rand.nextInt(width - rw - 3) + 1);
             int ry = Math.max(2, rand.nextInt(height - rh - 3) + 1);
             Room newRoom = new Room(rx, ry, rw, rh, this);
-            if (rx == 36 && ry == 21) {
+            /*if (rx == 36 && ry == 21) {
                 tracked = true;
                 newRoom.tracked = true;
-            }
+            }*/
 
             Boolean ok = true;
             for (Room oldRoom : roomSet) {
@@ -71,10 +72,12 @@ class WorldFrame {
                 roomSet.add(newRoom);
                 roomCount++;
                 if (!newRoom.connected(hallwaysSet)) {
+                    /*
                     if (tracked) {
                         System.out.println("closestx" + closest.getX());
                         System.out.println("closesty" + closest.getY());
                     }
+                    */
                     Room.connect(closest, newRoom, this);
                     hallCount++;
 
