@@ -54,8 +54,12 @@ class Room {
     /**
      * Returns width and height of the room
      */
-    int getW() { return w; }
-    int getH() { return h; }
+    int getW() {
+        return w;
+    }
+    int getH() {
+        return h;
+    }
 
 
     /**
