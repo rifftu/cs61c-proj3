@@ -21,7 +21,7 @@ class WorldFrame {
         Set<Room> roomSet;
         int attempts = 50;
         int maxSize = w / 8;
-        System.out.println(seed);
+
         pSet = new DynamicKD();
         tiles = new TETile[w][h];
 
@@ -66,10 +66,10 @@ class WorldFrame {
             }
         }
         for (Hallway hall : hallwaysSet) {
-            hall.draw(tiles);
+            hall.draw(tiles, hall);
         }
         for (Room room : roomSet) {
-            room.draw(tiles);
+            room.draw(tiles, room);
         }
     }
 

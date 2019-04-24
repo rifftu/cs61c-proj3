@@ -159,10 +159,7 @@ class Hallway extends Room {
 
 
 
-    @Override
-    int lWall() {
-        return startX - 1;
-    }
+
 
     @Override
     int rWall() {
@@ -182,10 +179,6 @@ class Hallway extends Room {
         }
     }
 
-    @Override
-    int bWall() {
-        return startY - 1;
-    }
 
 
 }
