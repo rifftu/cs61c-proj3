@@ -93,7 +93,11 @@ class WorldFrame {
         newRoom.addPoints(pSet);
     }
 
-    private Room closest(Room newRoom) { return pSet.nearest(newRoom.midX(), newRoom.midY()).room(); }
+    private Room closest(Room newRoom) {
+        return pSet.nearest(newRoom.midX(), newRoom.midY()).room();
+    }
 
-    TETile[][] tiles() { return tiles; }
+    TETile[][] tiles() {
+        return tiles;
+    }
 }

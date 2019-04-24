@@ -61,24 +61,40 @@ class Room {
     /**
      * Returns the locations of the inside walls of the room
      */
-    int getY() { return y; }
-    int getX() { return x; }
-    int rEdge() { return rWall() - 1; }
-    int tEdge() { return tWall() - 1; }
+    int getY() {
+        return y;
+    }
+    int getX() {
+        return x;
+    }
+    int rEdge() {
+        return rWall() - 1;
+    }
+    int tEdge() {
+        return tWall() - 1;
+    }
 
     /**
      * Gets the X and Y of room's midpoint.
      * Useful for finding nearest room.
      */
-    double midX() {return ((double) (getX() + rEdge())) / 2; }
-    double midY() {return ((double) (getY() + tEdge())) / 2; }
+    double midX() {
+        return ((double) (getX() + rEdge())) / 2;
+    }
+    double midY() {
+        return ((double) (getY() + tEdge())) / 2;
+    }
 
     /**
      * Returns the locations of the top and right walls of the room
      * (useful for building hallways)
      */
-    int rWall() { return x + w; }
-    int tWall() { return y + h; }
+    int rWall() {
+        return x + w;
+    }
+    int tWall() {
+        return y + h;
+    }
 
     /**
      * Builds a hallway between two rooms that are known to be not connected
@@ -89,21 +105,31 @@ class Room {
     static void connect(Room one, Room two, WorldFrame world) {
 
         if (vMeet(one, two)) {
+
             Hallway.builtVertical(one, two, world);
-        }
-        else if (hMeet(one, two)) {
+
+        } else if (hMeet(one, two)) {
+
             Hallway.builtHorizontal(one, two, world);
-        }
-        else if (one.getX() > two.rEdge()) {
 
-            if (one.tEdge() < two.getY()) { Hallway.forwardL(two, one, world); }
-            if (two.tEdge() < one.getY()) { Hallway.backwardL(one, two, world); }
-        }
+        } else if (one.getX() > two.rEdge()) {
 
-        else if (one.rEdge() < two.getX()) {
+            if (one.tEdge() < two.getY()) {
+                Hallway.forwardL(two, one, world);
+            }
+            if (two.tEdge() < one.getY()) {
+                Hallway.backwardL(one, two, world);
+            }
 
-            if (one.tEdge() < two.getY()) { Hallway.backwardL(two, one, world); }
-            if (two.tEdge() < one.getY()) { Hallway.forwardL(one, two, world); }
+        } else if (one.rEdge() < two.getX()) {
+
+            if (one.tEdge() < two.getY()) {
+                Hallway.backwardL(two, one, world);
+            }
+            if (two.tEdge() < one.getY()) {
+                Hallway.forwardL(one, two, world);
+            }
+
         }
     }
 
@@ -186,7 +212,9 @@ class Room {
      */
     boolean connected(Set<Hallway> halls) {
         for (Hallway hall : halls) {
-            if (Room.intersect(this, hall)) { return true; }
+            if (Room.intersect(this, hall)) {
+                return true;
+            }
         }
         return false;
     }
