@@ -16,7 +16,7 @@ public class WorldFrameTest {
         int w = 80;
         int h = 30;
         long seed = new Random().nextInt(1000000000);
-        seed = 71610048;
+        //seed = 71610048;
         //System.out.println(seed);
         //int seed = 5912;
         TERenderer ter = new TERenderer();

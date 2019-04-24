@@ -67,6 +67,13 @@ class Room {
     int tEdge() { return tWall() - 1; }
 
     /**
+     * Gets the X and Y of room's midpoint.
+     * Useful for finding nearest room.
+     */
+    double midX() {return ((double) (getX() + rEdge())) / 2; }
+    double midY() {return ((double) (getY() + tEdge())) / 2; }
+
+    /**
      * Returns the locations of the top and right walls of the room
      * (useful for building hallways)
      */

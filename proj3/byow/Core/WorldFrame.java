@@ -10,7 +10,7 @@ import java.util.Set;
 
 class WorldFrame {
 
-
+    private Set<Room> roomSet;
     Set<Hallway> hallwaysSet;
     Random rand;
     private TETile[][] tiles;
@@ -18,13 +18,12 @@ class WorldFrame {
 
 
     WorldFrame(int w, int h, long seed) {
-        Set<Room> roomSet;
-        int attempts = 50;
-        int maxSize = w / 8;
+
+        final int attempts = 50;
+        final int maxSize = w / 8;
 
         pSet = new DynamicKD();
         tiles = new TETile[w][h];
-
 
         rand = new Random(seed);
         int firstX = 10; int firstY = 10; int firstW = 5; int firstH = 5;
@@ -35,46 +34,66 @@ class WorldFrame {
         root.addPoints(pSet);
 
         for (int i = 0; i < attempts; i++) {
-            int rw = Math.max(2, rand.nextInt(maxSize));
-            int rh = Math.max(2, rand.nextInt(maxSize));
-            int rx = Math.max(2, rand.nextInt(w - rw - 3) + 1);
-            int ry = Math.max(2, rand.nextInt(h - rh - 3) + 1);
-            Room newRoom = new Room(rx, ry, rw, rh);
 
+            Room newRoom = randomRoom(w, h, maxSize);
 
-            boolean ok = true;
-            for (Room oldRoom : roomSet) {
-                if (Room.intersect(oldRoom, newRoom)) {
-                    ok = false;
-                    break;
-                }
+            if (hasOverlap(newRoom)) {
+                continue;
             }
-            if (ok) {
-                Room closest = pSet.nearest(rx + ((double) rw / 2), ry + ((double) rh / 2)).room();
-                roomSet.add(newRoom);
-                if (!newRoom.connected(hallwaysSet)) {
 
-                    Room.connect(closest, newRoom, this);
-
-                }
-                newRoom.addPoints(pSet);
-            }
+            placeRoom(newRoom);
         }
+
+        drawRooms(w, h);
+
+    }
+
+    private void drawRooms(int w, int h) {
+
+        clearTiles(w, h);
+
+        for (Hallway hall : hallwaysSet) {
+            Room.draw(tiles, hall);
+        }
+        for (Room room : roomSet) {
+            Room.draw(tiles, room);
+        }
+    }
+
+    private void clearTiles(int w, int h) {
         for (int x = 0; x < w; x += 1) {
             for (int y = 0; y < h; y += 1) {
                 tiles[x][y] = Tileset.NOTHING;
             }
         }
-        for (Hallway hall : hallwaysSet) {
-            hall.draw(tiles, hall);
-        }
-        for (Room room : roomSet) {
-            room.draw(tiles, room);
-        }
     }
 
-
-    TETile[][] tiles() {
-        return tiles;
+    private Room randomRoom(int w, int h, int maxSize) {
+        int rw = Math.max(2, rand.nextInt(maxSize));
+        int rh = Math.max(2, rand.nextInt(maxSize));
+        int rx = Math.max(2, rand.nextInt(w - rw - 3) + 1);
+        int ry = Math.max(2, rand.nextInt(h - rh - 3) + 1);
+        return new Room(rx, ry, rw, rh);
     }
+
+    private boolean hasOverlap(Room newRoom) {
+        for (Room oldRoom : roomSet) {
+            if (Room.intersect(oldRoom, newRoom)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void placeRoom(Room newRoom) {
+        roomSet.add(newRoom);
+        if (!newRoom.connected(hallwaysSet)) {
+            Room.connect(closest(newRoom), newRoom, this);
+        }
+        newRoom.addPoints(pSet);
+    }
+
+    private Room closest(Room newRoom) { return pSet.nearest(newRoom.midX(), newRoom.midY()).room(); }
+
+    TETile[][] tiles() { return tiles; }
 }
