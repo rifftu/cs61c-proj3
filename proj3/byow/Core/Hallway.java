@@ -1,8 +1,6 @@
 package byow.Core;
 
-//import byow.SaveDemo.World;
-//import byow.TileEngine.TETile;
-//import byow.TileEngine.Tileset;
+
 
 import java.util.Random;
 
@@ -11,40 +9,28 @@ class Hallway extends Room {
     private int length;
     private int startX;
     private int startY;
-    static boolean test;
-    //private int endX;
-    //private int endY;
+
     private Hallway(int x, int y, Direction d, int l, WorldFrame world) {
 
         dir = d;
         length = l;
         startX = x;
         startY = y;
-        Point farend;
+        Point farEnd;
         if (d == Direction.UP) {
-            farend = new Point(x, y + l - 1, this);
+            farEnd = new Point(x, y + l - 1, this);
         } else {
-            farend = new Point(x + l - 1, y, this);
+            farEnd = new Point(x + l - 1, y, this);
         }
-        Point closeend = new Point(x, y, this);
+        Point closeEnd = new Point(x, y, this);
 
-        world.pSet.put(closeend);
-        world.pSet.put(farend);
+        world.pSet.put(closeEnd);
+        world.pSet.put(farEnd);
 
 
     }
-    int getStartX() {
-        return startX;
-    }
-    int getStartY() {
-        return startY;
-    }
-    Direction getD() {
-        return dir;
-    }
-    int getL() {
-        return length;
-    }
+
+
 
     @Override
     int getX() {
@@ -169,11 +155,6 @@ class Hallway extends Room {
     }
 
     @Override
-    int lWall() {
-        return startX - 1;
-    }
-
-    @Override
     int rWall() {
         if (dir == Direction.UP) {
             return startX + 1;
@@ -191,10 +172,6 @@ class Hallway extends Room {
         }
     }
 
-    @Override
-    int bWall() {
-        return startY - 1;
-    }
 
 
 }

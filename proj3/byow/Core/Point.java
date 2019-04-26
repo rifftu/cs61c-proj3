@@ -6,13 +6,13 @@ public class Point {
     private double y;
     private Room mom;
 
-    public Point(double x, double y, Room mom) {
+    Point(double x, double y, Room mom) {
         this.x = x;
         this.y = y;
         this.mom = mom;
     }
 
-    public Room room() {
+    Room room() {
         return mom;
     }
 
@@ -38,7 +38,7 @@ public class Point {
      * Note: This is the square of the Euclidean distance, i.e.
      * there's no square root. 
      */
-    public static double distance(Point p1, Point p2) {
+    static double distance(Point p1, Point p2) {
         return distance(p1.getX(), p2.getX(), p1.getY(), p2.getY());
     }
 

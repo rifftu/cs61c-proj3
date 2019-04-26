@@ -5,157 +5,187 @@ import byow.TileEngine.Tileset;
 
 import java.util.Set;
 
-public class Room {
+class Room {
+
+    /**
+     * Private variables storing room location and size
+     * (Different from hallways)
+     */
     private int x;
     private int y;
     private int w;
     private int h;
 
+    /**
+     * Default constructor (unused)
+     */
     Room() { }
 
-    Room(int x, int y, int w, int h, WorldFrame world) {
-
+    /**
+     * Room constructor stores input into private variables
+     * @param x X of bottom left corner
+     * @param y Y of bottom left corner
+     * @param w width of room
+     * @param h height of room
+     */
+    Room(int x, int y, int w, int h) {
         this.x = x;
         this.y = y;
         this.w = w;
         this.h = h;
-
     }
 
-    void addPoints(DynamicKD pset) {
+    /**
+     * Adds the four corners of the room into the pointSet,
+     * which is used for calculating the closest point to a new room
+     * @param pSet KDTree storing all the corners (belongs to worldFrame)
+     */
+    void addPoints(DynamicKD pSet) {
 
         Point ur = new Point(x + w - 1, y + h - 1, this);
         Point ul = new Point(x, y + h - 1, this);
         Point ll = new Point(x, y, this);
         Point lr = new Point(x + w - 1, y, this);
-        System.out.println("ur Point "+ ur.getX() + " y " + ur.getY());
-        System.out.println("ul Point "+ ul.getX() + " y " + ul.getY());
-        System.out.println("ll Point "+ ll.getX() + " y " + ll.getY());
-        System.out.println("lr Point "+ lr.getX() + " y " + lr.getY());
-        System.out.println("ur mom  "+ this.getX() + " w " + this.getW() + " y " +this.getY() +
-                        " h " + this.getH());
-        pset.put(ur);
-        pset.put(ul);
-        pset.put(ll);
-        pset.put(lr);
-    }
 
-    /*
-    void expand(WorldFrame world) {
+        pSet.put(ur);
+        pSet.put(ul);
+        pSet.put(ll);
+        pSet.put(lr);
 
     }
 
-    private int hasSpace(Direction d) {
-
-        return 0;
-    }
-    */
+    /**
+     * Returns width and height of the room
+     */
     int getW() {
         return w;
     }
     int getH() {
         return h;
     }
+
+
+    /**
+     * Returns the locations of the inside walls of the room
+     */
     int getY() {
         return y;
     }
     int getX() {
         return x;
     }
-    int lWall() {
-        return x - 1;
-    }
-
-    int rWall() {
-        return x + w;
-    }
-
-    int tWall() {
-        return y + h;
-    }
-
-    int bWall() {
-        return y - 1;
-    }
-
     int rEdge() {
         return rWall() - 1;
     }
-
     int tEdge() {
         return tWall() - 1;
     }
 
+    /**
+     * Gets the X and Y of room's midpoint.
+     * Useful for finding nearest room.
+     */
+    double midX() {
+        return ((double) (getX() + rEdge())) / 2;
+    }
+    double midY() {
+        return ((double) (getY() + tEdge())) / 2;
+    }
+
+    /**
+     * Returns the locations of the top and right walls of the room
+     * (useful for building hallways)
+     */
+    int rWall() {
+        return x + w;
+    }
+    int tWall() {
+        return y + h;
+    }
+
+    /**
+     * Builds a hallway between two rooms that are known to be not connected
+     * @param one first room
+     * @param two second room
+     * @param world The worldFrame this occurs in
+     */
     static void connect(Room one, Room two, WorldFrame world) {
 
-        if (intersect(one, two)) {
-            return;
-        }
-
-        if (Math.min(one.rEdge(), two.rEdge()) >= Math.max(one.getX(), two.getX())) {
+        if (vMeet(one, two)) {
 
             Hallway.builtVertical(one, two, world);
 
-        } else if (Math.min(one.tEdge(), two.tEdge()) >= Math.max(one.getY(), two.getY())) {
+        } else if (hMeet(one, two)) {
 
             Hallway.builtHorizontal(one, two, world);
 
         } else if (one.getX() > two.rEdge()) {
-            if (one.tEdge() < two.getY()) {
 
+            if (one.tEdge() < two.getY()) {
                 Hallway.forwardL(two, one, world);
             }
             if (two.tEdge() < one.getY()) {
                 Hallway.backwardL(one, two, world);
             }
+
         } else if (one.rEdge() < two.getX()) {
+
             if (one.tEdge() < two.getY()) {
                 Hallway.backwardL(two, one, world);
             }
             if (two.tEdge() < one.getY()) {
                 Hallway.forwardL(one, two, world);
-
             }
+
         }
     }
 
+    /**
+     * Checks to see if the rooms overlap in 2d space.
+     * i.e. to say, they both horizontally and vertically overlap
+     * @param one first room
+     * @param two second room
+     * @return true if the rooms overlap
+     */
     static boolean intersect(Room one, Room two) {
-
-        boolean hMeet = false;
-        boolean vMeet = false;
-        if (ibt(two.tWall(), one.bWall(), one.tWall())
-                || ibt(two.bWall(), one.bWall(), one.tWall())) {
-            hMeet = true;
-        }
-        if (ibt(one.tWall(), two.bWall(), two.tWall())
-                || ibt(one.bWall(), two.bWall(), two.tWall())) {
-            hMeet = true;
-        }
-
-        if (ibt(two.lWall(), one.lWall(), one.rWall())
-                || ibt(two.rWall(), one.lWall(), one.rWall())) {
-            vMeet = true;
-        }
-        if (ibt(one.lWall(), two.lWall(), two.rWall())
-                || ibt(one.rWall(), two.lWall(), two.rWall())) {
-            vMeet = true;
-        }
-
-
-        return hMeet && vMeet;
-    }
-    static boolean ibt(int you, int one, int two) {
-        return (you > one && you < two) || (you < one && you > two);
-    }
-    static boolean ibti(int you, int one, int two) {
-        return (you >= one && you <= two) || (you <= one && you >= two);
+        return hMeet(one, two) && vMeet(one, two);
     }
 
-    void draw(TETile[][] tiles) {
-        int yValue = getY();
-        int xValue = getX();
-        int hValue = getH();
-        int wValue = getW();
+    /**
+     * Checks to see if the rooms overlap vertically
+     * @param one first room
+     * @param two second room
+     * @return true if there are points along the X axis where both rooms exist
+     */
+    private static boolean vMeet(Room one, Room two) {
+        return Math.min(one.rEdge(), two.rEdge()) >= Math.max(one.getX(), two.getX());
+    }
+
+    /**
+     * Checks to see if the rooms overlap horizontally
+     * @param one first room
+     * @param two second room
+     * @return true if there are points along the Y axis where both rooms exist
+     */
+    private static boolean hMeet(Room one, Room two) {
+        return Math.min(one.tEdge(), two.tEdge()) >= Math.max(one.getY(), two.getY());
+    }
+
+    /**
+     * Static function to draw a room or hallway using for loops
+     * @param tiles tileset representing the room
+     * @param room the room currently being drawn
+     */
+    static void draw(TETile[][] tiles, Room room) {
+
+        // Gets the necessary info about the room
+        int yValue = room.getY();
+        int xValue = room.getX();
+        int hValue = room.getH();
+        int wValue = room.getW();
+
+        // Draws the left and right walls of the room,
+        // but only if there isn't already a floor there
         for (int j = yValue - 1; j <= yValue + hValue; j++) {
             if (tiles[xValue - 1][j] == Tileset.NOTHING) {
                 tiles[xValue - 1][j] = Tileset.WALL;
@@ -165,6 +195,9 @@ public class Room {
             }
         }
 
+        // Goes from left to right, drawing the bottom wall, middle
+        // floor, and top wall of the room. Walls are only drawn if there isn't
+        // already floor there.
         for (int i = xValue; i < xValue + wValue; i++) {
             if (tiles[i][yValue - 1] == Tileset.NOTHING) {
                 tiles[i][yValue - 1] = Tileset.WALL;
@@ -178,10 +211,15 @@ public class Room {
         }
     }
 
+    /**
+     * Checks to see if the new room is already connected to a hallway.
+     * If it is, there is no need to connect it again.
+     * @param halls Set of all existing hallways in the room.
+     * @return T if the room overlaps with a hallway, otherwise F
+     */
     boolean connected(Set<Hallway> halls) {
         for (Hallway hall : halls) {
             if (Room.intersect(this, hall)) {
-
                 return true;
             }
         }

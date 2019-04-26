@@ -1,7 +1,7 @@
 package byow.Core;
 
 
-public class DynamicKD {
+class DynamicKD {
 
     private Node root;
 
@@ -27,10 +27,10 @@ public class DynamicKD {
         }
     }
 
-    public DynamicKD() {
+    DynamicKD() {
         root = null;
     }
-    public Point nearest(double x, double y) {
+    Point nearest(double x, double y) {
         BestSet bs = new BestSet(root);
         checkNear(new Point(x, y, null), root, bs);
         return bs.node.myPoint;
@@ -45,8 +45,8 @@ public class DynamicKD {
             bs.node = curr;
             bs.dist = Point.distance(curr.myPoint, other);
         }
-        Node good = null;
-        Node bad = null;
+        Node good;
+        Node bad;
         if (dims[curr.dim] >= curr.coords[curr.dim]) {
             good = curr.right;
             bad = curr.left;
@@ -59,7 +59,7 @@ public class DynamicKD {
             checkNear(other, bad, bs);
         }
     }
-    public void put(Point p) {
+    void put(Point p) {
         root = add(p, root, 0);
     }
     private Node add(Point point, Node curr, int dim) {
