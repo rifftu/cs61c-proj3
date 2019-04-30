@@ -22,7 +22,7 @@ abstract class Creature implements Serializable {
     WorldFrame world() {
         return this.world;
     }
-    void randomLocation(){
+    void randomLocation() {
 
     }
     int getX() {
@@ -63,7 +63,7 @@ abstract class Creature implements Serializable {
 
     abstract int getH();
 
-    abstract void move(int Dist, Direction dir);
+    abstract void move(int dist, Direction dir);
 
     boolean alive() {
         return this.alive;
@@ -74,7 +74,7 @@ abstract class Creature implements Serializable {
     abstract boolean killer();
 
 
-    static boolean blocked (Creature cr) {
+    static boolean blocked(Creature cr) {
         TETile[][] grid = cr.world().getFloortiles();
         Creature[][] map = cr.world().animals();
         int x = cr.nextX();

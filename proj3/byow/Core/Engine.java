@@ -2,14 +2,14 @@ package byow.Core;
 
 import byow.InputDemo.InputSource;
 import byow.InputDemo.StringInputDevice;
-import byow.TileEngine.TERenderer;
-import byow.SaveDemo.Editor;
+//import byow.TileEngine.TERenderer;
+//import byow.SaveDemo.Editor;
 import byow.TileEngine.TETile;
 import edu.princeton.cs.introcs.StdDraw;
 
 import java.awt.*;
 import java.io.*;
-import java.lang.reflect.WildcardType;
+//import java.lang.reflect.WildcardType;
 import java.util.Random;
 
 public class Engine {
@@ -70,8 +70,9 @@ public class Engine {
                 if (c == 'q' && pre == ':') {
                     //System.out.println("quit save");
                     interactWithInputString(":q");
-                } else if (c == ':'){
+                } else if (c == ':') {
                     //do nothing
+                    c = ':';
                 } else {
                     interactWithInputString(in);
                 }
@@ -150,7 +151,7 @@ public class Engine {
                     c = Character.toUpperCase(inputType.getNextKey());
                     if (c == 'Q') {
                         saveGame(w);
-                        System.exit(0);
+                        gameStart = false;
                     }
                     break;
                 default:
@@ -160,7 +161,7 @@ public class Engine {
                         break;
                     } else {
                         //System.out.println("character " + c);
-                        w.keyCatcher(c);// moving player
+                        w.keyCatcher(c); // moving player
                     }
                     break;
             }
@@ -176,7 +177,7 @@ public class Engine {
      * source: save demo by Professor Hug
      */
     private static void saveGame(WorldFrame w) {
-        File f = new File("./save_game");
+        File f = new File("./save_game.txt");
         try {
             if (!f.exists()) {
                 f.createNewFile();
@@ -198,7 +199,7 @@ public class Engine {
      * source: save Demo by Professor Hug
      */
     private static WorldFrame loadGame() {
-        File f = new File("./save_game");
+        File f = new File("./save_game.txt");
         if (f.exists()) {
             try {
                 FileInputStream fs = new FileInputStream(f);
@@ -227,7 +228,7 @@ public class Engine {
         StdDraw.setPenColor(Color.white);
         StdDraw.line(0, w.getH() - 1, w.getW(), w.getH() - 1);
         int x = (int) StdDraw.mouseX();
-        int y = (int )StdDraw.mouseY();
+        int y = (int) StdDraw.mouseY();
         if (x < w.getW() && y < w.getH()) {
             StdDraw.text(5, HEIGHT - 1.5, w.tiles()[x][y].description());
         } else {

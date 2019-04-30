@@ -52,7 +52,7 @@ public class MainMenu implements Serializable {
         StdDraw.setFont(font);
         StdDraw.text(width / 2, height / 2 + 10, "Please enter your name");
         StdDraw.text(width / 2, height / 2 + 8, "Please do not enter the name has length over 30");
-        StdDraw.text(  width / 2, height / 2 + 6, " and using SPACE BAR to complete ");
+        StdDraw.text(width / 2, height / 2 + 6, " and using SPACE BAR to complete ");
         StdDraw.text(width / 2, height / 2, s);
         StdDraw.setPenColor(Color.white);
         StdDraw.show();

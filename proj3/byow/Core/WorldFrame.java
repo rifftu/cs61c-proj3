@@ -9,14 +9,14 @@ import java.util.Random;
 import java.util.Set;
 
 
-import java.awt.event.KeyListener;
+//import java.awt.event.KeyListener;
 
 
 class WorldFrame implements Serializable {
 
 
-    private Creature P1;
-    private Creature P2;
+    private Creature p1;
+    private Creature p2;
     private Set<Room> roomSet;
     private Set<Hallway> hallwaysSet;
     private Set<Creature> animalSet;
@@ -69,11 +69,11 @@ class WorldFrame implements Serializable {
         drawRooms();
 
 
-        P1 = new Player("P1", this);
-        P2 = new Player("P2", this);
+        p1 = new Player("P1", this);
+        p2 = new Player("P2", this);
 
-        root.addCreature(P1, this);
-        root.addCreature(P2, this);
+        root.addCreature(p1, this);
+        root.addCreature(p2, this);
 
         copytiles();
 
@@ -176,28 +176,28 @@ class WorldFrame implements Serializable {
     void keyCatcher(char c) {
         switch (c) {
             case 'w':
-                P1.move(1, Direction.UP);
+                p1.move(1, Direction.UP);
                 break;
             case 'a':
-                P1.move(1, Direction.LEFT);
+                p1.move(1, Direction.LEFT);
                 break;
             case 's':
-                P1.move(1, Direction.DOWN);
+                p1.move(1, Direction.DOWN);
                 break;
             case 'd':
-                P1.move(1, Direction.RIGHT);
+                p1.move(1, Direction.RIGHT);
                 break;
             case 'i':
-                P2.move(1, Direction.UP);
+                p2.move(1, Direction.UP);
                 break;
             case 'j':
-                P2.move(1, Direction.LEFT);
+                p2.move(1, Direction.LEFT);
                 break;
             case 'k':
-                P2.move(1, Direction.DOWN);
+                p2.move(1, Direction.DOWN);
                 break;
             case 'l':
-                P2.move(1, Direction.RIGHT);
+                p2.move(1, Direction.RIGHT);
                 break;
             default:
 

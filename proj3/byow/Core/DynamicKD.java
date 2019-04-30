@@ -7,7 +7,7 @@ class DynamicKD implements Serializable {
 
     private Node root;
 
-    private class Node implements Serializable{
+    private class Node implements Serializable {
         Point myPoint;
         Node left;
         Node right;

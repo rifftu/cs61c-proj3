@@ -5,7 +5,7 @@ import byow.TileEngine.Tileset;
 import java.io.Serializable;
 
 
-class Player extends Creature implements Serializable{
+class Player extends Creature implements Serializable {
 
     Player(String name, WorldFrame world) {
         this.name = name;
@@ -45,7 +45,7 @@ class Player extends Creature implements Serializable{
         }
     }
 
-    void move(int Dist, Direction dir) {
+    void move(int dist, Direction dir) {
         this.facing = dir;
         //System.out.println(dir);
         if (!Creature.blocked(this)) {
