@@ -1,5 +1,6 @@
 package byow.lab13;
 
+import byow.Core.RandomUtils;
 import edu.princeton.cs.introcs.StdDraw;
 
 import java.awt.Color;
@@ -43,32 +44,100 @@ public class MemoryGame {
         StdDraw.clear(Color.BLACK);
         StdDraw.enableDoubleBuffering();
 
-        //TODO: Initialize random number generator
+        //DO: Initialize random number generator
+        rand = new Random();
     }
 
     public String generateRandomString(int n) {
-        //TODO: Generate random string of letters of length n
-        return null;
+        //DO: Generate random string of letters of length n
+        String result = "";
+        for (int i = 0; i < n; i++) {
+            result += CHARACTERS[rand.nextInt(26)];
+        }
+        return result;
     }
 
     public void drawFrame(String s) {
-        //TODO: Take the string and display it in the center of the screen
-        //TODO: If game is not over, display relevant game information at the top of the screen
+
+        //DO: Take the string and display it in the center of the screen
+        StdDraw.clear(Color.black);
+        Font font = new Font("Arial", Font.BOLD, 30);
+        StdDraw.setFont(font);
+        StdDraw.text(width / 2, height / 2, s);
+        StdDraw.setPenColor(Color.white);
+
+        //DO: If game is not over, display relevant game information at the top of the screen
+        StdDraw.text(10, height - 2, "Round: " + round);
+        StdDraw.text(10, height - 4, Boolean.toString(playerTurn));
+        StdDraw.show();
+        //StdDraw.pause(1000);
     }
 
     public void flashSequence(String letters) {
-        //TODO: Display each character in letters, making sure to blank the screen between letters
+        //DO: Display each character in letters, making sure to blank the screen between letters
+        for (int i = 0;i < letters.length(); i++) {
+            Font font = new Font("Arial", Font.BOLD, 30);
+            StdDraw.setFont(font);
+            StdDraw.text(width / 2, height / 2, Character.toString(letters.charAt(i)));
+            StdDraw.setPenColor(Color.white);
+            StdDraw.show();
+            StdDraw.pause(1000);
+            StdDraw.clear(Color.black);
+            StdDraw.pause(500);
+        }
     }
 
     public String solicitNCharsInput(int n) {
-        //TODO: Read n letters of player input
-        return null;
+        //DO: Read n letters of player input
+        String result = "";
+        Font font = new Font("Arial", Font.BOLD, 30);
+        StdDraw.setFont(font);
+        StdDraw.setPenColor(Color.white);
+        while (result.length() != n) {
+            if (StdDraw.hasNextKeyTyped()) {
+                StdDraw.clear(Color.black);
+                drawFrame(result);
+                result += StdDraw.nextKeyTyped();
+                StdDraw.text(width / 2, height / 2, result);
+                StdDraw.show();
+                StdDraw.pause(500);
+            }
+        }
+        return result;
     }
 
     public void startGame() {
-        //TODO: Set any relevant variables before the game starts
-
-        //TODO: Establish Engine loop
+        //DO: Set any relevant variables before the game starts
+        round = 1;
+        playerTurn = true;
+        gameOver = false;
+        StdDraw.setPenColor(Color.white);
+        Font font = new Font("Arial", Font.BOLD, 30);
+        StdDraw.setFont(font);
+        //StdDraw.pause(5000);
+        //DO: Establish Engine loop
+        while (!gameOver) {
+            StdDraw.text(width / 2, height / 2, "Round: "+ round);
+            StdDraw.show();
+            StdDraw.pause(1000);
+            StdDraw.clear(Color.black);
+            String rd = generateRandomString(round);
+            flashSequence(rd);
+            drawFrame(rd);
+            StdDraw.show();
+            StdDraw.pause(1000);
+            StdDraw.clear(Color.black);
+            String player = solicitNCharsInput(round);
+            StdDraw.clear(Color.black);
+            if (player.equals(rd)) {
+                round ++;
+            } else {
+                StdDraw.text(width / 2, height / 2, "Game Over! You made it to round: " + round);
+                StdDraw.show();
+                StdDraw.pause(5000);
+                gameOver = true;
+            }
+        }
     }
 
 }
