@@ -152,6 +152,7 @@ public class Engine {
                     if (c == 'Q') {
                         saveGame(w);
                         gameStart = false;
+                        return w.tiles();
                     }
                     break;
                 default:
