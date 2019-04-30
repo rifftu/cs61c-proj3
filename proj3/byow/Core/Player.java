@@ -3,6 +3,10 @@ package byow.Core;
 class Player extends Creature {
 
     private WorldFrame world;
+    private Direction facing;
+
+    private int x;
+    private int y;
 
     @Override
     WorldFrame world() {
@@ -11,12 +15,12 @@ class Player extends Creature {
 
     @Override
     int getX() {
-        return 0;
+        return x;
     }
 
     @Override
     int getY() {
-        return 0;
+        return y;
     }
 
     @Override
@@ -41,7 +45,21 @@ class Player extends Creature {
 
     @Override
     void move(int Dist, Direction dir) {
-
+        this.facing = dir;
+        if (Creature.blocked(this)) {
+            int x = this.x;
+            int y = this.y;
+            world.animals()[x][y] = null;
+            switch (dir) {
+                case LEFT: x--;
+                case RIGHT: x++;
+                case UP: y++;
+                case DOWN: y--;
+            }
+            this.x = x;
+            this.y = y;
+            world.animals()[x][y] = this;
+        }
     }
 
     @Override

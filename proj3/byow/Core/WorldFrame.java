@@ -7,21 +7,26 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
+import java.awt.event.KeyListener;
+
 
 class WorldFrame {
 
-    //Only one randomizer used throughout world generation
+
+    Creature P1;
+    Creature P2;
+    private Set<Room> roomSet;
+    Set<Hallway> hallwaysSet;
+    Set<Creature> animalSet;
     Random rand;
 
-    //Sets meant for storing things
+    private Creature[][] animals;
     DynamicKD pSet;
-    Set<Hallway> hallwaysSet;
-    private Set<Room> roomSet;
 
     //The tiles
     private TETile[][] tiles;
 
-    /**
+
     WorldFrame(int w, int h, long seed) {
 
         final int attempts = 50;
@@ -50,6 +55,9 @@ class WorldFrame {
         }
 
         drawRooms(w, h);
+
+        P1 = new Player();
+        P2 = new Player();
 
     }
 
@@ -105,4 +113,32 @@ class WorldFrame {
     TETile[][] tiles() {
         return tiles;
     }
+
+    Creature[][] animals() {
+        return animals;
+    }
+
+    void keyCatcher(char c) {
+        switch (c) {
+            case 'w':
+                P1.move(1, Direction.UP);
+            case 'a':
+                P1.move(1, Direction.LEFT);
+            case 's':
+                P1.move(1, Direction.DOWN);
+            case 'd':
+                P1.move(1, Direction.RIGHT);
+            case 'i':
+                P1.move(1, Direction.UP);
+            case 'j':
+                P1.move(1, Direction.LEFT);
+            case 'k':
+                P1.move(1, Direction.DOWN);
+            case 'l':
+                P1.move(1, Direction.RIGHT);
+            default:
+
+        }
+    }
+
 }

@@ -1,5 +1,7 @@
 package byow.InputDemo;
 
+import edu.princeton.cs.introcs.StdDraw;
+
 /**
  * Created by hug.
  * Demonstrates how a single interface can be used to provide input
@@ -36,7 +38,13 @@ public class DemoInputSource {
                 break;
             }
         }
+        int i = 0;
+        while (true) {
+            System.out.println(i);
+            StdDraw.pause(300);
+            i++;
+        }
 
-        System.out.println("Processed " + totalCharacters + " characters.");
+        //System.out.println("Processed " + totalCharacters + " characters.");
     }
 }
