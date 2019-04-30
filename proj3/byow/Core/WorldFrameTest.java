@@ -25,7 +25,7 @@ public class WorldFrameTest {
         //for (int i = 0; i < 10; i++) {
             System.out.println(seed);
 
-            frame = new WorldFrame(w, h, seed);
+            frame = new WorldFrame(w, h, seed, "");
 
             //for (int i = 0; i < args.length; i++) {
             //    engine.interactWithInputString(args[i]);

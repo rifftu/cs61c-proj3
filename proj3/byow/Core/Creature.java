@@ -3,7 +3,9 @@ package byow.Core;
 import byow.TileEngine.TETile;
 import byow.TileEngine.Tileset;
 
-abstract class Creature {
+import java.io.Serializable;
+
+abstract class Creature implements Serializable {
 
     protected WorldFrame world;
     protected Direction facing;
@@ -17,7 +19,9 @@ abstract class Creature {
     WorldFrame world() {
         return this.world;
     }
+    void randomLocation(){
 
+    }
     int getX() {
         return x;
     }

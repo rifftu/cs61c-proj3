@@ -20,7 +20,7 @@ class WorldFrame implements Serializable {
     private Set<Hallway> hallwaysSet;
     private Set<Creature> animalSet;
     private Random rand;
-
+    private String name;
     private Creature[][] animals;
     private DynamicKD pSet;
 
@@ -28,7 +28,7 @@ class WorldFrame implements Serializable {
     private TETile[][] tiles;
 
 
-    WorldFrame(int w, int h, long seed) {
+    WorldFrame(int w, int h, long seed, String name) {
 
         final int attempts = 50;
         final int maxSize = w / 8;
@@ -57,8 +57,8 @@ class WorldFrame implements Serializable {
 
         drawRooms(w, h);
 
-        P1 = new Player("P1");
-        P2 = new Player("P1");
+        P1 = new Player(name);
+        P2 = new Player("P2");
 
     }
 
@@ -135,21 +135,21 @@ class WorldFrame implements Serializable {
 
     void keyCatcher(char c) {
         switch (c) {
-            case 'w':
+            case 'W':
                 P1.move(1, Direction.UP);
-            case 'a':
+            case 'A':
                 P1.move(1, Direction.LEFT);
-            case 's':
+            case 'S':
                 P1.move(1, Direction.DOWN);
-            case 'd':
+            case 'D':
                 P1.move(1, Direction.RIGHT);
-            case 'i':
+            case 'I':
                 P1.move(1, Direction.UP);
-            case 'j':
+            case 'J':
                 P1.move(1, Direction.LEFT);
-            case 'k':
+            case 'K':
                 P1.move(1, Direction.DOWN);
-            case 'l':
+            case 'L':
                 P1.move(1, Direction.RIGHT);
             default:
 

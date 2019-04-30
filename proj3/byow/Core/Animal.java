@@ -1,5 +1,7 @@
 package byow.Core;
 
-enum Animal {
+import java.io.Serializable;
+
+enum Animal implements Serializable {
     Player, Baddie, Nothing
 }

@@ -1,6 +1,10 @@
 package byow.Core;
 
-class Player extends Creature {
+import byow.TileEngine.Tileset;
+
+import java.io.Serializable;
+
+class Player extends Creature implements Serializable {
 
 
 
@@ -20,8 +24,6 @@ class Player extends Creature {
         return 0;
     }
 
-
-
     void move(int Dist, Direction dir) {
         this.facing = dir;
         if (Creature.blocked(this)) {
@@ -37,6 +39,7 @@ class Player extends Creature {
             this.x = x;
             this.y = y;
             world.animals()[x][y] = this;
+            world.tiles()[x][y] = Tileset.AVATAR;
         }
     }
 
