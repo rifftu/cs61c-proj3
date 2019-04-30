@@ -37,17 +37,17 @@ public class WorldFrameTest {
 
         ter.renderFrame(testTiles);
 
-        while (true) {
-            if (StdDraw.hasNextKeyTyped()) {
-                char c = Character.toLowerCase(StdDraw.nextKeyTyped());
-                if (c == 'q') {
-                    break;
-                } else {
-                    frame.keyCatcher(c);
-                    ter.renderFrame(testTiles);
-                }
-            }
+        KeyboardInputSource key = new KeyboardInputSource();
 
+        while (true) {
+            char c = key.getNextKey();
+            if (c == 'q') {
+                break;
+            } else {
+                System.out.println("BOOP");
+                frame.keyCatcher(c);
+                ter.renderFrame(testTiles);
+            }
         }
 
 

@@ -27,9 +27,19 @@ class Player extends Creature {
     @Override
     TETile tile() {
         if (this.name().equals("P1")) {
-            return Tileset.P1;
+            switch (this.facing) {
+                case UP: return Tileset.W;
+                case LEFT: return Tileset.A;
+                case DOWN: return Tileset.S;
+                default: return Tileset.D;
+            }
         } else {
-            return Tileset.P2;
+            switch (this.facing) {
+                case UP: return Tileset.I;
+                case LEFT: return Tileset.J;
+                case DOWN: return Tileset.K;
+                default: return Tileset.L;
+            }
         }
     }
 

@@ -81,7 +81,7 @@ public class Engine {
                     break;
                 case 'L':
                     //System.out.println("test L");
-                    w.drawRooms(WIDTH, HEIGHT);
+                    w.drawRooms();
                     finalWorldFrame = w.tiles();
                     break;
                 case ':':

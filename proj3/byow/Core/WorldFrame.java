@@ -82,7 +82,7 @@ class WorldFrame implements Serializable {
 
     }
 
-    private void drawRooms() {
+    void drawRooms() {
 
 
         clearTiles();
@@ -178,27 +178,28 @@ class WorldFrame implements Serializable {
         switch (c) {
             case 'w':
                 P1.move(1, Direction.UP);
-                System.out.println("W");
+                break;
             case 'a':
                 P1.move(1, Direction.LEFT);
-                System.out.println("A");
-
+                break;
             case 's':
                 P1.move(1, Direction.DOWN);
-                System.out.println("S");
-
+                break;
             case 'd':
                 P1.move(1, Direction.RIGHT);
-                System.out.println("D");
-
+                break;
             case 'i':
                 P2.move(1, Direction.UP);
+                break;
             case 'j':
                 P2.move(1, Direction.LEFT);
+                break;
             case 'k':
                 P2.move(1, Direction.DOWN);
+                break;
             case 'l':
                 P2.move(1, Direction.RIGHT);
+                break;
             default:
 
         }
