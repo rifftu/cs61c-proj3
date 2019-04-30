@@ -3,7 +3,10 @@ package byow.Core;
 import byow.InputDemo.InputSource;
 import byow.InputDemo.StringInputDevice;
 //import byow.TileEngine.TERenderer;
+import byow.SaveDemo.Editor;
 import byow.TileEngine.TETile;
+
+import java.io.*;
 
 public class Engine {
     //TERenderer ter = new TERenderer();
@@ -53,49 +56,40 @@ public class Engine {
         //TETile[][] finalWorldFrame = new WorldFrame(input).tiles();
         InputSource inputType = new StringInputDevice(input);
         int totalCharacters = 0;
-        //String previousWorld = input,
-        String newWorld = input;
-        //String newInput = input;
+        String newWorld = "";
         long seed = 0;
         int startIndexSeed = 0;
         boolean newW = false;
         while (inputType.possibleNextInput()) {
             totalCharacters += 1;
             char c = Character.toUpperCase(inputType.getNextKey());
-            if (c == 'N') {
-                startIndexSeed = totalCharacters;
-                newW = true;
-                //if (0 < inputType.getNextKey() || inputType.getNextKey() > 9) {
-                //    System.out.println("wrong format to build new world");
-                //}
-            }
-            if (c == 'S') {
-                //System.out.println("moo");
-                if ((startIndexSeed != totalCharacters - 1) && newW) {
-                    newWorld = input.substring(startIndexSeed, totalCharacters - 1);
-                    seed = Long.parseLong(newWorld);
-                    //System.out.println(seed);
-                    //newInput = input.substring(totalCharacters, input.length());
+            switch (c) {
+                case 'N':
+                    startIndexSeed = totalCharacters;
+                    newW = true;
                     break;
-                }
+                case 'S':
+                    if ((startIndexSeed != totalCharacters - 1) && newW) {
+                        newWorld = input.substring(startIndexSeed, totalCharacters - 1);
+                        seed = Long.parseLong(newWorld);
+                        break;
+                    }
 
+                    break;
+                case 'L':
+
+                case ':':
+                    c = Character.toUpperCase(inputType.getNextKey());
+                    if (c == 'Q') {
+                 //       saveGame(w);
+                        System.exit(0);
+                    }
+                    break;
+                //default: keyCatcher(c);// something to do with invalid input
             }
-            //for phase 2 might be
-            /*if (c == 'L') {
-                newWorld = previousWorld;
-                seed = previousSeed;
-                break;
-            }
-            if (c == 'Q') {
-                System.out.println("done.");
-                break;
-            }
-            if (c == ':') {
-                previousWorld = newWorld;
-            }*/
         }
         TETile[][] finalWorldFrame = null;
-        if (seed > 0 && seed < Math.pow(2, 63)) {
+        if (seed > 0) {
             //ter.initialize(WIDTH, HEIGHT);
             //System.out.println("seed "+ seed);
             //WorldFrame frame = new WorldFrame(WIDTH, HEIGHT, seed, newInput);
@@ -111,6 +105,53 @@ public class Engine {
         return finalWorldFrame;
     }
 
+    /**
+     * this is function to save the game
+     * source: save demo by Professor Hug
+     */
+    /*private static void saveGame(WorldFrame w) {
+        File f = new File("./save_data");
+        try {
+            if (!f.exists()) {
+                f.createNewFile();
+            }
+            FileOutputStream fs = new FileOutputStream(f);
+            ObjectOutputStream os = new ObjectOutputStream(fs);
+            //os.writeObject(editor);
+        }  catch (FileNotFoundException e) {
+            System.out.println("file not found");
+            System.exit(0);
+        } catch (IOException e) {
+            System.out.println(e);
+            System.exit(0);
+        }
+    }*/
 
+    /**
+     * this is function to load the game
+     * source: save Demo by Professor Hug
+     */
+    /*private static Editor loadGame() {
+        File f = new File("./save_data");
+        if (f.exists()) {
+            try {
+                FileInputStream fs = new FileInputStream(f);
+                ObjectInputStream os = new ObjectInputStream(fs);
+                return (Editor) os.readObject();
+            } catch (FileNotFoundException e) {
+                System.out.println("file not found");
+                System.exit(0);
+            } catch (IOException e) {
+                System.out.println(e);
+                System.exit(0);
+            } catch (ClassNotFoundException e) {
+                System.out.println("class not found");
+                System.exit(0);
+            }
+        }
+
+        //In the case no Editor has been saved yet, we return a new one.
+        return new Editor();
+    }*/
 
 }
