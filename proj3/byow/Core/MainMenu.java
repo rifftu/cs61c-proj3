@@ -151,6 +151,10 @@ public class MainMenu implements Serializable {
         StdDraw.text(width / 2, height / 2, s);
         StdDraw.show();
     }
+
+    /**
+     * function to draw frame while user is inputting player's name
+     */
     public String setName() {
         // Read n letters of player input
         drawFrameName("");
@@ -173,6 +177,24 @@ public class MainMenu implements Serializable {
         menu();
         return result;
     }
+
+    /**
+     * method to display screen when there is a winner
+     *
+     */
+    public void drawFrameWin(String s) {
+        //Take the string and display it in the center of the screen
+        StdDraw.clear(Color.black);
+        Font font = new Font("Arial", Font.BOLD, 25);
+        StdDraw.setFont(font);
+        StdDraw.setPenColor(Color.white);
+        StdDraw.text(width / 2, height / 2 + 10, "Congratulation!!!");
+        StdDraw.text(width / 2, height / 2 + 8, s + " win!");
+        StdDraw.text(width / 2, height / 2 + 6, " Type b to comeback to the main menu");
+        StdDraw.show();
+    }
+
+
     public static void main(String[] args) {
         MainMenu n = new MainMenu();
         n.menu();

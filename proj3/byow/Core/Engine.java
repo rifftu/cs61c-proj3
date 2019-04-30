@@ -20,7 +20,7 @@ public class Engine {
     private TETile[][] finalWorldFrame;
     private WorldFrame w;
     static Random rand = new Random();
-    private static long seed = rand.nextInt(1000);
+    private static long seed = rand.nextInt(999999999);
     private boolean gameStart = false;
     private static String name1 = "P1";
     private static String name2 = "P2";
