@@ -3,10 +3,13 @@ package byow.Core;
 import byow.TileEngine.TETile;
 import byow.TileEngine.Tileset;
 
+
+import java.io.Serializable;
 import java.util.Random;
+
 import java.util.Set;
 
-class Room {
+class Room implements Serializable {
 
     /**
      * Private variables storing room location and size
@@ -42,14 +45,17 @@ class Room {
      * @param pSet KDTree storing all the corners (belongs to worldFrame)
      */
     void addPoints(DynamicKD pSet) {
+
         Point ur = new Point(x + w - 1, y + h - 1, this);
         Point ul = new Point(x, y + h - 1, this);
         Point ll = new Point(x, y, this);
         Point lr = new Point(x + w - 1, y, this);
+
         pSet.put(ur);
         pSet.put(ul);
         pSet.put(ll);
         pSet.put(lr);
+
     }
 
     /**

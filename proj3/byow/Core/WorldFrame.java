@@ -3,11 +3,16 @@ package byow.Core;
 import byow.TileEngine.TETile;
 import byow.TileEngine.Tileset;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-class WorldFrame {
+
+import java.awt.event.KeyListener;
+
+
+class WorldFrame implements Serializable {
 
 
     private Creature P1;
@@ -79,6 +84,7 @@ class WorldFrame {
 
     private void drawRooms() {
 
+
         clearTiles();
 
         for (Hallway hall : hallwaysSet) {
@@ -107,6 +113,7 @@ class WorldFrame {
         for (int x = 0; x < w; x += 1) {
             for (int y = 0; y < h; y += 1) {
                 floortiles[x][y] = Tileset.NOTHING;
+
             }
         }
     }

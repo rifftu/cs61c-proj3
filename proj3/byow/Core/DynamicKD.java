@@ -1,11 +1,13 @@
 package byow.Core;
 
 
-class DynamicKD {
+import java.io.Serializable;
+
+class DynamicKD implements Serializable {
 
     private Node root;
 
-    private class Node {
+    private class Node implements Serializable{
         Point myPoint;
         Node left;
         Node right;

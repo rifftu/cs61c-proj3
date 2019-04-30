@@ -2,14 +2,14 @@ package byow.Core;
 
 
 
+import java.io.Serializable;
 import java.util.Random;
 
-class Hallway extends Room {
+class Hallway extends Room implements Serializable {
     private Direction dir;
     private int length;
     private int startX;
     private int startY;
-
 
     private Hallway(int x, int y, Direction d, int l, WorldFrame world) {
 
@@ -116,7 +116,6 @@ class Hallway extends Room {
         Random ran = world.rand();
 
         int yH = RandomUtils.uniform(ran, two.getY(), two.tEdge() + 1);
-
         int xH = RandomUtils.uniform(ran, one.getX(), one.rEdge() + 1);
         int lH = two.getX() - xH;
 
@@ -141,7 +140,6 @@ class Hallway extends Room {
         int xH = two.rWall();
         int lH = RandomUtils.uniform(ran, one.getX() - two.rWall(), one.rWall() - two.rWall());
 
-
         if (lH > 0) {
 
 
@@ -156,10 +154,6 @@ class Hallway extends Room {
             world.hallwaysSet().add(new Hallway(xV, yH, Direction.UP, lV, world));
         }
     }
-
-
-
-
 
     @Override
     int rWall() {

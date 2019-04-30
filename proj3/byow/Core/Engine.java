@@ -2,11 +2,15 @@ package byow.Core;
 
 import byow.InputDemo.InputSource;
 import byow.InputDemo.StringInputDevice;
-//import byow.TileEngine.TERenderer;
+import byow.TileEngine.TERenderer;
+import byow.SaveDemo.Editor;
 import byow.TileEngine.TETile;
 
+import java.io.*;
+import java.lang.reflect.WildcardType;
+
 public class Engine {
-    //TERenderer ter = new TERenderer();
+    TERenderer ter = new TERenderer();
     /* Feel free to change the width and height. */
     public static final int WIDTH = 80;
     public static final int HEIGHT = 40;
@@ -53,62 +57,106 @@ public class Engine {
         //TETile[][] finalWorldFrame = new WorldFrame(input).tiles();
         InputSource inputType = new StringInputDevice(input);
         int totalCharacters = 0;
-        //String previousWorld = input,
-        String newWorld = input;
-        //String newInput = input;
+        String newWorld = "";
         long seed = 0;
         int startIndexSeed = 0;
         boolean newW = false;
+        TETile[][] finalWorldFrame = null;
+        WorldFrame w = loadGame();
         while (inputType.possibleNextInput()) {
             totalCharacters += 1;
             char c = Character.toUpperCase(inputType.getNextKey());
-            if (c == 'N') {
-                startIndexSeed = totalCharacters;
-                newW = true;
-                //if (0 < inputType.getNextKey() || inputType.getNextKey() > 9) {
-                //    System.out.println("wrong format to build new world");
-                //}
-            }
-            if (c == 'S') {
-                //System.out.println("moo");
-                if ((startIndexSeed != totalCharacters - 1) && newW) {
-                    newWorld = input.substring(startIndexSeed, totalCharacters - 1);
-                    seed = Long.parseLong(newWorld);
-                    //System.out.println(seed);
-                    //newInput = input.substring(totalCharacters, input.length());
+            switch (c) {
+                case 'N':
+                    startIndexSeed = totalCharacters;
+                    newW = true;
                     break;
-                }
-
+                case 'S':
+                    if ((startIndexSeed != totalCharacters - 1) && newW) {
+                        newWorld = input.substring(startIndexSeed, totalCharacters - 1);
+                        seed = Long.parseLong(newWorld);
+                        w = new WorldFrame(WIDTH, HEIGHT, seed);
+                        finalWorldFrame = w.tiles();
+                    }
+                    break;
+                case 'L':
+                    //System.out.println("test L");
+                    w.drawRooms(WIDTH, HEIGHT);
+                    finalWorldFrame = w.tiles();
+                    break;
+                case ':':
+                    c = Character.toUpperCase(inputType.getNextKey());
+                    if (c == 'Q') {
+                        saveGame(w);
+                        System.exit(0);
+                    }
+                    break;
+                default:
+                    //System.out.println("default");
+                    break;
+                    // keyCatcher(c);// something to do with invalid input
             }
-            //for phase 2 might be
-            /*if (c == 'L') {
-                newWorld = previousWorld;
-                seed = previousSeed;
-                break;
-            }
-            if (c == 'Q') {
-                System.out.println("done.");
-                break;
-            }
-            if (c == ':') {
-                previousWorld = newWorld;
-            }*/
         }
-        TETile[][] finalWorldFrame = null;
-        if (seed > 0 && seed < Math.pow(2, 63)) {
-            //ter.initialize(WIDTH, HEIGHT);
+
+        //if (seed > 0) {
+        ter.initialize(WIDTH, HEIGHT);
             //System.out.println("seed "+ seed);
             //WorldFrame frame = new WorldFrame(WIDTH, HEIGHT, seed, newInput);
-            WorldFrame frame = new WorldFrame(WIDTH, HEIGHT, seed);
-            finalWorldFrame = frame.tiles();
-            //ter.renderFrame(frame.tiles);
-        }
 
+        ter.renderFrame(finalWorldFrame);
+
+        //}
         //System.out.println("Processed " + totalCharacters + " characters.");
 
         return finalWorldFrame;
     }
 
+    /**
+     * this is function to save the game
+     * source: save demo by Professor Hug
+     */
+    private static void saveGame(WorldFrame w) {
+        File f = new File("./save_game");
+        try {
+            if (!f.exists()) {
+                f.createNewFile();
+            }
+            FileOutputStream fs = new FileOutputStream(f);
+            ObjectOutputStream os = new ObjectOutputStream(fs);
+            os.writeObject(w);
+        }  catch (FileNotFoundException e) {
+            System.out.println("file not found");
+            System.exit(0);
+        } catch (IOException e) {
+            System.out.println(e);
+            System.exit(0);
+        }
+    }
 
+    /**
+     * this is function to load the game
+     * source: save Demo by Professor Hug
+     */
+    private static WorldFrame loadGame() {
+        File f = new File("./save_game");
+        if (f.exists()) {
+            try {
+                FileInputStream fs = new FileInputStream(f);
+                ObjectInputStream os = new ObjectInputStream(fs);
+                return (WorldFrame) os.readObject();
+            } catch (FileNotFoundException e) {
+                System.out.println("file not found");
+                System.exit(0);
+            } catch (IOException e) {
+                System.out.println(e);
+                System.exit(0);
+            } catch (ClassNotFoundException e) {
+                System.out.println("class not found");
+                System.exit(0);
+            }
+        }
+        //In the case no Editor has been saved yet, we return a new one.
+        return new WorldFrame(WIDTH, HEIGHT, 1);
+    }
 
 }
