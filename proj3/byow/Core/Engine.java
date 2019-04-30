@@ -2,7 +2,7 @@ package byow.Core;
 
 import byow.InputDemo.InputSource;
 import byow.InputDemo.StringInputDevice;
-//import byow.TileEngine.TERenderer;
+import byow.TileEngine.TERenderer;
 import byow.TileEngine.TETile;
 import edu.princeton.cs.introcs.StdDraw;
 
@@ -12,7 +12,7 @@ import java.io.*;
 import java.util.Random;
 
 public class Engine {
-    //TERenderer ter = new TERenderer();
+    TERenderer ter = new TERenderer();
     /* Feel free to change the width and height. */
     public static final int WIDTH = 80;
     public static final int HEIGHT = 35;
@@ -170,9 +170,9 @@ public class Engine {
                     break;
             }
         }
-        //ter.initialize(WIDTH, HEIGHT);//need to comment out when using the interact with keyboard
-        //ter.renderFrame(w.tiles());
-        //ter.showOnly();
+        ter.initialize(WIDTH, HEIGHT);//need to comment out when using the interact with keyboard
+        ter.renderFrame(w.tiles());
+        ter.showOnly();
         return w.tiles();
     }
 
@@ -195,7 +195,7 @@ public class Engine {
 
         } catch (IOException e) {
             System.out.println(e);
-            //System.exit(0);
+            System.exit(0);
         }
     }
 
