@@ -22,8 +22,8 @@ public class Engine {
     static Random rand = new Random();
     private static long seed = rand.nextInt(1000);
     private boolean gameStart = false;
-    private static String name1 = "";
-    private static String name2 = "";
+    private static String name1 = "P1";
+    private static String name2 = "P2";
 
     /**
      * Method used for exploring a fresh world. This method should handle all inputs,
