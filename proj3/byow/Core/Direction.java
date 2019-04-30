@@ -1,5 +1,5 @@
 package byow.Core;
 
 public enum Direction {
-    UP, RIGHT;
+    UP, RIGHT, DOWN, LEFT
 }

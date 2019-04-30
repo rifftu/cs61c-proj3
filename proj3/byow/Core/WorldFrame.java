@@ -8,14 +8,24 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
+import java.awt.event.KeyListener;
+
 
 class WorldFrame implements Serializable {
 
+
+    private Creature P1;
+    private Creature P2;
     private Set<Room> roomSet;
-    Set<Hallway> hallwaysSet;
-    Random rand;
+    private Set<Hallway> hallwaysSet;
+    private Set<Creature> animalSet;
+    private Random rand;
+
+    private Creature[][] animals;
+    private DynamicKD pSet;
+
+    //The tiles
     private TETile[][] tiles;
-    DynamicKD pSet;
 
 
     WorldFrame(int w, int h, long seed) {
@@ -46,6 +56,9 @@ class WorldFrame implements Serializable {
         }
 
         drawRooms(w, h);
+
+        P1 = new Player("P1");
+        P2 = new Player("P1");
 
     }
 
@@ -102,4 +115,45 @@ class WorldFrame implements Serializable {
     TETile[][] tiles() {
         return tiles;
     }
+
+    Creature[][] animals() {
+        return animals;
+    }
+
+    Set<Hallway> hallwaysSet() {
+        return hallwaysSet;
+    }
+    Set<Creature> animalSet() {
+        return animalSet;
+    }
+    Random rand() {
+        return rand;
+    }
+    DynamicKD pSet() {
+        return pSet;
+    }
+
+    void keyCatcher(char c) {
+        switch (c) {
+            case 'w':
+                P1.move(1, Direction.UP);
+            case 'a':
+                P1.move(1, Direction.LEFT);
+            case 's':
+                P1.move(1, Direction.DOWN);
+            case 'd':
+                P1.move(1, Direction.RIGHT);
+            case 'i':
+                P1.move(1, Direction.UP);
+            case 'j':
+                P1.move(1, Direction.LEFT);
+            case 'k':
+                P1.move(1, Direction.DOWN);
+            case 'l':
+                P1.move(1, Direction.RIGHT);
+            default:
+
+        }
+    }
+
 }
