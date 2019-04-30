@@ -7,9 +7,6 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-import java.awt.event.KeyListener;
-
-
 class WorldFrame {
 
 
@@ -24,7 +21,11 @@ class WorldFrame {
     private DynamicKD pSet;
 
     //The tiles
-    private TETile[][] tiles;
+    private TETile[][] floortiles;
+    private TETile[][] showtiles;
+
+    private int w;
+    private int h;
 
 
     WorldFrame(int w, int h, long seed) {
@@ -32,20 +33,26 @@ class WorldFrame {
         final int attempts = 50;
         final int maxSize = w / 8;
 
+        this.w = w;
+        this.h = h;
+
         pSet = new DynamicKD();
-        tiles = new TETile[w][h];
+        floortiles = new TETile[w][h];
+        showtiles = new TETile[w][h];
+        animals = new Creature[w][h];
 
         rand = new Random(seed);
         int firstX = 10; int firstY = 10; int firstW = 5; int firstH = 5;
         roomSet = new HashSet<>();
         hallwaysSet = new HashSet<>();
+        animalSet = new HashSet<>();
         Room root = new Room(firstX, firstY, firstW, firstH);
         roomSet.add(root);
         root.addPoints(pSet);
 
         for (int i = 0; i < attempts; i++) {
 
-            Room newRoom = randomRoom(w, h, maxSize);
+            Room newRoom = randomRoom(maxSize);
 
             if (hasOverlap(newRoom)) {
                 continue;
@@ -54,34 +61,57 @@ class WorldFrame {
             placeRoom(newRoom);
         }
 
-        drawRooms(w, h);
+        drawRooms();
 
-        P1 = new Player("P1");
-        P2 = new Player("P1");
+
+        P1 = new Player("P1", this);
+        P2 = new Player("P2", this);
+
+        root.addCreature(P1, this);
+        root.addCreature(P2, this);
+
+        copytiles();
+
+        drawAnimals();
+
 
     }
 
-    private void drawRooms(int w, int h) {
+    private void drawRooms() {
 
-        clearTiles(w, h);
+        clearTiles();
 
         for (Hallway hall : hallwaysSet) {
-            Room.draw(tiles, hall);
+            Room.draw(floortiles, hall);
         }
         for (Room room : roomSet) {
-            Room.draw(tiles, room);
+            Room.draw(floortiles, room);
         }
+
+
     }
 
-    private void clearTiles(int w, int h) {
-        for (int x = 0; x < w; x += 1) {
-            for (int y = 0; y < h; y += 1) {
-                tiles[x][y] = Tileset.NOTHING;
+    private void drawAnimals() {
+        for (Creature cr : animalSet) {
+            int x = cr.getX();
+            int y = cr.getY();
+            if (floortiles[x][y] == Tileset.WALL) {
+                throw new RuntimeException("This " + cr.name() + " is in a wall wtf");
+            } else {
+                showtiles[x][y] = cr.tile();
             }
         }
     }
 
-    private Room randomRoom(int w, int h, int maxSize) {
+    private void clearTiles() {
+        for (int x = 0; x < w; x += 1) {
+            for (int y = 0; y < h; y += 1) {
+                floortiles[x][y] = Tileset.NOTHING;
+            }
+        }
+    }
+
+    private Room randomRoom(int maxSize) {
         int rw = Math.max(2, rand.nextInt(maxSize));
         int rh = Math.max(2, rand.nextInt(maxSize));
         int rx = Math.max(2, rand.nextInt(w - rw - 3) + 1);
@@ -110,8 +140,14 @@ class WorldFrame {
         return pSet.nearest(newRoom.midX(), newRoom.midY()).room();
     }
 
+
     TETile[][] tiles() {
-        return tiles;
+        return showtiles;
+    }
+
+
+    TETile[][] getFloortiles() {
+        return floortiles;
     }
 
     Creature[][] animals() {
@@ -135,23 +171,47 @@ class WorldFrame {
         switch (c) {
             case 'w':
                 P1.move(1, Direction.UP);
+                System.out.println("W");
             case 'a':
                 P1.move(1, Direction.LEFT);
+                System.out.println("A");
+
             case 's':
                 P1.move(1, Direction.DOWN);
+                System.out.println("S");
+
             case 'd':
                 P1.move(1, Direction.RIGHT);
+                System.out.println("D");
+
             case 'i':
-                P1.move(1, Direction.UP);
+                P2.move(1, Direction.UP);
             case 'j':
-                P1.move(1, Direction.LEFT);
+                P2.move(1, Direction.LEFT);
             case 'k':
-                P1.move(1, Direction.DOWN);
+                P2.move(1, Direction.DOWN);
             case 'l':
-                P1.move(1, Direction.RIGHT);
+                P2.move(1, Direction.RIGHT);
             default:
 
         }
+
+        step();
+
     }
 
+    private void step() {
+        copytiles();
+        drawAnimals();
+    }
+
+    private void copytiles() {
+        for (int x = 0; x < w; x++) {
+            System.arraycopy(floortiles[x], 0, showtiles[x], 0, h);
+        }
+    }
+
+    void flip(int x, int y) {
+
+    }
 }

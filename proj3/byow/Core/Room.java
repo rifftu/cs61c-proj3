@@ -239,6 +239,8 @@ class Room {
             cY = RandomUtils.uniform(r, getY(), tWall());
             if (map[cX][cY] == null) {
                 map[cX][cY] = cr;
+                cr.x = cX;
+                cr.y = cY;
                 world.animalSet().add(cr);
                 return true;
             }

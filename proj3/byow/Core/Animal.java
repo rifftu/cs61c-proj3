@@ -1,5 +1,5 @@
 package byow.Core;
 
-enum Animal {
-    Player, Baddie, Nothing
+enum Sprite {
+    Player1, Player2, Baddie, Deadboi
 }
