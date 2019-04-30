@@ -2,7 +2,7 @@ package byow.Core;
 
 import byow.InputDemo.InputSource;
 import byow.InputDemo.StringInputDevice;
-//import byow.TileEngine.TERenderer;
+import byow.TileEngine.TERenderer;
 import byow.TileEngine.TETile;
 import edu.princeton.cs.introcs.StdDraw;
 
@@ -12,7 +12,7 @@ import java.io.*;
 import java.util.Random;
 
 public class Engine {
-    //TERenderer ter = new TERenderer();
+    TERenderer ter = new TERenderer();
     /* Feel free to change the width and height. */
     public static final int WIDTH = 80;
     public static final int HEIGHT = 35;
@@ -57,14 +57,15 @@ public class Engine {
                 }
             }
         }
-        //ter.initialize(WIDTH, HEIGHT);
-        //ter.renderFrame(w.tiles());
+        ter.initialize(WIDTH, HEIGHT);
+        ter.renderFrame(w.tiles());
         Character c = '[';
         while (gameStart) {
             hudDisplay();
             if (StdDraw.hasNextKeyTyped()) {
                 Character pre = c;
                 c =  StdDraw.nextKeyTyped();
+                //System.out.println("character " + c);
                 String in = Character.toString(c);
                 if (c == 'q' && pre == ':') {
                     //System.out.println("quit save");
@@ -229,7 +230,7 @@ public class Engine {
      *
      */
     private void hudDisplay() {
-        //ter.renderFrame(w.tiles());
+        ter.renderFrame(w.tiles());
         StdDraw.setPenColor(Color.white);
         StdDraw.line(0, w.getH() - 1, w.getW(), w.getH() - 1);
         int x = (int) StdDraw.mouseX();
