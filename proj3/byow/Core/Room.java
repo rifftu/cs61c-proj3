@@ -3,9 +3,10 @@ package byow.Core;
 import byow.TileEngine.TETile;
 import byow.TileEngine.Tileset;
 
+import java.io.Serializable;
 import java.util.Set;
 
-class Room {
+class Room implements Serializable {
 
     /**
      * Private variables storing room location and size

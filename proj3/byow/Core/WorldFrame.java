@@ -3,12 +3,13 @@ package byow.Core;
 import byow.TileEngine.TETile;
 import byow.TileEngine.Tileset;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
 
-class WorldFrame {
+class WorldFrame implements Serializable {
 
     private Set<Room> roomSet;
     Set<Hallway> hallwaysSet;
@@ -48,7 +49,7 @@ class WorldFrame {
 
     }
 
-    private void drawRooms(int w, int h) {
+    public void drawRooms(int w, int h) {
 
         clearTiles(w, h);
 

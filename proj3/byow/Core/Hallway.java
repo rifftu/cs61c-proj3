@@ -2,9 +2,10 @@ package byow.Core;
 
 
 
+import java.io.Serializable;
 import java.util.Random;
 
-class Hallway extends Room {
+class Hallway extends Room implements Serializable {
     private Direction dir;
     private int length;
     private int startX;
