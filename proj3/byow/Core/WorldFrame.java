@@ -10,13 +10,18 @@ import java.util.Set;
 
 class WorldFrame {
 
-    private Set<Room> roomSet;
-    Set<Hallway> hallwaysSet;
+    //Only one randomizer used throughout world generation
     Random rand;
-    private TETile[][] tiles;
+
+    //Sets meant for storing things
     DynamicKD pSet;
+    Set<Hallway> hallwaysSet;
+    private Set<Room> roomSet;
 
+    //The tiles
+    private TETile[][] tiles;
 
+    /**
     WorldFrame(int w, int h, long seed) {
 
         final int attempts = 50;
