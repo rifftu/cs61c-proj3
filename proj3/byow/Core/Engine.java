@@ -122,17 +122,17 @@ public class Engine {
             char c = Character.toUpperCase(inputType.getNextKey());
             switch (c) {
                 case 'N':
-                    System.out.println("tes N");
+                    //System.out.println("tes N");
                     startIndexSeed = totalCharacters;
                     newW = true;
                     break;
                 case 'S':
-                    System.out.println("test S");
+                    //System.out.println("test S");
                     if ((startIndexSeed != totalCharacters - 1) && newW) {
                         newWorld = input.substring(startIndexSeed, totalCharacters - 1);
                         seed = Long.parseLong(newWorld);
                         w = new WorldFrame(WIDTH, HEIGHT - 2, seed);
-
+                        newW = false;
                     }
                     if (!newW) {
                         w.keyCatcher('s');
@@ -156,10 +156,10 @@ public class Engine {
                 default:
                     c = Character.toLowerCase(c);
                     if (48 <= c && c <= 57) {
-                        System.out.println("number");
+                        //System.out.println("number");
                         break;
                     } else {
-                        System.out.println("character " + c);
+                        //System.out.println("character " + c);
                         w.keyCatcher(c);// moving player
                     }
                     break;
@@ -167,6 +167,7 @@ public class Engine {
         }
         //ter.initialize(WIDTH, HEIGHT);//need to comment out when using the interact with keyboard
         //ter.renderFrame(w.tiles());
+        //ter.showOnly();
         return w.tiles();
     }
 
