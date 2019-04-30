@@ -26,8 +26,6 @@ class Player extends Creature implements Serializable{
         return 1;
     }
 
-<<<<<<< HEAD
-=======
     @Override
     TETile tile() {
         if (this.name().equals("P1")) {
@@ -47,7 +45,6 @@ class Player extends Creature implements Serializable{
         }
     }
 
->>>>>>> e95361a5e908f3605e856e9b60ae75bf67aed0b5
     void move(int Dist, Direction dir) {
         this.facing = dir;
         //System.out.println(dir);
@@ -60,10 +57,6 @@ class Player extends Creature implements Serializable{
             y = this.nextY();
             this.x = x;
             this.y = y;
-<<<<<<< HEAD
-            world.animals()[x][y] = this;
-            world.tiles()[x][y] = Tileset.AVATAR;
-=======
 
             if (map[x][y] != null && map[x][y].killer()) {
                 this.alive = false;
@@ -72,7 +65,6 @@ class Player extends Creature implements Serializable{
                 map[x][y] = this;
                 world.flip(nextX(), nextY());
             }
->>>>>>> e95361a5e908f3605e856e9b60ae75bf67aed0b5
         }
     }
 

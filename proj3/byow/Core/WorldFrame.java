@@ -33,7 +33,7 @@ class WorldFrame implements Serializable {
     private int h;
 
 
-    WorldFrame(int w, int h, long seed, String name) {
+    WorldFrame(int w, int h, long seed) {
 
         final int attempts = 50;
         final int maxSize = w / 8;

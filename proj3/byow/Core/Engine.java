@@ -13,6 +13,7 @@ import java.util.Random;
 
 public class Engine {
     TERenderer ter = new TERenderer();
+    //ter.initialize(WIDTH, HEIGHT);
     /* Feel free to change the width and height. */
     public static final int WIDTH = 80;
     public static final int HEIGHT = 40;
@@ -23,6 +24,7 @@ public class Engine {
     private static long seed = rand.nextInt(1000);
     private boolean gameStart = false;
     private static String name = "";
+
     /**
      * Method used for exploring a fresh world. This method should handle all inputs,
      * including inputs from the main menu.
@@ -37,7 +39,7 @@ public class Engine {
                 switch (c) {
                     case 'N':
                         System.out.println("test");
-                        w = new WorldFrame(WIDTH, HEIGHT, seed, name);
+                        w = new WorldFrame(WIDTH, HEIGHT, seed);
                         gameStart = true;
                         break;
                     case 'Q':
@@ -54,13 +56,23 @@ public class Engine {
                 }
             }
         }
-        finalWorldFrame = w.tiles();
         ter.initialize(WIDTH, HEIGHT);
-        ter.renderFrame(finalWorldFrame);
+        ter.renderFrame(w.tiles());
+        Character c = '[';
         while (gameStart) {
             if (StdDraw.hasNextKeyTyped()) {
-                String c = Character.toString(Character.toUpperCase(StdDraw.nextKeyTyped()));
-                interactWithInputString(c);
+                Character pre = c;
+                c =  StdDraw.nextKeyTyped();
+
+                String in = Character.toString(c);
+                if (c == 'q' && pre == ':') {
+                    //System.out.println("quit save");
+                    interactWithInputString(":q");
+                } else if (c == ':'){
+                    //do nothing
+                } else {
+                    interactWithInputString(in);
+                }
             }
         }
 
@@ -110,14 +122,16 @@ public class Engine {
             char c = Character.toUpperCase(inputType.getNextKey());
             switch (c) {
                 case 'N':
+                    System.out.println("tes N");
                     startIndexSeed = totalCharacters;
                     newW = true;
                     break;
                 case 'S':
+                    System.out.println("test S");
                     if ((startIndexSeed != totalCharacters - 1) && newW) {
                         newWorld = input.substring(startIndexSeed, totalCharacters - 1);
                         seed = Long.parseLong(newWorld);
-                        w = new WorldFrame(WIDTH, HEIGHT, seed, name);
+                        w = new WorldFrame(WIDTH, HEIGHT, seed);
 
                     }
                     if (!newW) {
@@ -126,8 +140,11 @@ public class Engine {
                     break;
                 case 'L':
                     //System.out.println("test L");
-                    w.drawRooms();
-                    finalWorldFrame = w.tiles();
+                    if (gameStart) {
+                        w.keyCatcher('l');
+                    } else {
+                        w = loadGame();
+                    }
                     break;
                 case ':':
                     c = Character.toUpperCase(inputType.getNextKey());
@@ -137,15 +154,20 @@ public class Engine {
                     }
                     break;
                 default:
-                    //System.out.println("default");
-                    w.keyCatcher(c);// moving player
+                    c = Character.toLowerCase(c);
+                    if (48 <= c && c <= 57) {
+                        System.out.println("number");
+                        break;
+                    } else {
+                        System.out.println("character " + c);
+                        w.keyCatcher(c);// moving player
+                    }
                     break;
             }
         }
-        finalWorldFrame = w.tiles();
-        ter.initialize(WIDTH, HEIGHT);
-        ter.renderFrame(finalWorldFrame);
-        return finalWorldFrame;
+        //ter.initialize(WIDTH, HEIGHT);//need to comment out when using the interact with keyboard
+        ter.renderFrame(w.tiles());
+        return w.tiles();
     }
 
     /**
@@ -193,7 +215,7 @@ public class Engine {
             }
         }
         //In the case no WorldFrame has been saved yet, return a new one.
-        return new WorldFrame(WIDTH, HEIGHT, seed, name);
+        return new WorldFrame(WIDTH, HEIGHT, seed);
     }
 
 }
