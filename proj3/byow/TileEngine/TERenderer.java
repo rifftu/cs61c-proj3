@@ -96,6 +96,14 @@ public class TERenderer {
                 world[x][y].draw(x + xOffset, y + yOffset);
             }
         }
+        //StdDraw.show();
+    }
+
+    /**
+     * separated StdDraw out of renderFrame to avoid flashing when moving the mouse
+     */
+    public void showOnly() {
         StdDraw.show();
     }
+
 }
