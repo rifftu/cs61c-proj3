@@ -78,14 +78,13 @@ public class MainMenu implements Serializable {
                     drawFrameSeed(result);
                     StdDraw.text(width / 2, height / 2, result);
                 }
-                if (addedChar == 'S'){
+                if (addedChar == 'S') {
                     finish = true;
                     break;
                 }
             }
         }
-        String sub = result.substring(0,result.length());
-
+        //String sub = result.substring(0, result.length());
         return Long.parseLong(result);
     }
 

@@ -36,6 +36,7 @@ public class WorldFrameTest {
         testTiles = frame.tiles();
 
         ter.renderFrame(testTiles);
+        ter.showOnly();
 
         KeyboardInputSource key = new KeyboardInputSource();
 
@@ -47,6 +48,7 @@ public class WorldFrameTest {
                 System.out.println("BOOP");
                 frame.keyCatcher(c);
                 ter.renderFrame(testTiles);
+                ter.showOnly();
             }
         }
 

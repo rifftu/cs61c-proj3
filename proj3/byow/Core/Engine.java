@@ -38,7 +38,7 @@ public class Engine {
                 char c = Character.toUpperCase(StdDraw.nextKeyTyped());
                 switch (c) {
                     case 'N':
-                        System.out.println("test");
+                        //System.out.println("test");
                         seed = mainM.setSeed();
                         w = new WorldFrame(WIDTH, HEIGHT - 2, seed);
                         gameStart = true;
@@ -65,7 +65,6 @@ public class Engine {
             if (StdDraw.hasNextKeyTyped()) {
                 Character pre = c;
                 c =  StdDraw.nextKeyTyped();
-
                 String in = Character.toString(c);
                 if (c == 'q' && pre == ':') {
                     //System.out.println("quit save");
@@ -128,14 +127,16 @@ public class Engine {
                     newW = true;
                     break;
                 case 'S':
-                    //System.out.println("test S");
-                    if ((startIndexSeed != totalCharacters - 1) && newW) {
-                        newWorld = input.substring(startIndexSeed, totalCharacters - 1);
-                        seed = Long.parseLong(newWorld);
-                        w = new WorldFrame(WIDTH, HEIGHT - 2, seed);
-                        newW = false;
-                    }
-                    if (!newW) {
+                    if (newW) {
+                        //System.out.println("test S");
+                        if ((startIndexSeed != totalCharacters - 1)) {
+                            newWorld = input.substring(startIndexSeed, totalCharacters - 1);
+                            seed = Long.parseLong(newWorld);
+                            w = new WorldFrame(WIDTH, HEIGHT - 2, seed);
+                            newW = false;
+                        }
+                    } else {
+                        //System.out.println("test S else");
                         w.keyCatcher('s');
                     }
                     break;
@@ -145,6 +146,8 @@ public class Engine {
                         w.keyCatcher('l');
                     } else {
                         w = loadGame();
+                        gameStart = true;
+                        //System.out.println(newW);
                     }
                     break;
                 case ':':

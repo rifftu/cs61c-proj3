@@ -79,7 +79,9 @@ abstract class Creature implements Serializable {
         Creature[][] map = cr.world().animals();
         int x = cr.nextX();
         int y = cr.nextY();
-        return (grid[x][y] == Tileset.WALL || !(map[x][y] == null));
+        //System.out.println(grid[x][y].description().equals("wall"));
+        //return (grid[x][y] == Tileset.WALL || !(map[x][y] == null));
+        return (grid[x][y].description().equals("wall") || !(map[x][y] == null));
     }
 
 }
