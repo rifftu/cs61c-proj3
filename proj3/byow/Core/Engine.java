@@ -51,7 +51,12 @@ public class Engine {
                         gameStart = true;
                         break;
                     case 'C':
-                        name1 = mainM.setName();
+                        mainM.choosePlayer();
+                        if (mainM.getName1()) {
+                            name1 = mainM.setName();
+                        } else {
+                            name2 = mainM.setName();
+                        }
                         break;
                     default:
                 }

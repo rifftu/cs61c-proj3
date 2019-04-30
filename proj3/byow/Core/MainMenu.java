@@ -13,6 +13,9 @@ public class MainMenu implements Serializable {
     private int width = 60;
     private int height = 30;
     private int nameLength = 30;
+    private boolean name1 = false;
+    private boolean name2 = false;
+
     /**
      * initial the background of main menu
      */
@@ -25,7 +28,20 @@ public class MainMenu implements Serializable {
         StdDraw.clear(Color.BLACK);
         StdDraw.enableDoubleBuffering();
     }
-
+    /**
+     * return name1 which is set to true if choose player method is called
+     * and user chose player 1
+     */
+    public boolean getName1() {
+        return name1;
+    }
+    /**
+     * return name1 which is set to true if choose player method is called
+     * and user chose player 1
+     */
+    public boolean getName2() {
+        return name2;
+    }
     /**
      * display the main menu with all options
      */
@@ -55,9 +71,9 @@ public class MainMenu implements Serializable {
         StdDraw.clear(Color.black);
         Font font = new Font("Arial", Font.BOLD, 25);
         StdDraw.setFont(font);
+        StdDraw.setPenColor(Color.white);
         StdDraw.text(width / 2, height / 2 + 10, "Please enter a number for seed");
         StdDraw.text(width / 2, height / 2, s);
-        StdDraw.setPenColor(Color.white);
         StdDraw.show();
     }
 
@@ -70,7 +86,7 @@ public class MainMenu implements Serializable {
         String result = "";
         boolean finish = false;
         while (!finish) {
-            if (StdDraw.hasNextKeyTyped() && !finish) {
+            if (StdDraw.hasNextKeyTyped()) {
                 StdDraw.clear(Color.black);
                 char addedChar = Character.toUpperCase(StdDraw.nextKeyTyped());
                 if (addedChar != 'S' && 48 <= addedChar && addedChar <= 57) {
@@ -88,6 +104,36 @@ public class MainMenu implements Serializable {
         return Long.parseLong(result);
     }
 
+    /**
+     * function to draw frame to ask user chose player
+     */
+    public void choosePlayer() {
+        StdDraw.clear(Color.black);
+        Font font = new Font("Arial", Font.BOLD, 25);
+        StdDraw.setFont(font);
+        StdDraw.setPenColor(Color.white);
+        StdDraw.text(width / 2, height / 2 + 10, "Please choose your player using keyboard");
+        StdDraw.text(width / 2 - 8, height / 2, "1: Player 1");
+        StdDraw.text(width / 2 + 8, height / 2, "2: Player 2");
+        StdDraw.show();
+        boolean finish = false;
+        while (!finish) {
+            if (StdDraw.hasNextKeyTyped()) {
+                StdDraw.clear(Color.black);
+                char addedChar = Character.toUpperCase(StdDraw.nextKeyTyped());
+                if (addedChar == 49) {
+                    finish = true;
+                    name1 = true;
+                    name2 = false;
+                } else if (addedChar == 50) {
+                    name2 = true;
+                    finish = true;
+                    name1 = false;
+                }
+            }
+        }
+        StdDraw.show();
+    }
 
     /**
      * function to draw frame to ask user to input a name
@@ -98,11 +144,11 @@ public class MainMenu implements Serializable {
         StdDraw.clear(Color.black);
         Font font = new Font("Arial", Font.BOLD, 25);
         StdDraw.setFont(font);
+        StdDraw.setPenColor(Color.white);
         StdDraw.text(width / 2, height / 2 + 10, "Please enter your name");
         StdDraw.text(width / 2, height / 2 + 8, "Please do not enter the name has length over 30");
         StdDraw.text(width / 2, height / 2 + 6, " and using SPACE BAR to complete ");
         StdDraw.text(width / 2, height / 2, s);
-        StdDraw.setPenColor(Color.white);
         StdDraw.show();
     }
     public String setName() {
