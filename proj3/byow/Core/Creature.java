@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 abstract class Creature implements Serializable {
 
+
     protected WorldFrame world;
     protected Direction facing;
 
@@ -15,6 +16,8 @@ abstract class Creature implements Serializable {
 
     protected int x;
     protected int y;
+
+    protected boolean eating;
 
     WorldFrame world() {
         return this.world;
@@ -30,6 +33,22 @@ abstract class Creature implements Serializable {
         return y;
     }
 
+    int nextX() {
+        switch (this.facing) {
+            case RIGHT: return getX() + 1;
+            case LEFT: return getX() - 1;
+            default: return getX();
+        }
+    }
+
+    int nextY() {
+        switch (this.facing) {
+            case UP: return getY() + 1;
+            case DOWN: return getY() - 1;
+            default: return getY();
+        }
+    }
+
     String name() {
         return name;
     }
@@ -37,6 +56,8 @@ abstract class Creature implements Serializable {
     Direction facing() {
         return facing;
     }
+
+    abstract TETile tile();
 
     abstract int getW();
 
@@ -52,19 +73,13 @@ abstract class Creature implements Serializable {
 
     abstract boolean killer();
 
-    abstract boolean blocking();
 
     static boolean blocked (Creature cr) {
-        TETile[][] grid = cr.world().tiles();
+        TETile[][] grid = cr.world().getFloortiles();
         Creature[][] map = cr.world().animals();
-        int x = cr.getX();
-        int y = cr.getY();
-        switch (cr.facing()) {
-            case UP: y++;
-            case RIGHT: x++;
-            case DOWN: y--;
-            case LEFT: x--;
-        }
-        return (grid[x][y] == Tileset.WALL || !(map[x][y].blocking()));
+        int x = cr.nextX();
+        int y = cr.nextY();
+        return (grid[x][y] == Tileset.WALL || !(map[x][y] == null));
     }
+
 }

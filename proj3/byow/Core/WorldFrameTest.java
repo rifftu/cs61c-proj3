@@ -3,6 +3,7 @@ package byow.Core;
 import byow.TileEngine.TERenderer;
 import byow.TileEngine.TETile;
 import byow.TileEngine.Tileset;
+import edu.princeton.cs.introcs.StdDraw;
 
 import java.awt.desktop.SystemEventListener;
 import java.util.Random;
@@ -22,22 +23,36 @@ public class WorldFrameTest {
         TERenderer ter = new TERenderer();
         WorldFrame frame;
         TETile[][] testTiles;
-        //for (int i = 0; i < 10; i++) {
-            System.out.println(seed);
+        System.out.println(seed);
 
-            frame = new WorldFrame(w, h, seed, "");
+        frame = new WorldFrame(w, h, seed);
 
-            //for (int i = 0; i < args.length; i++) {
-            //    engine.interactWithInputString(args[i]);
-            //}
-            //System.out.println(engine.toString());
-            ter.initialize(w, h);
+        //for (int i = 0; i < args.length; i++) {
+        //    engine.interactWithInputString(args[i]);
+        //}
+        //System.out.println(engine.toString());
+        ter.initialize(w, h);
 
-            testTiles = frame.tiles();
+        testTiles = frame.tiles();
 
-            ter.renderFrame(testTiles);
+        ter.renderFrame(testTiles);
 
-    //}
+        KeyboardInputSource key = new KeyboardInputSource();
+
+        while (true) {
+            char c = key.getNextKey();
+            if (c == 'q') {
+                break;
+            } else {
+                System.out.println("BOOP");
+                frame.keyCatcher(c);
+                ter.renderFrame(testTiles);
+            }
+        }
+
+
+
+
     }
 
 
