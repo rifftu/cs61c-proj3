@@ -13,7 +13,7 @@ import java.lang.reflect.WildcardType;
 import java.util.Random;
 
 public class Engine {
-    TERenderer ter = new TERenderer();
+    //TERenderer ter = new TERenderer();
     //ter.initialize(WIDTH, HEIGHT);
     /* Feel free to change the width and height. */
     public static final int WIDTH = 80;
@@ -57,8 +57,8 @@ public class Engine {
                 }
             }
         }
-        ter.initialize(WIDTH, HEIGHT);
-        ter.renderFrame(w.tiles());
+        //ter.initialize(WIDTH, HEIGHT);
+        //ter.renderFrame(w.tiles());
         Character c = '[';
         while (gameStart) {
             mouseDisplay();
@@ -166,7 +166,7 @@ public class Engine {
             }
         }
         //ter.initialize(WIDTH, HEIGHT);//need to comment out when using the interact with keyboard
-        ter.renderFrame(w.tiles());
+        //ter.renderFrame(w.tiles());
         return w.tiles();
     }
 
@@ -222,7 +222,7 @@ public class Engine {
      *
      */
     private void mouseDisplay() {
-        ter.renderFrame(w.tiles());
+        //ter.renderFrame(w.tiles());
         StdDraw.setPenColor(Color.white);
         StdDraw.line(0, w.getH() - 1, w.getW(), w.getH() - 1);
         int x = (int) StdDraw.mouseX();
