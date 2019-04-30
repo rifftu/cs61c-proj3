@@ -13,7 +13,6 @@ import java.util.Random;
 
 public class Engine {
     //TERenderer ter = new TERenderer();
-    //ter.initialize(WIDTH, HEIGHT);
     /* Feel free to change the width and height. */
     public static final int WIDTH = 80;
     public static final int HEIGHT = 35;
@@ -23,7 +22,8 @@ public class Engine {
     static Random rand = new Random();
     private static long seed = rand.nextInt(1000);
     private boolean gameStart = false;
-    private static String name = "";
+    private static String name1 = "";
+    private static String name2 = "";
 
     /**
      * Method used for exploring a fresh world. This method should handle all inputs,
@@ -39,6 +39,7 @@ public class Engine {
                 switch (c) {
                     case 'N':
                         System.out.println("test");
+                        seed = mainM.setSeed();
                         w = new WorldFrame(WIDTH, HEIGHT - 2, seed);
                         gameStart = true;
                         break;
@@ -50,7 +51,7 @@ public class Engine {
                         gameStart = true;
                         break;
                     case 'C':
-                        name = mainM.setName();
+                        name1 = mainM.setName();
                         break;
                     default:
                 }
@@ -60,7 +61,7 @@ public class Engine {
         //ter.renderFrame(w.tiles());
         Character c = '[';
         while (gameStart) {
-            mouseDisplay();
+            hudDisplay();
             if (StdDraw.hasNextKeyTyped()) {
                 Character pre = c;
                 c =  StdDraw.nextKeyTyped();
@@ -187,10 +188,11 @@ public class Engine {
             os.writeObject(w);
         }  catch (FileNotFoundException e) {
             System.out.println("file not found");
-            System.exit(0);
+            //System.exit(0);
+
         } catch (IOException e) {
             System.out.println(e);
-            System.exit(0);
+            //System.exit(0);
         }
     }
 
@@ -207,13 +209,13 @@ public class Engine {
                 return (WorldFrame) os.readObject();
             } catch (FileNotFoundException e) {
                 System.out.println("file not found");
-                System.exit(0);
+                //System.exit(0);
             } catch (IOException e) {
                 System.out.println(e);
-                System.exit(0);
+                //System.exit(0);
             } catch (ClassNotFoundException e) {
                 System.out.println("class not found");
-                System.exit(0);
+                //System.exit(0);
             }
         }
         //In the case no WorldFrame has been saved yet, return a new one.
@@ -223,7 +225,7 @@ public class Engine {
      * function to display mouse pointer on the game
      *
      */
-    private void mouseDisplay() {
+    private void hudDisplay() {
         //ter.renderFrame(w.tiles());
         StdDraw.setPenColor(Color.white);
         StdDraw.line(0, w.getH() - 1, w.getW(), w.getH() - 1);
@@ -234,9 +236,12 @@ public class Engine {
         } else {
             StdDraw.text(5, HEIGHT - 1.5, "nothing");
         }
-
+        StdDraw.text(WIDTH / 2 - 3, HEIGHT - 1.5, "Player 1: " + name1);
+        StdDraw.text(WIDTH - 10, HEIGHT - 1.5, "Player 2: " + name2);
         //StdDraw.filledCircle(x, y, 1);
         StdDraw.show();
         //StdDraw.pause(10);
     }
+
+
 }

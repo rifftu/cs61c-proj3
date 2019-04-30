@@ -45,7 +45,56 @@ public class MainMenu implements Serializable {
         StdDraw.show();
 
     }
-    public void drawFrame(String s) {
+
+    /**
+     * function to draw frame to ask user to input a seed
+     * @param s
+     */
+    public void drawFrameSeed(String s) {
+        //Take the string and display it in the center of the screen
+        StdDraw.clear(Color.black);
+        Font font = new Font("Arial", Font.BOLD, 25);
+        StdDraw.setFont(font);
+        StdDraw.text(width / 2, height / 2 + 10, "Please enter a number for seed");
+        StdDraw.text(width / 2, height / 2, s);
+        StdDraw.setPenColor(Color.white);
+        StdDraw.show();
+    }
+
+    /**
+     * funtionc to draw screen while user input a number for seed
+     */
+    public long setSeed() {
+        // Read n letters of player input
+        drawFrameSeed("");
+        String result = "";
+        boolean finish = false;
+        while (!finish) {
+            if (StdDraw.hasNextKeyTyped() && !finish) {
+                StdDraw.clear(Color.black);
+                char addedChar = Character.toUpperCase(StdDraw.nextKeyTyped());
+                if (addedChar != 'S' && 48 <= addedChar && addedChar <= 57) {
+                    result += addedChar;
+                    drawFrameSeed(result);
+                    StdDraw.text(width / 2, height / 2, result);
+                }
+                if (addedChar == 'S'){
+                    finish = true;
+                    break;
+                }
+            }
+        }
+        String sub = result.substring(0,result.length());
+
+        return Long.parseLong(result);
+    }
+
+
+    /**
+     * function to draw frame to ask user to input a name
+     * @param s
+     */
+    public void drawFrameName(String s) {
         //Take the string and display it in the center of the screen
         StdDraw.clear(Color.black);
         Font font = new Font("Arial", Font.BOLD, 25);
@@ -59,15 +108,15 @@ public class MainMenu implements Serializable {
     }
     public String setName() {
         // Read n letters of player input
-        drawFrame("");
+        drawFrameName("");
         String result = "";
         boolean finish = false;
         while (result.length() <= nameLength && !finish) {
-            if (StdDraw.hasNextKeyTyped() && !finish) {
+            if (StdDraw.hasNextKeyTyped()) {
                 StdDraw.clear(Color.black);
                 char addedChar = StdDraw.nextKeyTyped();
                 result += addedChar;
-                drawFrame(result);
+                drawFrameName(result);
                 if (addedChar != 32) {
                     StdDraw.text(width / 2, height / 2, result);
                 } else {
