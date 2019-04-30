@@ -2,30 +2,12 @@ package byow.Core;
 
 class Player extends Creature {
 
-    private WorldFrame world;
-    private Direction facing;
 
-    private int x;
-    private int y;
 
-    @Override
-    WorldFrame world() {
-        return this.world;
-    }
-
-    @Override
-    int getX() {
-        return x;
-    }
-
-    @Override
-    int getY() {
-        return y;
-    }
-
-    @Override
-    Direction facing() {
-        return null;
+    Player(String name) {
+        this.name = name;
+        this.alive = true;
+        this.facing = Direction.UP;
     }
 
     @Override
@@ -38,12 +20,8 @@ class Player extends Creature {
         return 0;
     }
 
-    @Override
-    String name() {
-        return null;
-    }
 
-    @Override
+
     void move(int Dist, Direction dir) {
         this.facing = dir;
         if (Creature.blocked(this)) {
@@ -62,13 +40,19 @@ class Player extends Creature {
         }
     }
 
-    @Override
-    boolean alive() {
-        return false;
-    }
 
     @Override
     void kill() {
 
+    }
+
+    @Override
+    boolean blocking() {
+        return true;
+    }
+
+    @Override
+    boolean killer() {
+        return false;
     }
 }

@@ -25,8 +25,8 @@ class Hallway extends Room {
         }
         Point closeEnd = new Point(x, y, this);
 
-        world.pSet.put(closeEnd);
-        world.pSet.put(farEnd);
+        world.pSet().put(closeEnd);
+        world.pSet().put(farEnd);
 
 
     }
@@ -59,7 +59,7 @@ class Hallway extends Room {
     }
     //Built vertical hallway from lower room to other room
     static void builtVertical(Room one, Room two, WorldFrame world) {
-        Random ran = world.rand;
+        Random ran = world.rand();
         int len;
         int y;
         int smallestRWallX = Math.min(one.rEdge(), two.rEdge());
@@ -78,12 +78,12 @@ class Hallway extends Room {
 
 
         if (len > 0) {
-            world.hallwaysSet.add(new Hallway(x, y, Direction.UP, len, world));
+            world.hallwaysSet().add(new Hallway(x, y, Direction.UP, len, world));
         }
     }
 
     static void builtHorizontal(Room one, Room two, WorldFrame world) {
-        Random ran = world.rand;
+        Random ran = world.rand();
         int len;
         int x;
         int smallestTWallY = Math.min(one.tEdge(), two.tEdge());
@@ -104,7 +104,7 @@ class Hallway extends Room {
 
 
         if (len > 0) {
-            world.hallwaysSet.add(new Hallway(x, y, Direction.RIGHT, len, world));
+            world.hallwaysSet().add(new Hallway(x, y, Direction.RIGHT, len, world));
         }
     }
 
@@ -113,7 +113,7 @@ class Hallway extends Room {
     // room one is higher room, roo two is lower room
     static void forwardL(Room one, Room two, WorldFrame world) {
         //built horizontal hallway part
-        Random ran = world.rand;
+        Random ran = world.rand();
 
         int yH = RandomUtils.uniform(ran, two.getY(), two.tEdge() + 1);
 
@@ -121,7 +121,7 @@ class Hallway extends Room {
         int lH = two.getX() - xH;
 
         if (lH > 0) {
-            world.hallwaysSet.add(new Hallway(xH, yH, Direction.RIGHT, lH, world));
+            world.hallwaysSet().add(new Hallway(xH, yH, Direction.RIGHT, lH, world));
         }
         // built vertical part first
 
@@ -130,13 +130,13 @@ class Hallway extends Room {
 
 
         if (lV > 0) {
-            world.hallwaysSet.add(new Hallway(xH, yH, Direction.UP, lV, world));
+            world.hallwaysSet().add(new Hallway(xH, yH, Direction.UP, lV, world));
         }
     }
 
     //Built backward L hallway from higher right room to lower left room
     static void backwardL(Room one, Room two, WorldFrame world) {
-        Random ran = world.rand;
+        Random ran = world.rand();
         int yH = RandomUtils.uniform(ran, two.getY(), two.tWall());
         int xH = two.rWall();
         int lH = RandomUtils.uniform(ran, one.getX() - two.rWall(), one.rWall() - two.rWall());
@@ -145,7 +145,7 @@ class Hallway extends Room {
         if (lH > 0) {
 
 
-            world.hallwaysSet.add(new Hallway(xH, yH, Direction.RIGHT, lH, world));
+            world.hallwaysSet().add(new Hallway(xH, yH, Direction.RIGHT, lH, world));
         }
         // built vertical part first
         int xV = xH + lH;
@@ -153,7 +153,7 @@ class Hallway extends Room {
 
 
         if (lV > 0) {
-            world.hallwaysSet.add(new Hallway(xV, yH, Direction.UP, lV, world));
+            world.hallwaysSet().add(new Hallway(xV, yH, Direction.UP, lV, world));
         }
     }
 

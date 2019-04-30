@@ -1,16 +1,15 @@
 package byow.Core;
-/*
-import byow.TileEngine.TERenderer;
+
 import byow.TileEngine.TERenderer;
 import byow.TileEngine.TETile;
 import byow.TileEngine.Tileset;
 
 import java.awt.desktop.SystemEventListener;
 import java.util.Random;
-*/
+
 
 public class WorldFrameTest {
-    /*
+
     static  Engine engine = new Engine();
     public static void main(String[] args) {
 
@@ -40,6 +39,6 @@ public class WorldFrameTest {
 
     //}
     }
-    */
+
 
 }

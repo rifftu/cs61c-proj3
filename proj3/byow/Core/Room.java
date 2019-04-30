@@ -3,6 +3,7 @@ package byow.Core;
 import byow.TileEngine.TETile;
 import byow.TileEngine.Tileset;
 
+import java.util.Random;
 import java.util.Set;
 
 class Room {
@@ -217,6 +218,28 @@ class Room {
     boolean connected(Set<Hallway> halls) {
         for (Hallway hall : halls) {
             if (Room.intersect(this, hall)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Adds a creature to the room :)
+     * Makes 200 attempts (which is a lot of attempts tbh)
+     * @param cr the creature to be added
+     * @return true if it has been successfully added
+     */
+    boolean addCreature(Creature cr, WorldFrame world) {
+        Random r = world.rand();
+        Creature[][] map = world.animals();
+        int cX; int cY;
+        for (int i = 0; i < 200; i++) {
+            cX = RandomUtils.uniform(r, getX(), rWall());
+            cY = RandomUtils.uniform(r, getY(), tWall());
+            if (map[cX][cY] == null) {
+                map[cX][cY] = cr;
+                world.animalSet().add(cr);
                 return true;
             }
         }

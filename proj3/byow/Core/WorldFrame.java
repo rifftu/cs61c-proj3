@@ -13,15 +13,15 @@ import java.awt.event.KeyListener;
 class WorldFrame {
 
 
-    Creature P1;
-    Creature P2;
+    private Creature P1;
+    private Creature P2;
     private Set<Room> roomSet;
-    Set<Hallway> hallwaysSet;
-    Set<Creature> animalSet;
-    Random rand;
+    private Set<Hallway> hallwaysSet;
+    private Set<Creature> animalSet;
+    private Random rand;
 
     private Creature[][] animals;
-    DynamicKD pSet;
+    private DynamicKD pSet;
 
     //The tiles
     private TETile[][] tiles;
@@ -56,8 +56,8 @@ class WorldFrame {
 
         drawRooms(w, h);
 
-        P1 = new Player();
-        P2 = new Player();
+        P1 = new Player("P1");
+        P2 = new Player("P1");
 
     }
 
@@ -116,6 +116,19 @@ class WorldFrame {
 
     Creature[][] animals() {
         return animals;
+    }
+
+    Set<Hallway> hallwaysSet() {
+        return hallwaysSet;
+    }
+    Set<Creature> animalSet() {
+        return animalSet;
+    }
+    Random rand() {
+        return rand;
+    }
+    DynamicKD pSet() {
+        return pSet;
     }
 
     void keyCatcher(char c) {
