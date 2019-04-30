@@ -221,4 +221,12 @@ class WorldFrame implements Serializable {
     void flip(int x, int y) {
 
     }
+
+    int getW() {
+        return this.w;
+    }
+
+    int getH() {
+        return this.h;
+    }
 }

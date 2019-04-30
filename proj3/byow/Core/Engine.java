@@ -7,6 +7,7 @@ import byow.SaveDemo.Editor;
 import byow.TileEngine.TETile;
 import edu.princeton.cs.introcs.StdDraw;
 
+import java.awt.*;
 import java.io.*;
 import java.lang.reflect.WildcardType;
 import java.util.Random;
@@ -16,7 +17,7 @@ public class Engine {
     //ter.initialize(WIDTH, HEIGHT);
     /* Feel free to change the width and height. */
     public static final int WIDTH = 80;
-    public static final int HEIGHT = 40;
+    public static final int HEIGHT = 35;
 
     private TETile[][] finalWorldFrame;
     private WorldFrame w;
@@ -39,7 +40,7 @@ public class Engine {
                 switch (c) {
                     case 'N':
                         System.out.println("test");
-                        w = new WorldFrame(WIDTH, HEIGHT, seed);
+                        w = new WorldFrame(WIDTH, HEIGHT - 2, seed);
                         gameStart = true;
                         break;
                     case 'Q':
@@ -60,6 +61,7 @@ public class Engine {
         ter.renderFrame(w.tiles());
         Character c = '[';
         while (gameStart) {
+            mouseDisplay();
             if (StdDraw.hasNextKeyTyped()) {
                 Character pre = c;
                 c =  StdDraw.nextKeyTyped();
@@ -75,8 +77,6 @@ public class Engine {
                 }
             }
         }
-
-
 
     }
 
@@ -131,7 +131,7 @@ public class Engine {
                     if ((startIndexSeed != totalCharacters - 1) && newW) {
                         newWorld = input.substring(startIndexSeed, totalCharacters - 1);
                         seed = Long.parseLong(newWorld);
-                        w = new WorldFrame(WIDTH, HEIGHT, seed);
+                        w = new WorldFrame(WIDTH, HEIGHT - 2, seed);
 
                     }
                     if (!newW) {
@@ -215,7 +215,26 @@ public class Engine {
             }
         }
         //In the case no WorldFrame has been saved yet, return a new one.
-        return new WorldFrame(WIDTH, HEIGHT, seed);
+        return new WorldFrame(WIDTH, HEIGHT - 2, seed);
     }
+    /**
+     * function to display mouse pointer on the game
+     *
+     */
+    private void mouseDisplay() {
+        ter.renderFrame(w.tiles());
+        StdDraw.setPenColor(Color.white);
+        StdDraw.line(0, w.getH() - 1, w.getW(), w.getH() - 1);
+        int x = (int) StdDraw.mouseX();
+        int y = (int )StdDraw.mouseY();
+        if (x < w.getW() && y < w.getH()) {
+            StdDraw.text(5, HEIGHT - 1.5, w.tiles()[x][y].description());
+        } else {
+            StdDraw.text(5, HEIGHT - 1.5, "nothing");
+        }
 
+        //StdDraw.filledCircle(x, y, 1);
+        StdDraw.show();
+        //StdDraw.pause(10);
+    }
 }
