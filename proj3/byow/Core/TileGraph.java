@@ -1,9 +1,10 @@
 package byow.Core;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TileGraph implements AStarGraph<iPoint> {
+public class TileGraph implements AStarGraph<iPoint>, Serializable {
     @Override
     public List<WeightedEdge<iPoint>> neighbors(iPoint b) {
         List<iPoint> neighbors = b.neighbors();
