@@ -23,17 +23,20 @@ class WorldFrame implements Serializable {
     private Random rand;
     private String name1;
     private String name2;
-    private Creature[][] animals;
     private DynamicKD pSet;
 
     //The tiles
     private TETile[][] floortiles;
     private TETile[][] showtiles;
+    private Creature[][] animals;
+    private iPoint[][] nodes;
 
     private int w;
     private int h;
 
     private int count;
+
+
 
 
     WorldFrame(int w, int h, long seed, String namePlayer1, String namePlayer2) {
