@@ -151,9 +151,9 @@ public class Engine {
                     break;
             }
         }
-        ter.initialize(WIDTH, HEIGHT);
-        ter.renderFrame(w.tiles());
-        ter.showOnly();
+        //ter.initialize(WIDTH, HEIGHT);
+        //ter.renderFrame(w.tiles());
+        //ter.showOnly();
         return w.tiles();
     }
 
