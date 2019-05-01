@@ -46,6 +46,9 @@ class Player extends Creature implements Serializable {
     }
 
     void move(int dist, Direction dir) {
+        if (!this.alive()) {
+            return;
+        }
         this.facing = dir;
         //System.out.println(dir);
         if (!Creature.blocked(this)) {
@@ -61,6 +64,7 @@ class Player extends Creature implements Serializable {
             if (map[x][y] != null && map[x][y].killer()) {
                 this.alive = false;
                 map[x][y].kill();
+                world.animalSet().remove(this);
             } else {
                 map[x][y] = this;
                 world.flip(nextX(), nextY());
@@ -78,5 +82,6 @@ class Player extends Creature implements Serializable {
     boolean killer() {
         return false;
     }
+
 
 }

@@ -19,6 +19,8 @@ abstract class Creature implements Serializable {
 
     protected boolean eating;
 
+    int digest;
+
     WorldFrame world() {
         return this.world;
     }
@@ -73,7 +75,6 @@ abstract class Creature implements Serializable {
 
     abstract boolean killer();
 
-
     static boolean blocked(Creature cr) {
         TETile[][] grid = cr.world().getFloortiles();
         Creature[][] map = cr.world().animals();
@@ -81,7 +82,8 @@ abstract class Creature implements Serializable {
         int y = cr.nextY();
         //System.out.println(grid[x][y].description().equals("wall"));
         //return (grid[x][y] == Tileset.WALL || !(map[x][y] == null));
-        return (grid[x][y].description().equals("wall") || !(map[x][y] == null));
+        return (grid[x][y].description().equals("wall")
+                || !(map[x][y] == null || map[x][y].killer()));
     }
 
 }

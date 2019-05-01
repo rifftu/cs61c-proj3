@@ -2,6 +2,8 @@ package byow.Core;
 
 
 
+import byow.TileEngine.Tileset;
+
 import java.io.Serializable;
 import java.util.Random;
 
@@ -28,6 +30,7 @@ class Hallway extends Room implements Serializable {
         world.pSet().put(closeEnd);
         world.pSet().put(farEnd);
 
+        this.tile = Tileset.FLOOR;
 
     }
 

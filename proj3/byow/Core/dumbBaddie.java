@@ -1,21 +1,31 @@
 package byow.Core;
 
 import byow.TileEngine.TETile;
+import byow.TileEngine.Tileset;
 
 public class dumbBaddie extends Creature {
+
+    dumbBaddie() {
+        digest = 0;
+    }
+
     @Override
     TETile tile() {
-        return null;
+        if (digest > 0) {
+            return Tileset.EATING;
+        } else {
+            return Tileset.DUMBO;
+        }
     }
 
     @Override
     int getW() {
-        return 0;
+        return 1;
     }
 
     @Override
     int getH() {
-        return 0;
+        return 1;
     }
 
     @Override
@@ -25,11 +35,11 @@ public class dumbBaddie extends Creature {
 
     @Override
     void kill() {
-
+        this.digest = 50;
     }
 
     @Override
     boolean killer() {
-        return false;
+        return (this.digest == 0);
     }
 }

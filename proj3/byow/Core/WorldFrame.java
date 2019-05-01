@@ -32,6 +32,8 @@ class WorldFrame implements Serializable {
     private int w;
     private int h;
 
+    private int count;
+
 
     WorldFrame(int w, int h, long seed) {
 
@@ -47,10 +49,13 @@ class WorldFrame implements Serializable {
         animals = new Creature[w][h];
 
         rand = new Random(seed);
-        int firstX = 10; int firstY = 10; int firstW = 5; int firstH = 5;
         roomSet = new HashSet<>();
         hallwaysSet = new HashSet<>();
         animalSet = new HashSet<>();
+
+        count = 0;
+
+        int firstX = 10; int firstY = 10; int firstW = 5; int firstH = 5;
         Room root = new Room(firstX, firstY, firstW, firstH);
         roomSet.add(root);
         root.addPoints(pSet);
@@ -122,7 +127,15 @@ class WorldFrame implements Serializable {
         int rh = Math.max(2, rand.nextInt(maxSize));
         int rx = Math.max(2, rand.nextInt(w - rw - 3) + 1);
         int ry = Math.max(2, rand.nextInt(h - rh - 3) + 1);
-        return new Room(rx, ry, rw, rh);
+
+
+        Room newRoom = new Room(rx, ry, rw, rh);
+
+        if (rand.nextDouble() < 0.4) {
+            newRoom.makeTile(Tileset.GRASS);
+        }
+
+        return newRoom;
     }
 
     private boolean hasOverlap(Room newRoom) {
@@ -174,6 +187,8 @@ class WorldFrame implements Serializable {
     }
 
     void keyCatcher(char c) {
+
+
         switch (c) {
             case 'w':
                 p1.move(1, Direction.UP);
@@ -203,13 +218,25 @@ class WorldFrame implements Serializable {
 
         }
 
-        step();
+        Step();
 
     }
 
-    private void step() {
+
+    private void Step() {
+
+        for (Creature cr : animalSet) {
+            if (cr.digest > 0) {
+                cr.digest--;
+            }
+        }
+
         copytiles();
         drawAnimals();
+
+
+        count++;
+
     }
 
     private void copytiles() {
@@ -219,7 +246,15 @@ class WorldFrame implements Serializable {
     }
 
     void flip(int x, int y) {
-
+        if (floortiles[x][y] == Tileset.GRASS && animals[x][y] == null) {
+            if (rand.nextDouble() < 0.15) {
+                Creature newBaddie = new dumbBaddie();
+                newBaddie.x = x;
+                newBaddie.y = y;
+                animalSet.add(newBaddie);
+                animals[x][y] = newBaddie;
+            }
+        }
     }
 
     int getW() {

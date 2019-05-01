@@ -21,6 +21,11 @@ class Room implements Serializable {
     private int h;
 
     /**
+     * The tile of the floor
+     */
+    protected TETile tile;
+
+    /**
      * Default constructor (unused)
      */
     Room() { }
@@ -37,6 +42,7 @@ class Room implements Serializable {
         this.y = y;
         this.w = w;
         this.h = h;
+        this.tile = Tileset.FLOOR;
     }
 
     /**
@@ -105,6 +111,22 @@ class Room implements Serializable {
     }
     int tWall() {
         return y + h;
+    }
+
+    /**
+     * Returns the floor material of this room
+     * @return the tile
+     */
+    TETile tile() {
+        return tile;
+    }
+
+    /**
+     * paints the floor, so to speak
+     * @param t the new floor
+     */
+    void makeTile(TETile t) {
+        tile = t;
     }
 
     /**
@@ -207,7 +229,7 @@ class Room implements Serializable {
                 tiles[i][yValue - 1] = Tileset.WALL;
             }
             for (int j = yValue; j < yValue + hValue; j++) {
-                tiles[i][j] = Tileset.FLOOR;
+                tiles[i][j] = room.tile();
             }
             if (tiles[i][yValue + hValue] == Tileset.NOTHING) {
                 tiles[i][yValue + hValue] = Tileset.WALL;
