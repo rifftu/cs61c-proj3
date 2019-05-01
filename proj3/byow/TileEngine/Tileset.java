@@ -17,6 +17,7 @@ import java.awt.Color;
  */
 
 public class Tileset {
+
     public static final TETile W = new TETile('W', Color.white, Color.black, "W");
     public static final TETile A = new TETile('A', Color.white, Color.black, "A");
     public static final TETile S = new TETile('S', Color.white, Color.black, "S");
@@ -25,6 +26,10 @@ public class Tileset {
     public static final TETile J = new TETile('J', Color.white, Color.black, "J");
     public static final TETile K = new TETile('K', Color.white, Color.black, "K");
     public static final TETile L = new TETile('L', Color.white, Color.black, "L");
+
+    public static final TETile DUMBO = new TETile('☠', Color.white, Color.black, "dumb");
+    public static final TETile EATING = new TETile('❌', Color.red, Color.black, "eating");
+    public static final TETile SMART = new TETile('☠', Color.red, Color.black, "smartBoi");
     public static final TETile WALL = new TETile('#', new Color(216, 128, 128), Color.darkGray,
             "wall");
     public static final TETile FLOOR = new TETile('·', new Color(128, 192, 128), Color.black,
