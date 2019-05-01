@@ -6,13 +6,13 @@ import java.io.Serializable;
 
 
 class Player extends Creature implements Serializable {
-
-    Player(String name, WorldFrame world) {
+    protected String setName;
+    Player(String name, String setName, WorldFrame world) {
         this.name = name;
         this.alive = true;
         this.facing = Direction.UP;
         this.eating = false;
-
+        this.setName = setName;
         this.world = world;
     }
 

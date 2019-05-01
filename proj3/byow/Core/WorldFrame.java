@@ -21,7 +21,8 @@ class WorldFrame implements Serializable {
     private Set<Hallway> hallwaysSet;
     private Set<Creature> animalSet;
     private Random rand;
-    private String name;
+    private String name1;
+    private String name2;
     private Creature[][] animals;
     private DynamicKD pSet;
 
@@ -35,7 +36,7 @@ class WorldFrame implements Serializable {
     private int count;
 
 
-    WorldFrame(int w, int h, long seed) {
+    WorldFrame(int w, int h, long seed, String namePlayer1, String namePlayer2) {
 
         final int attempts = 50;
         final int maxSize = w / 8;
@@ -54,6 +55,8 @@ class WorldFrame implements Serializable {
         animalSet = new HashSet<>();
 
         count = 0;
+        name1 = namePlayer1;
+        name2 = namePlayer2;
 
         int firstX = 10; int firstY = 10; int firstW = 5; int firstH = 5;
         Room root = new Room(firstX, firstY, firstW, firstH);
@@ -74,8 +77,8 @@ class WorldFrame implements Serializable {
         drawRooms();
 
 
-        p1 = new Player("P1", this);
-        p2 = new Player("P2", this);
+        p1 = new Player("P1", namePlayer1, this);
+        p2 = new Player("P2", namePlayer2, this);
 
         root.addCreature(p1, this);
         root.addCreature(p2, this);
@@ -86,6 +89,13 @@ class WorldFrame implements Serializable {
 
     }
 
+    String getName1() {
+        return name1;
+    }
+
+    String getName2() {
+        return name2;
+    }
     void drawRooms() {
 
 

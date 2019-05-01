@@ -40,7 +40,7 @@ public class Engine {
                     case 'N':
                         //System.out.println("test");
                         seed = mainM.setSeed();
-                        w = new WorldFrame(WIDTH, HEIGHT - 2, seed);
+                        w = new WorldFrame(WIDTH, HEIGHT - 2, seed, name1, name2);
                         gameStart = true;
                         break;
                     case 'Q':
@@ -138,7 +138,7 @@ public class Engine {
                         if ((startIndexSeed != totalCharacters - 1)) {
                             newWorld = input.substring(startIndexSeed, totalCharacters - 1);
                             seed = Long.parseLong(newWorld);
-                            w = new WorldFrame(WIDTH, HEIGHT - 2, seed);
+                            w = new WorldFrame(WIDTH, HEIGHT - 2, seed, name1, name2);
                             newW = false;
                         }
                     } else {
@@ -161,7 +161,8 @@ public class Engine {
                     if (c == 'Q') {
                         saveGame(w);
                         gameStart = false;
-                        return w.tiles();
+                        interactWithKeyboard();
+                        //return w.tiles();
                     }
                     break;
                 default:
@@ -228,7 +229,7 @@ public class Engine {
             }
         }
         //In the case no WorldFrame has been saved yet, return a new one.
-        return new WorldFrame(WIDTH, HEIGHT - 2, seed);
+        return new WorldFrame(WIDTH, HEIGHT - 2, seed, name1, name2);
     }
     /**
      * function to display mouse pointer on the game
@@ -245,8 +246,8 @@ public class Engine {
         } else {
             StdDraw.text(5, HEIGHT - 1.5, "nothing");
         }
-        StdDraw.text(WIDTH / 2 - 3, HEIGHT - 1.5, "Player 1: " + name1);
-        StdDraw.text(WIDTH - 10, HEIGHT - 1.5, "Player 2: " + name2);
+        StdDraw.text(WIDTH / 2 - 3, HEIGHT - 1.5, "Player 1: " + w.getName1());
+        StdDraw.text(WIDTH - 10, HEIGHT - 1.5, "Player 2: " + w.getName2());
         //StdDraw.filledCircle(x, y, 1);
         StdDraw.show();
         //StdDraw.pause(10);

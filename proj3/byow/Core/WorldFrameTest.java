@@ -25,7 +25,7 @@ public class WorldFrameTest {
         TETile[][] testTiles;
         System.out.println(seed);
 
-        frame = new WorldFrame(w, h, seed);
+        frame = new WorldFrame(w, h, seed, "P1", "P2");
 
         //for (int i = 0; i < args.length; i++) {
         //    engine.interactWithInputString(args[i]);
