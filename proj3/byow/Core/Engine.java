@@ -21,7 +21,7 @@ public class Engine {
     private WorldFrame w;
     static Random rand = new Random();
     private static long seed = rand.nextInt(999999999);
-    private boolean gameStart = false;
+    private boolean newGameStart = false;
     private static String name1 = "P1";
     private static String name2 = "P2";
 
@@ -33,7 +33,7 @@ public class Engine {
         MainMenu mainM = new MainMenu();
         mainM.menu();
         //boolean menu = true;
-        while (!gameStart) {
+        while (!newGameStart) {
             if (StdDraw.hasNextKeyTyped()) {
                 char c = Character.toUpperCase(StdDraw.nextKeyTyped());
                 switch (c) {
@@ -41,22 +41,18 @@ public class Engine {
                         //System.out.println("test");
                         seed = mainM.setSeed();
                         w = new WorldFrame(WIDTH, HEIGHT - 2, seed, name1, name2);
-                        gameStart = true;
+                        newGameStart = true;
                         break;
                     case 'Q':
                         System.exit(0);
                         break;
                     case 'L':
                         w = loadGame();
-                        gameStart = true;
+                        newGameStart = true;
                         break;
                     case 'C':
                         mainM.choosePlayer();
-                        if (mainM.getName1()) {
-                            name1 = mainM.setName();
-                        } else {
-                            name2 = mainM.setName();
-                        }
+                        setName(mainM);
                         break;
                     default:
                 }
@@ -65,21 +61,20 @@ public class Engine {
         ter.initialize(WIDTH, HEIGHT);
         ter.renderFrame(w.tiles());
         Character c = '[';
-        while (gameStart) {
+        while (newGameStart) {
             hudDisplay();
             if (StdDraw.hasNextKeyTyped()) {
                 Character pre = c;
                 c =  StdDraw.nextKeyTyped();
-                //System.out.println("character " + c);
-                String in = Character.toString(c);
+                //String in = Character.toString(c);
                 if (c == 'q' && pre == ':') {
-                    //System.out.println("quit save");
-                    interactWithInputString(":q");
+                    callSave(w);
+                    interactWithKeyboard();
                 } else if (c == ':') {
                     //do nothing
                     c = ':';
                 } else {
-                    interactWithInputString(in);
+                    w.keyCatcher(c);
                 }
             }
         }
@@ -134,7 +129,6 @@ public class Engine {
                     break;
                 case 'S':
                     if (newW) {
-                        //System.out.println("test S");
                         if ((startIndexSeed != totalCharacters - 1)) {
                             newWorld = input.substring(startIndexSeed, totalCharacters - 1);
                             seed = Long.parseLong(newWorld);
@@ -142,44 +136,31 @@ public class Engine {
                             newW = false;
                         }
                     } else {
-                        //System.out.println("test S else");
                         w.keyCatcher('s');
                     }
                     break;
                 case 'L':
-                    //System.out.println("test L");
-                    if (gameStart) {
-                        w.keyCatcher('l');
-                    } else {
-                        w = loadGame();
-                        gameStart = true;
-                        //System.out.println(newW);
-                    }
+                    w = loadGame();
                     break;
                 case ':':
                     c = Character.toUpperCase(inputType.getNextKey());
                     if (c == 'Q') {
-                        saveGame(w);
-                        gameStart = false;
-                        interactWithKeyboard();
-                        //return w.tiles();
+                        callSave(w);
                     }
                     break;
                 default:
                     c = Character.toLowerCase(c);
                     if (48 <= c && c <= 57) {
-                        //System.out.println("number");
                         break;
                     } else {
-                        //System.out.println("character " + c);
                         w.keyCatcher(c); // moving player
                     }
                     break;
             }
         }
-        //ter.initialize(WIDTH, HEIGHT); //need to comment out when using the interact with keyboard
-        //ter.renderFrame(w.tiles());
-        //ter.showOnly();
+        ter.initialize(WIDTH, HEIGHT); //need to comment out when using the interact with keyboard
+        ter.renderFrame(w.tiles());
+        ter.showOnly();
         return w.tiles();
     }
 
@@ -253,5 +234,22 @@ public class Engine {
         //StdDraw.pause(10);
     }
 
-
+    /**
+     * helper function to call load game
+     * @param world
+     */
+    void callSave(WorldFrame world) {
+        saveGame(w);
+        newGameStart = false;
+    }
+    /**
+     * set name fucntion
+     */
+    void setName(MainMenu m) {
+        if (m.getName1()) {
+            name1 = m.setName();
+        } else {
+            name2 = m.setName();
+        }
+    }
 }
