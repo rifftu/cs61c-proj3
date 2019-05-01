@@ -26,6 +26,7 @@ public class Tileset {
     public static final TETile J = new TETile('J', Color.white, Color.black, "J");
     public static final TETile K = new TETile('K', Color.white, Color.black, "K");
     public static final TETile L = new TETile('L', Color.white, Color.black, "L");
+    public static final TETile PATH = new TETile('*', Color.white, Color.black, "L");
 
     public static final TETile DUMBO = new TETile('☠', Color.white, Color.black, "dumb");
     public static final TETile EATING = new TETile('❌', Color.red, Color.black, "eating");

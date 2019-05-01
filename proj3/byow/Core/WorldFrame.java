@@ -5,6 +5,7 @@ import byow.TileEngine.Tileset;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
@@ -20,6 +21,7 @@ class WorldFrame implements Serializable {
     private Set<Room> roomSet;
     private Set<Hallway> hallwaysSet;
     private Set<Creature> animalSet;
+    private Set<List<iPoint>> pathSet;
     private Random rand;
     private String name1;
     private String name2;
@@ -36,7 +38,7 @@ class WorldFrame implements Serializable {
 
     private int count;
 
-
+    private TileGraph graph;
 
 
     WorldFrame(int w, int h, long seed, String namePlayer1, String namePlayer2) {
@@ -52,14 +54,18 @@ class WorldFrame implements Serializable {
         showtiles = new TETile[w][h];
         animals = new Creature[w][h];
 
+
         rand = new Random(seed);
         roomSet = new HashSet<>();
         hallwaysSet = new HashSet<>();
         animalSet = new HashSet<>();
+        pathSet = new HashSet<>();
 
         count = 0;
         name1 = namePlayer1;
         name2 = namePlayer2;
+
+        graph = new TileGraph();
 
         int firstX = 10; int firstY = 10; int firstW = 5; int firstH = 5;
         Room root = new Room(firstX, firstY, firstW, firstH);
@@ -227,6 +233,9 @@ class WorldFrame implements Serializable {
             case 'l':
                 p2.move(1, Direction.RIGHT);
                 break;
+            case 't':
+                System.out.println("triggered");
+                break;
             default:
 
         }
@@ -245,6 +254,7 @@ class WorldFrame implements Serializable {
         }
 
         copytiles();
+        drawPaths();
         drawAnimals();
 
 
@@ -277,4 +287,24 @@ class WorldFrame implements Serializable {
     int getH() {
         return this.h;
     }
+
+    iPoint[][] nodes() {
+        return nodes;
+    }
+
+    TileGraph graph() {
+        return graph;
+    }
+
+    void drawPaths() {
+        for (Creature cr : animalSet) {
+            List<iPoint> path = cr.path;
+            if (path != null && path.size() > 1) {
+                for (iPoint p : path) {
+                    showtiles[p.x][p.y] = Tileset.PATH;
+                }
+            }
+        }
+    }
+
 }
