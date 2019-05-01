@@ -45,7 +45,6 @@ public class WorldFrameTest {
             if (c == 'q') {
                 break;
             } else {
-                System.out.println("BOOP");
                 frame.keyCatcher(c);
                 ter.renderFrame(testTiles);
                 ter.showOnly();

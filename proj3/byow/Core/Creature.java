@@ -4,6 +4,7 @@ import byow.TileEngine.TETile;
 //import byow.TileEngine.Tileset;
 
 import java.io.Serializable;
+import java.util.List;
 
 abstract class Creature implements Serializable {
 
@@ -20,6 +21,8 @@ abstract class Creature implements Serializable {
     protected boolean eating;
 
     int digest;
+
+    List<iPoint> path;
 
     WorldFrame world() {
         return this.world;
@@ -84,6 +87,15 @@ abstract class Creature implements Serializable {
         //return (grid[x][y] == Tileset.WALL || !(map[x][y] == null));
         return (grid[x][y].description().equals("wall")
                 || !(map[x][y] == null || map[x][y].killer()));
+    }
+
+    List<iPoint> path(int goalX, int goalY) {
+        iPoint[][] nodes = world.nodes();
+        iPoint goal = nodes[goalX][goalY];
+        iPoint start = nodes[this.getX()][this.getY()];
+        AStarSolver<iPoint> solver = new AStarSolver<>(world.graph(), start, goal, 10);
+        path = solver.solution();
+        return path;
     }
 
 }
