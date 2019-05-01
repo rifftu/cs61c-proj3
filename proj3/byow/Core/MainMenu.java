@@ -57,7 +57,8 @@ public class MainMenu implements Serializable {
         StdDraw.text(midWidth, midHeight + 2, "New Game (N)");
         StdDraw.text(midWidth, midHeight, "Load Game (L)");
         StdDraw.text(midWidth, midHeight - 2, "Quit Game (Q)");
-        StdDraw.text(midWidth, midHeight - 4, "Change name of avatar (C)");
+        StdDraw.text(midWidth, midHeight - 4, "Set name of player(s) (C)");
+        StdDraw.text(midWidth, midHeight - 6, "Replay (R)");
         StdDraw.show();
 
     }

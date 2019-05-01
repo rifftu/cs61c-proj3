@@ -2,6 +2,7 @@ package byow.Core;
 
 import byow.InputDemo.InputSource;
 import byow.InputDemo.StringInputDevice;
+import byow.SaveDemo.World;
 import byow.TileEngine.TERenderer;
 import byow.TileEngine.TETile;
 import edu.princeton.cs.introcs.StdDraw;
@@ -24,6 +25,8 @@ public class Engine {
     private boolean newGameStart = false;
     private static String name1 = "P1";
     private static String name2 = "P2";
+    private long previousSeed;
+    private String action;
 
     /**
      * Method used for exploring a fresh world. This method should handle all inputs,
@@ -33,15 +36,17 @@ public class Engine {
         MainMenu mainM = new MainMenu();
         mainM.menu();
         //boolean menu = true;
+
         while (!newGameStart) {
             if (StdDraw.hasNextKeyTyped()) {
                 char c = Character.toUpperCase(StdDraw.nextKeyTyped());
                 switch (c) {
                     case 'N':
                         //System.out.println("test");
-                        seed = mainM.setSeed();
+                        previousSeed = seed = mainM.setSeed();
                         w = new WorldFrame(WIDTH, HEIGHT - 2, seed, name1, name2);
                         newGameStart = true;
+                        action = "";
                         break;
                     case 'Q':
                         System.exit(0);
@@ -54,31 +59,19 @@ public class Engine {
                         mainM.choosePlayer();
                         setName(mainM);
                         break;
+                    case 'R':
+                        w = new WorldFrame(WIDTH, HEIGHT - 2, previousSeed, name1, name2);
+                        newGameStart = true;
+                        //replay(action);
+                        playGameWithInitial(w, action);
+                        break;
                     default:
                 }
             }
         }
         ter.initialize(WIDTH, HEIGHT);
         ter.renderFrame(w.tiles());
-        Character c = '[';
-        while (newGameStart) {
-            hudDisplay();
-            if (StdDraw.hasNextKeyTyped()) {
-                Character pre = c;
-                c =  StdDraw.nextKeyTyped();
-                //String in = Character.toString(c);
-                if (c == 'q' && pre == ':') {
-                    callSave(w);
-                    interactWithKeyboard();
-                } else if (c == ':') {
-                    //do nothing
-                    c = ':';
-                } else {
-                    w.keyCatcher(c);
-                }
-            }
-        }
-
+        playGame(w, newGameStart);
     }
 
     /**
@@ -158,7 +151,7 @@ public class Engine {
                     break;
             }
         }
-        ter.initialize(WIDTH, HEIGHT); //need to comment out when using the interact with keyboard
+        ter.initialize(WIDTH, HEIGHT);
         ter.renderFrame(w.tiles());
         ter.showOnly();
         return w.tiles();
@@ -216,7 +209,7 @@ public class Engine {
      * function to display mouse pointer on the game
      *
      */
-    private void hudDisplay() {
+    private void hudDisplay(boolean isPaused) {
         ter.renderFrame(w.tiles());
         StdDraw.setPenColor(Color.white);
         StdDraw.line(0, w.getH() - 1, w.getW(), w.getH() - 1);
@@ -231,7 +224,10 @@ public class Engine {
         StdDraw.text(WIDTH - 10, HEIGHT - 1.5, "Player 2: " + w.getName2());
         //StdDraw.filledCircle(x, y, 1);
         StdDraw.show();
-        //StdDraw.pause(10);
+        if (isPaused) {
+            StdDraw.pause(500);
+        }
+
     }
 
     /**
@@ -251,5 +247,49 @@ public class Engine {
         } else {
             name2 = m.setName();
         }
+    }
+
+    /**
+     * function to play game with input from keyboard
+     * @param  world: the world the player is in
+     * @param isGameStarted: boolean if the game start or not
+     */
+    void playGame(WorldFrame world, boolean isGameStarted) {
+        Character c = '[';
+        while (isGameStarted) {
+            hudDisplay(false);
+            if (StdDraw.hasNextKeyTyped()) {
+                Character pre = c;
+                c =  StdDraw.nextKeyTyped();
+                //String in = Character.toString(c);
+                if (c == 'q' && pre == ':') {
+                    callSave(w);
+                    interactWithKeyboard();
+                } else if (c == ':') {
+                    //do nothing
+                    c = ':';
+                } else {
+                    action += c;
+                    w.keyCatcher(c);
+                }
+            }
+        }
+
+    }
+
+    /**
+     * function to start the game with inital input string
+     */
+    void playGameWithInitial(WorldFrame world, String act) {
+        ter.initialize(WIDTH, HEIGHT);
+        ter.renderFrame(world.tiles());
+        ter.showOnly();
+        StdDraw.pause(500);
+        for (int i = 0; i < act.length(); i++) {
+            world.keyCatcher(act.charAt(i));
+            ter.renderFrame(world.tiles());
+            hudDisplay(true);
+        }
+        playGame(world, true);
     }
 }
