@@ -3,10 +3,11 @@ package byow.Core;
 import byow.TileEngine.TETile;
 import byow.TileEngine.Tileset;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-class iPoint {
+class iPoint implements Serializable {
     int x;
     int y;
     private TETile[][] tiles;
