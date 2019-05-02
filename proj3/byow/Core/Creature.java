@@ -22,7 +22,7 @@ abstract class Creature implements Serializable {
 
     int digest;
 
-    List<iPoint> path;
+    List<IPoint> path;
 
     WorldFrame world() {
         return this.world;
@@ -89,11 +89,11 @@ abstract class Creature implements Serializable {
                 || !(map[x][y] == null || map[x][y].killer()));
     }
 
-    List<iPoint> path(int goalX, int goalY) {
-        iPoint[][] nodes = world.nodes();
-        iPoint goal = nodes[goalX][goalY];
-        iPoint start = nodes[this.getX()][this.getY()];
-        AStarSolver<iPoint> solver = new AStarSolver<>(world.graph(), start, goal, 10);
+    List<IPoint> path(int goalX, int goalY) {
+        IPoint[][] nodes = world.nodes();
+        IPoint goal = nodes[goalX][goalY];
+        IPoint start = nodes[this.getX()][this.getY()];
+        AStarSolver<IPoint> solver = new AStarSolver<>(world.graph(), start, goal, 10);
         path = solver.solution();
         return path;
     }

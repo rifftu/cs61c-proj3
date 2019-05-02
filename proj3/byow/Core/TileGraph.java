@@ -4,19 +4,19 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TileGraph implements AStarGraph<iPoint>, Serializable {
+public class TileGraph implements AStarGraph<IPoint>, Serializable {
     @Override
-    public List<WeightedEdge<iPoint>> neighbors(iPoint b) {
-        List<iPoint> neighbors = b.neighbors();
-        List<WeightedEdge<iPoint>> neighborEdges = new ArrayList<>();
-        for (iPoint n : neighbors) {
+    public List<WeightedEdge<IPoint>> neighbors(IPoint b) {
+        List<IPoint> neighbors = b.neighbors();
+        List<WeightedEdge<IPoint>> neighborEdges = new ArrayList<>();
+        for (IPoint n : neighbors) {
             neighborEdges.add(new WeightedEdge<>(b, n, 1));
         }
         return neighborEdges;
     }
 
     @Override
-    public double estimatedDistanceToGoal(iPoint s, iPoint goal) {
+    public double estimatedDistanceToGoal(IPoint s, IPoint goal) {
         double dx = (goal.x - s.x);
         double dy = (goal.y - s.y);
         double actual = Math.sqrt((Math.pow(dx, 2) + Math.pow(dy, 2)));

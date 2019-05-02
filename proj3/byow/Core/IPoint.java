@@ -7,21 +7,21 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-class iPoint implements Serializable {
+class IPoint implements Serializable {
     int x;
     int y;
     private TETile[][] tiles;
-    private iPoint[][] nodes;
+    private IPoint[][] nodes;
 
-    iPoint(int x, int y, TETile[][] tiles, iPoint[][] nodes) {
+    IPoint(int x, int y, TETile[][] tiles, IPoint[][] nodes) {
         this.x = x;
         this.y = y;
         this.tiles = tiles;
         this.nodes = nodes;
     }
 
-    List<iPoint> neighbors() {
-        List<iPoint> result = new ArrayList<>();
+    List<IPoint> neighbors() {
+        List<IPoint> result = new ArrayList<>();
         if (tiles[x + 1][y] != Tileset.WALL) {
             result.add(nodes[x + 1][y]);
         }

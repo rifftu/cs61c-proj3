@@ -21,7 +21,7 @@ class WorldFrame implements Serializable {
     private Set<Room> roomSet;
     private Set<Hallway> hallwaysSet;
     private Set<Creature> animalSet;
-    private Set<List<iPoint>> pathSet;
+    private Set<List<IPoint>> pathSet;
     private Random rand;
     private String name1;
     private String name2;
@@ -31,7 +31,7 @@ class WorldFrame implements Serializable {
     private TETile[][] floortiles;
     private TETile[][] showtiles;
     private Creature[][] animals;
-    private iPoint[][] nodes;
+    private IPoint[][] nodes;
 
     private int w;
     private int h;
@@ -56,7 +56,7 @@ class WorldFrame implements Serializable {
         floortiles = new TETile[w][h];
         showtiles = new TETile[w][h];
         animals = new Creature[w][h];
-        nodes = new iPoint[w][h];
+        nodes = new IPoint[w][h];
 
 
         rand = new Random(seed);
@@ -141,7 +141,7 @@ class WorldFrame implements Serializable {
         for (int x = 0; x < w; x += 1) {
             for (int y = 0; y < h; y += 1) {
                 floortiles[x][y] = Tileset.NOTHING;
-                nodes[x][y] = new iPoint(x, y, floortiles, nodes);
+                nodes[x][y] = new IPoint(x, y, floortiles, nodes);
             }
         }
     }
@@ -257,12 +257,12 @@ class WorldFrame implements Serializable {
 
         }
 
-        Step();
+        step();
 
     }
 
 
-    private void Step() {
+    private void step() {
 
         for (Creature cr : animalSet) {
             if (cr.digest > 0) {
@@ -305,7 +305,7 @@ class WorldFrame implements Serializable {
         return this.h;
     }
 
-    iPoint[][] nodes() {
+    IPoint[][] nodes() {
         return nodes;
     }
 
@@ -315,9 +315,9 @@ class WorldFrame implements Serializable {
 
     void drawPaths() {
         for (Creature cr : animalSet) {
-            List<iPoint> path = cr.path;
+            List<IPoint> path = cr.path;
             if (path != null && path.size() > 1) {
-                for (iPoint p : path) {
+                for (IPoint p : path) {
                     showtiles[p.x][p.y] = Tileset.PATH;
                 }
             }
