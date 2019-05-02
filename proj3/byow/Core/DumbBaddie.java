@@ -3,9 +3,9 @@ package byow.Core;
 import byow.TileEngine.TETile;
 import byow.TileEngine.Tileset;
 
-public class dumbBaddie extends Creature {
+public class DumbBaddie extends Creature {
 
-    dumbBaddie() {
+    DumbBaddie() {
         digest = 0;
     }
 

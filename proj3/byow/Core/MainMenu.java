@@ -10,9 +10,9 @@ import java.io.Serializable;
  * source: Editor by Professor Hug
  */
 public class MainMenu implements Serializable {
-    private int width = 60;
-    private int height = 30;
-    private int nameLength = 30;
+    private int width = 80;
+    private int height = 38;
+    private int nameLength = 20;
     private boolean name1 = false;
     private boolean name2 = false;
 
@@ -148,7 +148,7 @@ public class MainMenu implements Serializable {
         StdDraw.setFont(font);
         StdDraw.setPenColor(Color.white);
         StdDraw.text(width / 2, height / 2 + 10, "Please enter your name");
-        StdDraw.text(width / 2, height / 2 + 8, "Please do not enter the name has length over 30");
+        StdDraw.text(width / 2, height / 2 + 8, "Please do not enter the name has length over 20");
         StdDraw.text(width / 2, height / 2 + 6, " and using SPACE BAR to complete ");
         StdDraw.text(width / 2, height / 2, s);
         StdDraw.show();

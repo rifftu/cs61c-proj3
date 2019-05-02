@@ -4,10 +4,7 @@ import byow.TileEngine.TETile;
 import byow.TileEngine.Tileset;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 
 //import java.awt.event.KeyListener;
@@ -288,7 +285,7 @@ class WorldFrame implements Serializable {
     void flip(int x, int y) {
         if (floortiles[x][y] == Tileset.GRASS && animals[x][y] == null) {
             if (rand.nextDouble() < 0.15) {
-                Creature newBaddie = new dumbBaddie();
+                Creature newBaddie = new DumbBaddie();
                 newBaddie.x = x;
                 newBaddie.y = y;
                 animalSet.add(newBaddie);
@@ -323,5 +320,6 @@ class WorldFrame implements Serializable {
             }
         }
     }
+
 
 }

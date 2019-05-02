@@ -14,12 +14,12 @@ import java.io.*;
 public class Engine {
     TERenderer ter = new TERenderer();
     /* Feel free to change the width and height. */
-    public static final int WIDTH = 60;
-    public static final int HEIGHT = 35;
+    public static final int WIDTH = 80;
+    public static final int HEIGHT = 38;
 
     private WorldFrame w;
     private WorldFrame previousW;
-    private static long seed = - 1;
+    private static long seed = -1;
     private boolean newGameStart = false;
     private static String name1 = "P1";
     private static String name2 = "P2";
@@ -48,7 +48,7 @@ public class Engine {
                         break;
                     case 'L':
                         w = loadGame();
-                        if (w.getSeed() == - 1) {
+                        if (w.getSeed() == -1) {
                             System.exit(0);
                         }
                         newGameStart = true;
@@ -59,7 +59,8 @@ public class Engine {
                         break;
                     case 'R':
                         previousW = loadGame();
-                        w = new WorldFrame(WIDTH, HEIGHT - 2, previousW.getSeed(), name1, name2);
+                        w = new WorldFrame(WIDTH, HEIGHT - 2, previousW.getSeed(),
+                                previousW.getName1(), previousW.getName2());
                         newGameStart = true;
                         //replay(action);
                         playGameWithInitial(w, previousW.getAction());
@@ -133,7 +134,7 @@ public class Engine {
                     break;
                 case 'L':
                     w = loadGame();
-                    if (w.getSeed() == - 1) {
+                    if (w.getSeed() == -1) {
                         System.exit(0);
                     }
                     break;
@@ -285,7 +286,7 @@ public class Engine {
      * function to start the game with inital input string
      */
     void playGameWithInitial(WorldFrame world, String act) {
-        if (act != "") {//if there is saved version before
+        if (act.equals("")) {//if there is saved version before
             ter.initialize(WIDTH, HEIGHT);
             ter.renderFrame(world.tiles());
             ter.showOnly();
