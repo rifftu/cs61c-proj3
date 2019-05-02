@@ -2,7 +2,6 @@ package byow.Core;
 
 import byow.InputDemo.InputSource;
 import byow.InputDemo.StringInputDevice;
-import byow.SaveDemo.World;
 import byow.TileEngine.TERenderer;
 import byow.TileEngine.TETile;
 import edu.princeton.cs.introcs.StdDraw;
@@ -21,7 +20,7 @@ public class Engine {
     private TETile[][] finalWorldFrame;
     private WorldFrame w;
     static Random rand = new Random();
-    private static long seed = rand.nextInt(999999999);
+    private static long seed = 0;
     private boolean newGameStart = false;
     private static String name1 = "P1";
     private static String name2 = "P2";
@@ -53,6 +52,9 @@ public class Engine {
                         break;
                     case 'L':
                         w = loadGame();
+                        if (w.getSeed() == 0) {
+                            System.exit(0);
+                        }
                         newGameStart = true;
                         break;
                     case 'C':
@@ -134,6 +136,9 @@ public class Engine {
                     break;
                 case 'L':
                     w = loadGame();
+                    if (w.getSeed() == 0) {
+                        System.exit(0);
+                    }
                     break;
                 case ':':
                     c = Character.toUpperCase(inputType.getNextKey());
@@ -264,7 +269,8 @@ public class Engine {
                 //String in = Character.toString(c);
                 if (c == 'q' && pre == ':') {
                     callSave(w);
-                    interactWithKeyboard();
+                    System.exit(0);
+                    //interactWithKeyboard();
                 } else if (c == ':') {
                     //do nothing
                     c = ':';

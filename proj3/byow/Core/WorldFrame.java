@@ -37,6 +37,7 @@ class WorldFrame implements Serializable {
     private int h;
 
     private int count;
+    private long seed;
 
     private TileGraph graph;
 
@@ -54,7 +55,7 @@ class WorldFrame implements Serializable {
         showtiles = new TETile[w][h];
         animals = new Creature[w][h];
 
-
+        this.seed = seed;
         rand = new Random(seed);
         roomSet = new HashSet<>();
         hallwaysSet = new HashSet<>();
@@ -183,7 +184,9 @@ class WorldFrame implements Serializable {
         return showtiles;
     }
 
-
+    long getSeed() {
+        return seed;
+    }
     TETile[][] getFloortiles() {
         return floortiles;
     }
