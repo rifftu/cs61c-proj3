@@ -23,6 +23,7 @@ class WorldFrame implements Serializable {
     private String name1;
     private String name2;
     private DynamicKD pSet;
+    private ArrayList<Room> roomArray;
 
     //The tiles
     private TETile[][] floortiles;
@@ -61,6 +62,7 @@ class WorldFrame implements Serializable {
         hallwaysSet = new HashSet<>();
         animalSet = new HashSet<>();
         pathSet = new HashSet<>();
+        roomArray = new ArrayList<>();
 
         count = 0;
         name1 = namePlayer1;
@@ -83,6 +85,7 @@ class WorldFrame implements Serializable {
             }
 
             placeRoom(newRoom);
+
         }
 
         drawRooms();
@@ -91,8 +94,12 @@ class WorldFrame implements Serializable {
         p1 = new Player("P1", namePlayer1, this);
         p2 = new Player("P2", namePlayer2, this);
 
-        root.addCreature(p1, this);
-        root.addCreature(p2, this);
+        //root.addCreature(p1, this);
+        //root.addCreature(p2, this);
+        Room room = randRoom(roomArray);
+        room.addCreature(p1, this);
+        room = randRoom(roomArray);
+        room.addCreature(p2, this);
 
         copytiles();
 
@@ -170,6 +177,7 @@ class WorldFrame implements Serializable {
 
     private void placeRoom(Room newRoom) {
         roomSet.add(newRoom);
+        roomArray.add(newRoom);
         if (!newRoom.connected(hallwaysSet)) {
             Room.connect(closest(newRoom), newRoom, this);
         }
@@ -188,9 +196,7 @@ class WorldFrame implements Serializable {
     long getSeed() {
         return seed;
     }
-    void setSeet(long s) {
-        this.seed = s;
-    }
+
     String getAction() {
         return action;
     }
@@ -319,6 +325,11 @@ class WorldFrame implements Serializable {
                 }
             }
         }
+    }
+
+    Room randRoom(ArrayList<Room> ro) {
+        int i = RandomUtils.uniform(rand, ro.size());
+        return ro.get(i);
     }
 
 

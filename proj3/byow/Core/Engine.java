@@ -219,7 +219,16 @@ public class Engine {
         int x = (int) StdDraw.mouseX();
         int y = (int) StdDraw.mouseY();
         if (x < w.getW() && y < w.getH()) {
-            StdDraw.text(5, HEIGHT - 1.5, w.tiles()[x][y].description());
+            String des = w.tiles()[x][y].description();
+            if (des.equals("W") || des.equals("A")
+                    || des.equals("S") || des.equals("D")) {
+                StdDraw.text(5, HEIGHT - 1.5, "Player 1");
+            } else if (des.equals("J") || des.equals("K")
+                    || des.equals("I") || des.equals("L")) {
+                StdDraw.text(5, HEIGHT - 1.5, "Player 2");
+            } else {
+                StdDraw.text(5, HEIGHT - 1.5, des);
+            }
         } else {
             StdDraw.text(5, HEIGHT - 1.5, "nothing");
         }
@@ -286,7 +295,7 @@ public class Engine {
      * function to start the game with inital input string
      */
     void playGameWithInitial(WorldFrame world, String act) {
-        if (act.equals("")) { //if there is saved version before
+        if (!act.equals("")) { //if there is saved version before
             ter.initialize(WIDTH, HEIGHT);
             ter.renderFrame(world.tiles());
             ter.showOnly();
