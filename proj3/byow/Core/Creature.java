@@ -22,6 +22,8 @@ abstract class Creature implements Serializable {
 
     int digest;
 
+    Direction guide;
+
     List<IPoint> path;
 
     WorldFrame world() {
@@ -95,6 +97,22 @@ abstract class Creature implements Serializable {
         IPoint start = nodes[this.getX()][this.getY()];
         AStarSolver<IPoint> solver = new AStarSolver<>(world.graph(), start, goal, 10);
         path = solver.solution();
+        if (path.size() < 2) {
+            guide = null;
+        }
+        IPoint next = path.get(1);
+        if (next.x > this.x) {
+            guide = Direction.RIGHT;
+        } else if (next.x < this.x) {
+            guide = Direction.LEFT;
+        } else {
+            //up or down
+            if (next.y > this.y) {
+                guide = Direction.UP;
+            } else {
+                guide = Direction.DOWN;
+            }
+        }
         return path;
     }
 

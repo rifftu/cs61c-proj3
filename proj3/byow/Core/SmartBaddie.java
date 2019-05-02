@@ -5,9 +5,14 @@ import byow.TileEngine.Tileset;
 
 public class SmartBaddie extends Creature {
 
-    SmartBaddie() {
+    int birthday;
+    final String name = "BOO!";
+
+    SmartBaddie(int count, WorldFrame world) {
         this.alive = true;
         digest = 0;
+        this.birthday = count;
+        this.world = world;
     }
 
     @Override
@@ -31,13 +36,19 @@ public class SmartBaddie extends Creature {
 
     @Override
     void move(int dist, Direction dir) {
+        System.out.println("i'm moving!");
         if (!this.alive() || this.digest > 0) {
             return;
         }
         this.facing = dir;
         //System.out.println(dir);
-        if (!Creature.blocked(this)) {
-            Creature[][] map = world.animals();
+        boolean blk = Creature.blocked(this);
+        Creature[][] map = world.animals();
+        if (map[nextX()][nextY()] != null) {
+            blk = false;
+        }
+        if (!blk) {
+
             int x = this.getX();
             int y = this.getY();
             map[x][y] = null;
@@ -48,15 +59,17 @@ public class SmartBaddie extends Creature {
 
             if (map[x][y] != null) {
                 if (map[x][y].killer()) {
-                    die();
+                    world.killList.add(this);
                 } else {
                     kill();
-                    map[x][y].die();
+                    world.killList.add(map[x][y]);
                     map[x][y] = this;
                 }
             } else {
                 map[x][y] = this;
             }
+        } else {
+            System.out.println("heYYY");
         }
     }
 

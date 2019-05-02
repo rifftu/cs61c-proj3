@@ -1,5 +1,6 @@
 package byow.Core;
 
+//import byow.SaveDemo.World;
 import byow.TileEngine.TETile;
 import byow.TileEngine.Tileset;
 
@@ -117,8 +118,12 @@ class Room implements Serializable {
      * Returns the floor material of this room
      * @return the tile
      */
-    TETile tile() {
-        return tile;
+    TETile tile(WorldFrame world) {
+        if (this.tile == Tileset.FLOOR) {
+            return world.changingFloor();
+        } else {
+            return this.tile;
+        }
     }
 
     /**
@@ -202,7 +207,7 @@ class Room implements Serializable {
      * @param tiles tileset representing the room
      * @param room the room currently being drawn
      */
-    static void draw(TETile[][] tiles, Room room) {
+    static void draw(TETile[][] tiles, Room room, WorldFrame world) {
 
         // Gets the necessary info about the room
         int yValue = room.getY();
@@ -229,7 +234,7 @@ class Room implements Serializable {
                 tiles[i][yValue - 1] = Tileset.WALL;
             }
             for (int j = yValue; j < yValue + hValue; j++) {
-                tiles[i][j] = room.tile();
+                tiles[i][j] = room.tile(world);
             }
             if (tiles[i][yValue + hValue] == Tileset.NOTHING) {
                 tiles[i][yValue + hValue] = Tileset.WALL;

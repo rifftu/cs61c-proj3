@@ -40,6 +40,9 @@ class WorldFrame implements Serializable {
 
     private TileGraph graph;
 
+    private boolean showPaths;
+
+    Set<Creature> killList;
 
     WorldFrame(int w, int h, long seed, String namePlayer1, String namePlayer2) {
 
@@ -63,6 +66,7 @@ class WorldFrame implements Serializable {
         animalSet = new HashSet<>();
         pathSet = new HashSet<>();
         roomArray = new ArrayList<>();
+        killList = new HashSet<>();
 
         count = 0;
         name1 = namePlayer1;
@@ -120,10 +124,10 @@ class WorldFrame implements Serializable {
         clearTiles();
 
         for (Hallway hall : hallwaysSet) {
-            Room.draw(floortiles, hall);
+            Room.draw(floortiles, hall, this);
         }
         for (Room room : roomSet) {
-            Room.draw(floortiles, room);
+            Room.draw(floortiles, room, this);
         }
 
 
@@ -253,8 +257,10 @@ class WorldFrame implements Serializable {
                 p2.move(1, Direction.RIGHT);
                 break;
             case 't':
-                System.out.println("triggered");
-                p1.path(p2.x, p2.y);
+                //p1.path(p2.x, p2.y);
+                showPaths = !showPaths;
+                drawRooms();
+                copytiles();
                 drawPaths();
                 drawAnimals();
                 return;
@@ -269,14 +275,53 @@ class WorldFrame implements Serializable {
 
     private void step() {
 
+
+
         for (Creature cr : animalSet) {
+
+            if (cr instanceof SmartBaddie && cr.alive()) {
+                SmartBaddie sCr = (SmartBaddie) cr;
+                Creature targ;
+                if (p1.alive()) {
+                    if (!p2.alive()) {
+                        targ = p1;
+                    } else {
+                        //compare distances
+                        int d1 = (int) (Math.pow(p1.x - sCr.x, 2) + Math.pow(p1.y - sCr.y, 2));
+                        int d2 = (int) (Math.pow(p2.x - sCr.x, 2) + Math.pow(p2.y - sCr.y, 2));
+                        if (d1 < d2) {
+                            targ = p1;
+                        } else {
+                            targ = p2;
+                        }
+                    }
+                } else if (p2.alive()) {
+                    targ = p2;
+                } else {
+                    break;
+                }
+                if (count - sCr.birthday >= 1) {
+                    sCr.path(targ.x, targ.y);
+                }
+                if ((count - sCr.birthday) % 2 == 1) {
+                    sCr.move(1, sCr.guide);
+                }
+            }
+
             if (cr.digest > 0) {
                 cr.digest--;
             }
         }
 
+        for (Creature cr : killList) {
+            cr.die();
+        }
+
+
         copytiles();
-        drawPaths();
+        if (showPaths) {
+            drawPaths();
+        }
         drawAnimals();
 
 
@@ -294,8 +339,8 @@ class WorldFrame implements Serializable {
         if (floortiles[x][y] == Tileset.GRASS && animals[x][y] == null) {
             if (rand.nextDouble() < 0.15) {
                 Creature newBaddie;
-                if (rand.nextDouble() < 0.2) {
-                    newBaddie = new SmartBaddie();
+                if (rand.nextDouble() < 0.3) {
+                    newBaddie = new SmartBaddie(getCount(), this);
                 } else {
                     newBaddie = new DumbBaddie();
                 }
@@ -336,13 +381,23 @@ class WorldFrame implements Serializable {
 
     Room randRoom(ArrayList<Room> ro) {
         int i = RandomUtils.uniform(rand, ro.size());
-        while (ro.get(i).tile() == Tileset.GRASS) {
+        while (ro.get(i).tile(this) == Tileset.GRASS) {
             i = RandomUtils.uniform(rand, ro.size());
         }
         return ro.get(i);
     }
 
+    int getCount() {
+        return count;
+    }
 
-
+    TETile changingFloor() {
+        if (showPaths) {
+            System.out.println("YAY");
+            return Tileset.XRAY;
+        } else {
+            return Tileset.FLOOR;
+        }
+    }
 
 }
