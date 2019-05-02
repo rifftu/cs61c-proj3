@@ -54,6 +54,7 @@ class WorldFrame implements Serializable {
         floortiles = new TETile[w][h];
         showtiles = new TETile[w][h];
         animals = new Creature[w][h];
+        nodes = new iPoint[w][h];
 
         this.seed = seed;
         rand = new Random(seed);
@@ -137,7 +138,7 @@ class WorldFrame implements Serializable {
         for (int x = 0; x < w; x += 1) {
             for (int y = 0; y < h; y += 1) {
                 floortiles[x][y] = Tileset.NOTHING;
-
+                nodes[x][y] = new iPoint(x, y, floortiles, nodes);
             }
         }
     }
@@ -238,6 +239,7 @@ class WorldFrame implements Serializable {
                 break;
             case 't':
                 System.out.println("triggered");
+                p1.path(p2.x, p2.y);
                 break;
             default:
 
