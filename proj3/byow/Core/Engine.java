@@ -286,7 +286,7 @@ public class Engine {
      * function to start the game with inital input string
      */
     void playGameWithInitial(WorldFrame world, String act) {
-        if (act.equals("")) {//if there is saved version before
+        if (act.equals("")){//if there is saved version before
             ter.initialize(WIDTH, HEIGHT);
             ter.renderFrame(world.tiles());
             ter.showOnly();
