@@ -73,7 +73,8 @@ public class MainMenu implements Serializable {
         Font font = new Font("Arial", Font.BOLD, 25);
         StdDraw.setFont(font);
         StdDraw.setPenColor(Color.white);
-        StdDraw.text(width / 2, height / 2 + 10, "Please enter a POSITIVE number for seed");
+        StdDraw.text(width / 2, height / 2 + 10,
+                "Please enter a POSITIVE number for seed then press S");
         StdDraw.text(width / 2, height / 2, s);
         StdDraw.show();
     }
