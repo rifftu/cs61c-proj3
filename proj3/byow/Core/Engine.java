@@ -40,7 +40,7 @@ public class Engine {
                     case 'N':
                         //System.out.println("test");
                         seed = mainM.setSeed();
-                        w = new WorldFrame(WIDTH, HEIGHT - 2, seed, name1, name2);
+                        w = new WorldFrame(WIDTH, HEIGHT - 3, seed, name1, name2);
                         newGameStart = true;
                         break;
                     case 'Q':
@@ -59,7 +59,7 @@ public class Engine {
                         break;
                     case 'R':
                         previousW = loadGame();
-                        w = new WorldFrame(WIDTH, HEIGHT - 2, previousW.getSeed(),
+                        w = new WorldFrame(WIDTH, HEIGHT - 3, previousW.getSeed(),
                                 previousW.getName1(), previousW.getName2());
                         newGameStart = true;
                         //replay(action);
@@ -125,7 +125,7 @@ public class Engine {
                         if ((startIndexSeed != totalCharacters - 1)) {
                             newWorld = input.substring(startIndexSeed, totalCharacters - 1);
                             seed = Long.parseLong(newWorld);
-                            w = new WorldFrame(WIDTH, HEIGHT - 2, seed, name1, name2);
+                            w = new WorldFrame(WIDTH, HEIGHT - 3, seed, name1, name2);
                             newW = false;
                         }
                     } else {
@@ -206,7 +206,7 @@ public class Engine {
             }
         }
         //In the case no WorldFrame has been saved yet, return a new one.
-        return new WorldFrame(WIDTH, HEIGHT - 2, seed, name1, name2);
+        return new WorldFrame(WIDTH, HEIGHT - 3, seed, name1, name2);
     }
     /**
      * function to display mouse pointer on the game
@@ -295,20 +295,27 @@ public class Engine {
      * function to start the game with inital input string
      */
     void playGameWithInitial(WorldFrame world, String act) {
-        if (!act.equals("")) { //if there is saved version before
+        if (w.getSeed() != -1) {
             ter.initialize(WIDTH, HEIGHT);
             ter.renderFrame(world.tiles());
-            ter.showOnly();
+            //ter.showOnly();
+            hudDisplay(false);
             StdDraw.pause(500);
-            for (int i = 0; i < act.length(); i++) {
-                world.keyCatcher(act.charAt(i));
-                ter.renderFrame(world.tiles());
-                hudDisplay(true);
+            if (!act.equals("")) { //if there is saved version before
+                for (int i = 0; i < act.length(); i++) {
+                    world.keyCatcher(act.charAt(i));
+                    ter.renderFrame(world.tiles());
+                    hudDisplay(true);
+                }
             }
+            //Font font = new Font("Arial", Font.BOLD, 20);
+            //StdDraw.setFont(font);
+            StdDraw.text(WIDTH / 2, HEIGHT - 3.2, "FINISH REPLAY. YOU CAN PLAY NOW!");
+            StdDraw.show();
+            StdDraw.pause(5000);
             playGame(world, true);
         } else {
             System.exit(0);
         }
-
     }
 }

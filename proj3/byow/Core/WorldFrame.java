@@ -329,8 +329,13 @@ class WorldFrame implements Serializable {
 
     Room randRoom(ArrayList<Room> ro) {
         int i = RandomUtils.uniform(rand, ro.size());
+        while (ro.get(i).tile() == Tileset.GRASS) {
+            i = RandomUtils.uniform(rand, ro.size());
+        }
         return ro.get(i);
     }
+
+
 
 
 }
