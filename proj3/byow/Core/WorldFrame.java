@@ -38,6 +38,7 @@ class WorldFrame implements Serializable {
 
     private int count;
     private long seed;
+    private String action;
 
     private TileGraph graph;
 
@@ -49,6 +50,7 @@ class WorldFrame implements Serializable {
 
         this.w = w;
         this.h = h;
+        this.seed = seed;
 
         pSet = new DynamicKD();
         floortiles = new TETile[w][h];
@@ -56,7 +58,7 @@ class WorldFrame implements Serializable {
         animals = new Creature[w][h];
         nodes = new iPoint[w][h];
 
-        this.seed = seed;
+
         rand = new Random(seed);
         roomSet = new HashSet<>();
         hallwaysSet = new HashSet<>();
@@ -66,6 +68,7 @@ class WorldFrame implements Serializable {
         count = 0;
         name1 = namePlayer1;
         name2 = namePlayer2;
+        action = "";
 
         graph = new TileGraph();
 
@@ -187,6 +190,15 @@ class WorldFrame implements Serializable {
 
     long getSeed() {
         return seed;
+    }
+    void setSeet(long s) {
+        this.seed = s;
+    }
+    String getAction() {
+        return action;
+    }
+    void setAction(String act) {
+        action = act;
     }
     TETile[][] getFloortiles() {
         return floortiles;
