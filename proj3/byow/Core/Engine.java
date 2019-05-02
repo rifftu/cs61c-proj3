@@ -14,18 +14,15 @@ import java.util.Random;
 public class Engine {
     TERenderer ter = new TERenderer();
     /* Feel free to change the width and height. */
-    public static final int WIDTH = 80;
+    public static final int WIDTH = 60;
     public static final int HEIGHT = 35;
 
-    private TETile[][] finalWorldFrame;
     private WorldFrame w;
-    static Random rand = new Random();
-    private static long seed = 0;
+    private WorldFrame previousW;
+    private static long seed = - 1;
     private boolean newGameStart = false;
     private static String name1 = "P1";
     private static String name2 = "P2";
-    private long previousSeed;
-    private String action;
 
     /**
      * Method used for exploring a fresh world. This method should handle all inputs,
@@ -42,17 +39,16 @@ public class Engine {
                 switch (c) {
                     case 'N':
                         //System.out.println("test");
-                        previousSeed = seed = mainM.setSeed();
+                        seed = mainM.setSeed();
                         w = new WorldFrame(WIDTH, HEIGHT - 2, seed, name1, name2);
                         newGameStart = true;
-                        action = "";
                         break;
                     case 'Q':
                         System.exit(0);
                         break;
                     case 'L':
                         w = loadGame();
-                        if (w.getSeed() == 0) {
+                        if (w.getSeed() == - 1) {
                             System.exit(0);
                         }
                         newGameStart = true;
@@ -62,10 +58,11 @@ public class Engine {
                         setName(mainM);
                         break;
                     case 'R':
-                        w = new WorldFrame(WIDTH, HEIGHT - 2, previousSeed, name1, name2);
+                        previousW = loadGame();
+                        w = new WorldFrame(WIDTH, HEIGHT - 2, previousW.getSeed(), name1, name2);
                         newGameStart = true;
                         //replay(action);
-                        playGameWithInitial(w, action);
+                        playGameWithInitial(w, previousW.getAction());
                         break;
                     default:
                 }
@@ -136,7 +133,7 @@ public class Engine {
                     break;
                 case 'L':
                     w = loadGame();
-                    if (w.getSeed() == 0) {
+                    if (w.getSeed() == - 1) {
                         System.exit(0);
                     }
                     break;
@@ -275,7 +272,8 @@ public class Engine {
                     //do nothing
                     c = ':';
                 } else {
-                    action += c;
+                    //System.out.println("action " + w.getAction());
+                    w.setAction(w.getAction() + c);
                     w.keyCatcher(c);
                 }
             }
@@ -287,15 +285,20 @@ public class Engine {
      * function to start the game with inital input string
      */
     void playGameWithInitial(WorldFrame world, String act) {
-        ter.initialize(WIDTH, HEIGHT);
-        ter.renderFrame(world.tiles());
-        ter.showOnly();
-        StdDraw.pause(500);
-        for (int i = 0; i < act.length(); i++) {
-            world.keyCatcher(act.charAt(i));
+        if (act != "") {//if there is saved version before
+            ter.initialize(WIDTH, HEIGHT);
             ter.renderFrame(world.tiles());
-            hudDisplay(true);
+            ter.showOnly();
+            StdDraw.pause(500);
+            for (int i = 0; i < act.length(); i++) {
+                world.keyCatcher(act.charAt(i));
+                ter.renderFrame(world.tiles());
+                hudDisplay(true);
+            }
+            playGame(world, true);
+        } else {
+            System.exit(0);
         }
-        playGame(world, true);
+
     }
 }
