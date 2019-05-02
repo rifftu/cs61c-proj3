@@ -261,7 +261,9 @@ class WorldFrame implements Serializable {
                 showPaths = !showPaths;
                 drawRooms();
                 copytiles();
-                drawPaths();
+                if (showPaths) {
+                    drawPaths();
+                }
                 drawAnimals();
                 return;
             default:
