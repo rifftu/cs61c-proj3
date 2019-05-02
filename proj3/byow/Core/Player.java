@@ -62,9 +62,7 @@ class Player extends Creature implements Serializable {
             this.y = y;
 
             if (map[x][y] != null && map[x][y].killer()) {
-                this.alive = false;
-                map[x][y].kill();
-                world.animalSet().remove(this);
+                die();
             } else {
                 map[x][y] = this;
                 world.flip(nextX(), nextY());

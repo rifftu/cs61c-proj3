@@ -255,7 +255,9 @@ class WorldFrame implements Serializable {
             case 't':
                 System.out.println("triggered");
                 p1.path(p2.x, p2.y);
-                break;
+                drawPaths();
+                drawAnimals();
+                return;
             default:
 
         }
@@ -291,7 +293,12 @@ class WorldFrame implements Serializable {
     void flip(int x, int y) {
         if (floortiles[x][y] == Tileset.GRASS && animals[x][y] == null) {
             if (rand.nextDouble() < 0.15) {
-                Creature newBaddie = new DumbBaddie();
+                Creature newBaddie;
+                if (rand.nextDouble() < 0.2) {
+                    newBaddie = new SmartBaddie();
+                } else {
+                    newBaddie = new DumbBaddie();
+                }
                 newBaddie.x = x;
                 newBaddie.y = y;
                 animalSet.add(newBaddie);

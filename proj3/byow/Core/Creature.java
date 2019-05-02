@@ -98,4 +98,14 @@ abstract class Creature implements Serializable {
         return path;
     }
 
+    void die() {
+        this.alive = false;
+        if (this.killer()) {
+            world.animals()[x][y].die();
+        } else {
+            world.animals()[x][y].kill();
+        }
+        world.animalSet().remove(this);
+    }
+
 }

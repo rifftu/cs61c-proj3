@@ -6,6 +6,7 @@ import byow.TileEngine.Tileset;
 public class DumbBaddie extends Creature {
 
     DumbBaddie() {
+        this.alive = true;
         digest = 0;
     }
 
@@ -35,6 +36,9 @@ public class DumbBaddie extends Creature {
 
     @Override
     void kill() {
+        if (!this.alive) {
+            return;
+        }
         this.digest = 50;
     }
 
