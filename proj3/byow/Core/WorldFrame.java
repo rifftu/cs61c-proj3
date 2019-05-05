@@ -37,7 +37,7 @@ class WorldFrame implements Serializable {
     private int count;
     private long seed;
     private String action;
-    private  String winner;
+    String winner;
     boolean gameOver;
     boolean thereIsWinner;
 
@@ -279,6 +279,7 @@ class WorldFrame implements Serializable {
     }
 
     void setGameOver() {
+        System.out.println("game over");
         this.gameOver = true;
     }
 
@@ -287,6 +288,7 @@ class WorldFrame implements Serializable {
     }
 
     void setThereIsWinner() {
+        System.out.println("Winner: " + winner);
         this.thereIsWinner = true;
     }
 
@@ -336,6 +338,9 @@ class WorldFrame implements Serializable {
             cr.die();
         }
 
+        if (!p1.alive() && !p2.alive) {
+            setGameOver();
+        }
 
         copytiles();
         if (showPaths) {
@@ -359,7 +364,7 @@ class WorldFrame implements Serializable {
             double randomD = rand.nextDouble();
             if (randomD < 0.15) {
                 Creature newBaddie;
-                if (rand.nextDouble() < 0.3) {
+                if (rand.nextDouble() < 0.5) {
                     newBaddie = new SmartBaddie(getCount(), this);
                 } else {
                     newBaddie = new DumbBaddie(this);
@@ -370,6 +375,12 @@ class WorldFrame implements Serializable {
                 animals[x][y] = newBaddie;
             } else if (randomD < .3) {
                 Creature newGoodie = new powerUp(this);
+                newGoodie.x = x;
+                newGoodie.y = y;
+                animalSet.add(newGoodie);
+                animals[x][y] = newGoodie;
+            } else if (randomD < .60) {
+                Creature newGoodie = new trophy(this);
                 newGoodie.x = x;
                 newGoodie.y = y;
                 animalSet.add(newGoodie);

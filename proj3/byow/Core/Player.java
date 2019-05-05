@@ -110,6 +110,12 @@ class Player extends Creature implements Serializable {
                     world.killList.add(map[x][y]);
                     this.stealth += 5;
                 }
+                if (map[x][y] instanceof trophy) {
+                    world.killList.add(map[x][y]);
+                    this.winner = true;
+                    world.winner = this.setName;
+                    world.setThereIsWinner();
+                }
             }
 
             map[x][y] = this;
