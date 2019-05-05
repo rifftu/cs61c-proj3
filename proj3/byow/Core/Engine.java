@@ -293,7 +293,7 @@ public class Engine {
                     w.keyCatcher(c);
                 }
             }
-            isGameStarted = world.getGameover() || world.getThereIsWinner();
+            //isGameStarted = world.getGameover() || world.getThereIsWinner();
         }
 
     }

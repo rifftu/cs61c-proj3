@@ -40,14 +40,6 @@ abstract class Creature implements Serializable {
         return y;
     }
 
-    void setX(int newX) {
-        x = newX;
-    }
-
-    void setY(int newY) {
-        y = newY;
-    }
-
     int nextX() {
         switch (this.facing) {
             case RIGHT: return getX() + 1;
