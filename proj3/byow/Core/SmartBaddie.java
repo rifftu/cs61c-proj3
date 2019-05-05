@@ -85,4 +85,9 @@ public class SmartBaddie extends Creature {
     boolean killer() {
         return false;
     }
+
+    @Override
+    boolean goodie() {
+        return false;
+    }
 }
