@@ -37,11 +37,12 @@ class WorldFrame implements Serializable {
     private int count;
     private long seed;
     private String action;
+    boolean gameOver;
+    boolean thereIsWinner;
 
     private TileGraph graph;
 
     private boolean showPaths;
-
     Set<Creature> killList;
 
     WorldFrame(int w, int h, long seed, String namePlayer1, String namePlayer2) {
@@ -72,6 +73,8 @@ class WorldFrame implements Serializable {
         name1 = namePlayer1;
         name2 = namePlayer2;
         action = "";
+        gameOver = false;
+        thereIsWinner = false;
 
         graph = new TileGraph();
 
@@ -274,10 +277,23 @@ class WorldFrame implements Serializable {
 
     }
 
+    void setGameOver() {
+        this.gameOver = true;
+    }
+
+    boolean getGameover() {
+        return this.gameOver;
+    }
+
+    void setThereIsWinner() {
+        this.thereIsWinner = true;
+    }
+
+    boolean getThereIsWinner() {
+        return this.thereIsWinner;
+    }
 
     private void step() {
-
-
 
         for (Creature cr : animalSet) {
 

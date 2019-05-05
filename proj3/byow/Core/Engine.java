@@ -71,6 +71,9 @@ public class Engine {
         ter.initialize(WIDTH, HEIGHT);
         ter.renderFrame(w.tiles());
         playGame(w, newGameStart);
+        if (w.getGameover() == true) {
+            mainM.drawFrameGameover();
+        }
     }
 
     /**
@@ -277,15 +280,17 @@ public class Engine {
                     callSave(w);
                     //System.exit(0);
                     interactWithKeyboard();
-                } else if (c == ':') {
+                } else if (c == 'q' && pre != ':') {
                     //do nothing
-                    c = ':';
+                    newGameStart = false;
+                    interactWithKeyboard();
                 } else {
                     //System.out.println("action " + w.getAction());
                     w.setAction(w.getAction() + c);
                     w.keyCatcher(c);
                 }
             }
+            isGameStarted = world.getGameover() || world.getThereIsWinner();
         }
 
     }
