@@ -90,7 +90,7 @@ abstract class Creature implements Serializable {
         //System.out.println(grid[x][y].description().equals("wall"));
         //return (grid[x][y] == Tileset.WALL || !(map[x][y] == null));
         return (grid[x][y].description().equals("wall")
-                || !(map[x][y] == null || map[x][y].killer()));
+                || !(map[x][y] == null || map[x][y].killer() || map[x][y].goodie()));
     }
 
     List<IPoint> path(int goalX, int goalY) {
@@ -122,7 +122,7 @@ abstract class Creature implements Serializable {
         this.alive = false;
         if (this.killer()) {
             world.animals()[x][y].die();
-        } else {
+        } else if (world.animals()[x][y] != null) {
             world.animals()[x][y].kill();
         }
         world.animalSet().remove(this);

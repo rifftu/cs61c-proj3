@@ -3,21 +3,16 @@ package byow.Core;
 import byow.TileEngine.TETile;
 import byow.TileEngine.Tileset;
 
-public class DumbBaddie extends Creature {
+public class powerUp extends Creature {
 
-    DumbBaddie(WorldFrame world) {
+    powerUp(WorldFrame world) {
         this.alive = true;
-        digest = 0;
         this.world = world;
     }
 
     @Override
     TETile tile() {
-        if (digest > 0) {
-            return Tileset.EATING;
-        } else {
-            return Tileset.DUMBO;
-        }
+        return Tileset.BLUBOI;
     }
 
     @Override
@@ -37,19 +32,16 @@ public class DumbBaddie extends Creature {
 
     @Override
     void kill() {
-        if (!this.alive) {
-            return;
-        }
-        this.digest = 50;
+
     }
 
     @Override
     boolean killer() {
-        return (this.digest == 0);
+        return false;
     }
 
     @Override
     boolean goodie() {
-        return false;
+        return true;
     }
 }

@@ -102,13 +102,22 @@ class Player extends Creature implements Serializable {
 
             if (map[x][y] != null && map[x][y].killer()) {
                 die();
-            } else {
-                map[x][y] = this;
-                if (stealth <= 0) {
-                    world.flip(nextX(), nextY());
-                } else {
-                    stealth--;
+                return;
+            }
+
+            if (map[x][y] != null && map[x][y].goodie()) {
+                if (map[x][y] instanceof powerUp) {
+                    world.killList.add(map[x][y]);
+                    this.stealth += 5;
                 }
+            }
+
+            map[x][y] = this;
+            if (stealth <= 0) {
+                world.flip(nextX(), nextY());
+            } else {
+                stealth--;
+
             }
         }
     }
@@ -132,5 +141,10 @@ class Player extends Creature implements Serializable {
 
     String getSetName() {
         return this.setName;
+    }
+
+    @Override
+    boolean goodie() {
+        return false;
     }
 }
