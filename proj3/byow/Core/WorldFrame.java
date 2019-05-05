@@ -376,7 +376,7 @@ class WorldFrame implements Serializable {
     void flip(int x, int y) {
         if (floortiles[x][y] == Tileset.GRASS && animals[x][y] == null) {
             double randomD = rand.nextDouble();
-            if (randomD < 0.15) {
+            if (randomD < 0.20) {
                 Creature newBaddie;
                 if (rand.nextDouble() < 0.5) {
                     newBaddie = new SmartBaddie(getCount(), this);
@@ -393,7 +393,7 @@ class WorldFrame implements Serializable {
                 newGoodie.y = y;
                 animalSet.add(newGoodie);
                 animals[x][y] = newGoodie;
-            } else if (randomD < .60) {
+            } else if (randomD < .33) {
                 Creature newGoodie = new trophy(this);
                 newGoodie.x = x;
                 newGoodie.y = y;

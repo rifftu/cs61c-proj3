@@ -313,11 +313,11 @@ public class Engine {
             Instant finish = Instant.now();
             long timeElapsed = Duration.between(start, finish).toMillis();
             //System.out.println("time Elapsed" + timeElapsed);
-            if (timeElapsed >= 5000) {
+            if (timeElapsed >= 20000) {
                w.flip(w.getP1(), w.getP2());
                 StdDraw.text(WIDTH / 2, HEIGHT - 3.2, "TIME TO FLIP!");
                 StdDraw.show();
-                StdDraw.pause(5000);
+                StdDraw.pause(2000);
                start = Instant.now();
             }
             isGameStarted = !(world.getGameover() || world.getThereIsWinner());
