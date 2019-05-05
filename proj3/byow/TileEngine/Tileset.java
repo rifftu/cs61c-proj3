@@ -27,6 +27,14 @@ public class Tileset {
     public static final TETile K = new TETile('K', Color.white, Color.black, "K");
     public static final TETile L = new TETile('L', Color.white, Color.black, "L");
     public static final TETile PATH = new TETile('*', Color.red, Color.black, "L");
+    public static final TETile Ws = new TETile('W', Color.cyan, Color.black, "W");
+    public static final TETile As = new TETile('A', Color.cyan, Color.black, "A");
+    public static final TETile Ss = new TETile('S', Color.cyan, Color.black, "S");
+    public static final TETile Ds = new TETile('D', Color.cyan, Color.black, "D");
+    public static final TETile Is = new TETile('I', Color.cyan, Color.black, "I");
+    public static final TETile Js = new TETile('J', Color.cyan, Color.black, "J");
+    public static final TETile Ks = new TETile('K', Color.cyan, Color.black, "K");
+    public static final TETile Ls = new TETile('L', Color.cyan, Color.black, "L");
 
     public static final TETile DUMBO = new TETile('☠', Color.white, Color.black, "dumb");
     public static final TETile EATING = new TETile('❌', Color.red, Color.black, "eating");

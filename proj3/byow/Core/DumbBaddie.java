@@ -46,4 +46,9 @@ public class DumbBaddie extends Creature {
     boolean killer() {
         return (this.digest == 0);
     }
+
+    @Override
+    boolean goodie() {
+        return false;
+    }
 }

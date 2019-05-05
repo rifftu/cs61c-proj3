@@ -80,6 +80,8 @@ abstract class Creature implements Serializable {
 
     abstract boolean killer();
 
+    abstract boolean goodie();
+
     static boolean blocked(Creature cr) {
         TETile[][] grid = cr.world().getFloortiles();
         Creature[][] map = cr.world().animals();
