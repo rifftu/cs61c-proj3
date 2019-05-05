@@ -37,6 +37,7 @@ class WorldFrame implements Serializable {
     private int count;
     private long seed;
     private String action;
+    private  String winner;
     boolean gameOver;
     boolean thereIsWinner;
 
