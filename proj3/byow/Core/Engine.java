@@ -59,6 +59,9 @@ public class Engine {
                         mainM.choosePlayer();
                         setName(mainM);
                         break;
+                    case 'I':
+                        mainM.Instruction();
+                        break;
                     case 'R':
                         previousW = loadGame();
                         w = new WorldFrame(WIDTH, HEIGHT - 3, previousW.getSeed(),
@@ -74,11 +77,19 @@ public class Engine {
         ter.renderFrame(w.tiles());
 
         playGame(w, newGameStart);
+        //System.out.println("test");
         if (w.getGameover()) {
+            //System.out.println("gameover");
             mainM.drawFrameGameover();
+            newGameStart = false;
+            interactWithKeyboard();
         }
         if (w.getThereIsWinner()) {
+            //System.out.println("there is winner");
             mainM.drawFrameWin(w.getWinner());
+            newGameStart = false;
+            interactWithKeyboard();
+            //System.out.println("there is winner after");
         }
     }
 
@@ -271,14 +282,15 @@ public class Engine {
 
     /**
      * function to play game with input from keyboard
+     * idea about get duration is from this source
+     * @source https://www.baeldung.com/java-measure-elapsed-time
      * @param  world: the world the player is in
      * @param isGameStarted: boolean if the game start or not
      */
     void playGame(WorldFrame world, boolean isGameStarted) {
         Character c = '[';
+        Instant start = Instant.now();
         while (isGameStarted) {
-            Instant start = Instant.now();
-
             hudDisplay(false);
             if (StdDraw.hasNextKeyTyped()) {
                 Character pre = c;
@@ -300,10 +312,16 @@ public class Engine {
             }
             Instant finish = Instant.now();
             long timeElapsed = Duration.between(start, finish).toMillis();
-            if (timeElapsed >= 5) {
-               // w.flip(w.getP1(), w.getP2());
+            //System.out.println("time Elapsed" + timeElapsed);
+            if (timeElapsed >= 5000) {
+               w.flip(w.getP1(), w.getP2());
+                StdDraw.text(WIDTH / 2, HEIGHT - 3.2, "TIME TO FLIP!");
+                StdDraw.show();
+                StdDraw.pause(5000);
+               start = Instant.now();
             }
-            //isGameStarted = world.getGameover() || world.getThereIsWinner();
+            isGameStarted = !(world.getGameover() || world.getThereIsWinner());
+
         }
 
     }

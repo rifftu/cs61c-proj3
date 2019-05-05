@@ -1,5 +1,7 @@
 package byow.Core;
 
+import byow.TileEngine.TERenderer;
+import edu.princeton.cs.algs4.TrieSET;
 import edu.princeton.cs.introcs.StdDraw;
 
 import java.awt.*;
@@ -61,7 +63,7 @@ public class MainMenu implements Serializable {
         StdDraw.text(midWidth, midHeight - 2, "Quit Game (Q)");
         StdDraw.text(midWidth, midHeight - 4, "Set name of player(s) (C)");
         StdDraw.text(midWidth, midHeight - 6, "Replay (R)");
-        StdDraw.text(midWidth, midHeight - 8, "Instruction (R)");
+        StdDraw.text(midWidth, midHeight - 8, "Instruction (I)");
         StdDraw.show();
     }
 
@@ -197,6 +199,7 @@ public class MainMenu implements Serializable {
         StdDraw.text(width / 2, height / 2 + 10, "Congratulation!!!");
         StdDraw.text(width / 2, height / 2 + 8, s + " win!");
         StdDraw.text(width / 2, height / 2 + 6, " Type b to comeback to the main menu");
+        StdDraw.show();
         boolean finish = false;
         while (!finish) {
             if (StdDraw.hasNextKeyTyped()) {
@@ -222,6 +225,7 @@ public class MainMenu implements Serializable {
         StdDraw.text(width / 2, height / 2 + 10, "UUUUUUUUU!!!");
         StdDraw.text(width / 2, height / 2 + 8, " NO ONE WIN!");
         StdDraw.text(width / 2, height / 2 + 6, " Type b to comeback to the main menu");
+        StdDraw.show();
         boolean finish = false;
         while (!finish) {
             if (StdDraw.hasNextKeyTyped()) {
@@ -234,6 +238,49 @@ public class MainMenu implements Serializable {
         StdDraw.show();
     }
 
+    /**
+     * method to display screen the instruction
+     *
+     */
+    public void Instruction() {
+        //Take the string and display it in the center of the screen
+        TERenderer ter = new TERenderer();
+        TETile[][] tile = new TETile[width][height];
+        ter.initialize(width, height);
+        for (int x = 0; x < width; x += 1) {
+            for (int y = 0; y < height; y += 1) {
+                tile[x][y] = Tileset.NOTHING;
+            }
+        }
+        tile[width / 2 - 8][height - 10] = Tileset.DUMBO;
+        tile[width / 2 - 8][height - 12] = Tileset.SMART;
+        tile[width / 2 - 8][height - 14] = Tileset.BLUBOI;
+        tile[width / 2 - 8][height - 16] = Tileset.CROWN;
+        System.out.println(tile[width/2][height -10].description());
+        ter.renderFrame(tile);
+
+        Font font = new Font("Arial", Font.BOLD, 25);
+        StdDraw.setFont(font);
+        StdDraw.setPenColor(Color.white);
+        StdDraw.text(40, height - 2, "INSTRUCTION   ");
+        StdDraw.text(40 , height - 4, " Type b to comeback to the main menu");
+        StdDraw.textLeft(35, height - 9.5, " White Ghost");
+        StdDraw.textLeft(35, height - 11.5, " Chasing Ghost");
+        StdDraw.textLeft(35, height - 13.5, " Blue Star");
+        StdDraw.textLeft(35, height - 15.5, " Crown");
+        StdDraw.textLeft(35, height - 17.5, " Location of players flip for every period of time");
+        StdDraw.show();
+        boolean finish = false;
+        while (!finish) {
+            if (StdDraw.hasNextKeyTyped()) {
+                if (StdDraw.nextKeyTyped() == 'b') {
+                    finish = true;
+                }
+            }
+        }
+        menu();
+        StdDraw.show();
+    }
     public static void main(String[] args) {
         MainMenu n = new MainMenu();
         n.menu();

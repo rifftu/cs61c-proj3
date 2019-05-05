@@ -2,6 +2,7 @@ package byow.Core;
 
 import byow.TileEngine.TERenderer;
 import byow.TileEngine.TETile;
+import byow.TileEngine.Tileset;
 //import byow.TileEngine.Tileset;
 //import edu.princeton.cs.introcs.StdDraw;
 
@@ -22,7 +23,7 @@ public class WorldFrameTest {
         //int seed = 5912;
         TERenderer ter = new TERenderer();
         WorldFrame frame;
-        TETile[][] testTiles;
+        TETile[][] testTiles = new TETile[w][h];
         System.out.println(seed);
 
         frame = new WorldFrame(w, h, seed, "P1", "P2");
@@ -32,15 +33,20 @@ public class WorldFrameTest {
         //}
         //System.out.println(engine.toString());
         ter.initialize(w, h);
-
-        testTiles = frame.tiles();
+        for (int x = 0; x < w; x += 1) {
+            for (int y = 0; y < h; y += 1) {
+                testTiles[x][y] = Tileset.NOTHING;
+            }
+        }
+        testTiles[w / 2][h - 10] = Tileset.DUMBO;
+        //testTiles = frame.tiles();
 
         ter.renderFrame(testTiles);
         ter.showOnly();
 
         KeyboardInputSource key = new KeyboardInputSource();
 
-        while (true) {
+        /*while (true) {
             char c = key.getNextKey();
             if (c == 'q') {
                 break;
@@ -49,7 +55,7 @@ public class WorldFrameTest {
                 ter.renderFrame(testTiles);
                 ter.showOnly();
             }
-        }
+        }*/
 
 
 

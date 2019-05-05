@@ -37,7 +37,7 @@ class WorldFrame implements Serializable {
     private int count;
     private long seed;
     private String action;
-    private  String winner;
+    String winner;
     boolean gameOver;
     boolean thereIsWinner;
 
@@ -280,6 +280,7 @@ class WorldFrame implements Serializable {
     }
 
     void setGameOver() {
+        System.out.println("game over");
         this.gameOver = true;
     }
 
@@ -288,6 +289,7 @@ class WorldFrame implements Serializable {
     }
 
     void setThereIsWinner() {
+        System.out.println("Winner: " + winner);
         this.thereIsWinner = true;
     }
 
@@ -337,6 +339,9 @@ class WorldFrame implements Serializable {
             cr.die();
         }
 
+        if (!p1.alive() && !p2.alive) {
+            setGameOver();
+        }
 
         copytiles();
         if (showPaths) {
@@ -354,13 +359,26 @@ class WorldFrame implements Serializable {
             System.arraycopy(floortiles[x], 0, showtiles[x], 0, h);
         }
     }
-
+    void flip(Creature p1, Creature p2) {
+        int x = p1.getX();
+        p1.setX(p2.getX());
+        p2.setX(x);
+        int y = p1.getY();
+        p1.setY(p2.getY());
+        p2.setY(y);
+        //p1 = new Player("P1", namePlayer1, this);
+        //Creature temp = new Player(p1.name, ((Player) p1).getSetName(), this);
+        //p1 = new Player(p2.name, ((Player) p2).getSetName(), this);
+        //p2 = new Player(temp.name, ((Player) temp).getSetName(), this);
+        animals[p2.getX()][p2.getY()] = p2;
+        animals[p1.getX()][p1.getY()] = p1;
+    }
     void flip(int x, int y) {
         if (floortiles[x][y] == Tileset.GRASS && animals[x][y] == null) {
             double randomD = rand.nextDouble();
             if (randomD < 0.15) {
                 Creature newBaddie;
-                if (rand.nextDouble() < 0.3) {
+                if (rand.nextDouble() < 0.5) {
                     newBaddie = new SmartBaddie(getCount(), this);
                 } else {
                     newBaddie = new DumbBaddie(this);
@@ -371,6 +389,12 @@ class WorldFrame implements Serializable {
                 animals[x][y] = newBaddie;
             } else if (randomD < .3) {
                 Creature newGoodie = new powerUp(this);
+                newGoodie.x = x;
+                newGoodie.y = y;
+                animalSet.add(newGoodie);
+                animals[x][y] = newGoodie;
+            } else if (randomD < .60) {
+                Creature newGoodie = new trophy(this);
                 newGoodie.x = x;
                 newGoodie.y = y;
                 animalSet.add(newGoodie);
