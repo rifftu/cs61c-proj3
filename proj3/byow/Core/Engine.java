@@ -71,8 +71,11 @@ public class Engine {
         ter.initialize(WIDTH, HEIGHT);
         ter.renderFrame(w.tiles());
         playGame(w, newGameStart);
-        if (w.getGameover() == true) {
+        if (w.getGameover()) {
             mainM.drawFrameGameover();
+        }
+        if (w.getThereIsWinner()) {
+            mainM.drawFrameWin(w.getWinner());
         }
     }
 

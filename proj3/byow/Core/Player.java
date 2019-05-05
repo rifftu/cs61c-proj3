@@ -123,7 +123,14 @@ class Player extends Creature implements Serializable {
         return false;
     }
 
-    boolean isWinner() {
+    boolean getWinner() {
         return this.winner;
+    }
+    void setWinner() {
+        this.winner = true;
+    }
+
+    String getSetName() {
+        return this.setName;
     }
 }

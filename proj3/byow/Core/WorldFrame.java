@@ -37,6 +37,7 @@ class WorldFrame implements Serializable {
     private int count;
     private long seed;
     private String action;
+    private  String winner;
     boolean gameOver;
     boolean thereIsWinner;
 
@@ -416,6 +417,10 @@ class WorldFrame implements Serializable {
         } else {
             return Tileset.FLOOR;
         }
+    }
+
+    String getWinner() {
+        return this.winner;
     }
 
 }
