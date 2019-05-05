@@ -62,7 +62,6 @@ public class Engine {
                         w = new WorldFrame(WIDTH, HEIGHT - 3, previousW.getSeed(),
                                 previousW.getName1(), previousW.getName2());
                         newGameStart = true;
-                        //replay(action);
                         playGameWithInitial(w, previousW.getAction());
                         break;
                     default:
@@ -276,8 +275,8 @@ public class Engine {
                 //String in = Character.toString(c);
                 if (c == 'q' && pre == ':') {
                     callSave(w);
-                    System.exit(0);
-                    //interactWithKeyboard();
+                    //System.exit(0);
+                    interactWithKeyboard();
                 } else if (c == ':') {
                     //do nothing
                     c = ':';

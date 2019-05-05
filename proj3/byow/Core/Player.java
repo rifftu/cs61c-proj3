@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 class Player extends Creature implements Serializable {
     protected String setName;
+    protected boolean winner;
     Player(String name, String setName, WorldFrame world) {
         this.name = name;
         this.alive = true;
@@ -14,6 +15,7 @@ class Player extends Creature implements Serializable {
         this.eating = false;
         this.setName = setName;
         this.world = world;
+        this.winner = false;
     }
 
     @Override
@@ -73,7 +75,6 @@ class Player extends Creature implements Serializable {
 
     @Override
     void kill() {
-
     }
 
     @Override
@@ -81,5 +82,7 @@ class Player extends Creature implements Serializable {
         return false;
     }
 
-
+    boolean isWinner() {
+        return this.winner;
+    }
 }

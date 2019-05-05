@@ -4,6 +4,8 @@ import edu.princeton.cs.introcs.StdDraw;
 
 import java.awt.*;
 import java.io.Serializable;
+import byow.TileEngine.TETile;
+import byow.TileEngine.Tileset;
 
 /**
  * class for main menu of the game
@@ -59,8 +61,8 @@ public class MainMenu implements Serializable {
         StdDraw.text(midWidth, midHeight - 2, "Quit Game (Q)");
         StdDraw.text(midWidth, midHeight - 4, "Set name of player(s) (C)");
         StdDraw.text(midWidth, midHeight - 6, "Replay (R)");
+        StdDraw.text(midWidth, midHeight - 8, "Instruction (R)");
         StdDraw.show();
-
     }
 
     /**
@@ -78,6 +80,7 @@ public class MainMenu implements Serializable {
         StdDraw.text(width / 2, height / 2, s);
         StdDraw.show();
     }
+
 
     /**
      * funtionc to draw screen while user input a number for seed
@@ -194,9 +197,42 @@ public class MainMenu implements Serializable {
         StdDraw.text(width / 2, height / 2 + 10, "Congratulation!!!");
         StdDraw.text(width / 2, height / 2 + 8, s + " win!");
         StdDraw.text(width / 2, height / 2 + 6, " Type b to comeback to the main menu");
+        boolean finish = false;
+        while (!finish) {
+            if (StdDraw.hasNextKeyTyped()) {
+                if (StdDraw.nextKeyTyped() == 'b') {
+                    finish = true;
+                }
+            }
+        }
+        menu();
         StdDraw.show();
     }
 
+    /**
+     * method to display screen when there is a winner
+     *
+     */
+    public void drawFrameGameover() {
+        //Take the string and display it in the center of the screen
+        StdDraw.clear(Color.black);
+        Font font = new Font("Arial", Font.BOLD, 25);
+        StdDraw.setFont(font);
+        StdDraw.setPenColor(Color.white);
+        StdDraw.text(width / 2, height / 2 + 10, "UUUUUUUUU!!!");
+        StdDraw.text(width / 2, height / 2 + 8, " NO ONE WIN!");
+        StdDraw.text(width / 2, height / 2 + 6, " Type b to comeback to the main menu");
+        boolean finish = false;
+        while (!finish) {
+            if (StdDraw.hasNextKeyTyped()) {
+                if (StdDraw.nextKeyTyped() == 'b') {
+                    finish = true;
+                }
+            }
+        }
+        menu();
+        StdDraw.show();
+    }
 
     public static void main(String[] args) {
         MainMenu n = new MainMenu();
