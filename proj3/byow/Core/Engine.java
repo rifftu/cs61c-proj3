@@ -75,7 +75,7 @@ public class Engine {
             mainM.drawFrameGameover();
         }
         if (w.getThereIsWinner()) {
-            mainM.drawFrameWin(w.getWinner);
+            mainM.drawFrameWin(w.getWinner());
         }
     }
 
