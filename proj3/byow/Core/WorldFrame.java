@@ -419,4 +419,8 @@ class WorldFrame implements Serializable {
         }
     }
 
+    String getWinner() {
+        return this.winner;
+    }
+
 }
