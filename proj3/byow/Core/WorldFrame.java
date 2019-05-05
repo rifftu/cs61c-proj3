@@ -114,7 +114,8 @@ class WorldFrame implements Serializable {
         drawAnimals();
 
     }
-
+    Creature getP1() { return p1;}
+    Creature getP2() { return p2;}
     String getName1() {
         return name1;
     }

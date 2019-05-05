@@ -8,6 +8,8 @@ import edu.princeton.cs.introcs.StdDraw;
 
 import java.awt.*;
 import java.io.*;
+import java.time.Instant;
+import java.time.Duration;
 //import java.lang.reflect.WildcardType;
 //import java.util.Random;
 
@@ -70,6 +72,7 @@ public class Engine {
         }
         ter.initialize(WIDTH, HEIGHT);
         ter.renderFrame(w.tiles());
+
         playGame(w, newGameStart);
         if (w.getGameover()) {
             mainM.drawFrameGameover();
@@ -274,6 +277,8 @@ public class Engine {
     void playGame(WorldFrame world, boolean isGameStarted) {
         Character c = '[';
         while (isGameStarted) {
+            Instant start = Instant.now();
+
             hudDisplay(false);
             if (StdDraw.hasNextKeyTyped()) {
                 Character pre = c;
@@ -292,6 +297,11 @@ public class Engine {
                     w.setAction(w.getAction() + c);
                     w.keyCatcher(c);
                 }
+            }
+            Instant finish = Instant.now();
+            long timeElapsed = Duration.between(start, finish).toMillis();
+            if (timeElapsed >= 5) {
+               // w.flip(w.getP1(), w.getP2());
             }
             //isGameStarted = world.getGameover() || world.getThereIsWinner();
         }
